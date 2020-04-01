@@ -15,8 +15,8 @@ build:
 all:
 
 # Lance le programme de test.
-check:
-	false
+check: build/test
+	./build/test
 
 #-------------IMPORTED--------------
 cc=gcc
