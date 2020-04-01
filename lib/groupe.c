@@ -18,6 +18,7 @@ groupe* g_open(FILE *db) {
 	int *amis;
 
 	g = malloc(sizeof(groupe));
+	g->personnes = NULL;
 	maillon_amis = 0;
 	fgets(line, MAX_LINE_LENGTH, db);  // Premiere ligne labels
 	while (fgets(line, MAX_LINE_LENGTH, db)) {

@@ -9,18 +9,18 @@
 
 typedef struct personne
 {
-    int index;
-    char nom[128];
-    char prenom[128];
-    char courriel[128];
-    char telephone[128];
-    char adresse[128];
-    struct personne *amis[MAX_AMIS];
+	int index;
+	char nom[128];
+	char prenom[128];
+	char courriel[128];
+	char telephone[128];
+	char adresse[128];
+	struct personne *amis[MAX_AMIS];
 } personne;
 
 typedef struct groupe
 {
-    node* personnes;
+	node* personnes;
 } groupe;
 
 // Crée un groupe à partir d'un flux donné.

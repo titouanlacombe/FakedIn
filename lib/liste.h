@@ -2,9 +2,9 @@
 
 typedef struct node
 {
-    void *data;
-    struct node *next;
-    struct node *previous;
+	void *data;
+	struct node *next;
+	struct node *previous;
 } node;
 
 // Crée une nouvelle node avec node->data affecté de data et node->next affecté de NULL. Retourne cette nouvelle node.
