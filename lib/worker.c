@@ -3,39 +3,37 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+worker* wrk_create(char* first_name, char* last_name, char* email)
+{
+    return NULL;
+}
 
-worker* create_worker(char * nom, char * prenom, char * mail)
+void wrk_delete(worker* w)
 {
 
 }
 
-void add_skill(worker* w, char * skill)
+void wrk_add_skill(worker* w, char* skill)
 {
 
 }
 
-void add_collegues(worker* w, char * collegue)
+void wrk_add_colleague(worker* w, char* colleague)
 {
 
 }
 
-void change_postal(worker* w, char * postal)
+void wrk_set_zip_code(worker* w, char* zip_code)
 {
 
 }
 
-void change_entreprise(worker* w, void * entreprise)
+void wrk_set_company(worker* w, void* company)
 {
 
 }
 
-void delete_worker(worker* w)
+int wrk_get_state(worker* w)
 {
-
+    return 0;
 }
-
-bool etat_employe(worker* w)
-{
-
-}
-

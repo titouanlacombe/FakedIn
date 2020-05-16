@@ -436,51 +436,58 @@ int main()
 	}
 
 //-----------------------------------TESTS WORKER--------------------------------------
+	worker* w;
 
-	worker* w = create_worker("chat","thomas","weebs@gmail.com");
-	// Tests de la fonction create_worker.
+	// Tests de la fonction wrk_create.
 	{
-		TEST(strcmp(w->nom,"chat")==0);
-		TEST(strcmp(w->prenom,"thomas")==0);
-		TEST(strcmp(w->mail,"weebs@gmail.com")==0);
-	}
-	// Tests de la fonction add_skill.
-	add_skill(w,"c");
-	add_skill(w,"overwatch");
-	{
-		TEST(strcmp(l_skip(w->skills,0),"c")==0);
-		TEST(strcmp(l_skip(w->skills,1),"overwatch")==0);
+		w = wrk_create("thomas", "billet", "weeb@gmail.com");
+		TEST(strcmp(w->first_name, "thomas") == 0);
+		TEST(strcmp(w->last_name, "billet") == 0);
+		TEST(strcmp(w->email, "weebs@gmail.com") == 0);
 	}
 
-	// Tests de la fonction add_collegues.
-	add_collegues(w,"Titouan");
-	add_collegues(w,"Maximilien");
+	// Tests de la fonction wrk_add_skill.
 	{
-		TEST(strcmp(l_skip(w->collegues,0),"Titouan")==0);
-		TEST(strcmp(l_skip(w->collegues,1),"Maximilien")==0);
+		wrk_add_skill(w, "c");
+		wrk_add_skill(w, "overwatch");
+
+		TEST(strcmp((char*)l_skip(w->skills, 0)->data, "c") == 0);
+		TEST(strcmp((char*)l_skip(w->skills, 1)->data, "overwatch") == 0);
 	}
 
-	// Tests de la fonction change postal.
-	change_postal(w,"13000");
+	// Tests de la fonction wrk_add_colleague.
 	{
-		TEST(strcmp(w->postal,"13000"));
+		wrk_add_colleague(w, "Titouan");
+		wrk_add_colleague(w, "Maximilien");
+
+		TEST(strcmp((char*)l_skip(w->colleagues, 0)->data, "Titouan") == 0);
+		TEST(strcmp((char*)l_skip(w->colleagues, 1)->data, "Maximilien") == 0);
 	}
 
-	// Tests de la fonction change entreprise et etat_employe
-	change_entreprise(w,"google");
+	// Tests de la fonction wrk_set_zip_code.
 	{
-		TEST(strcmp(w->entreprise,"google"));
-		TEST(etat_employe==1);
-		change_entreprise(w,NULL);
-		TEST(strcmp(w->entreprise,NULL));
-		TEST(etat_employe==0);
+		wrk_set_zip_code(w, "13000");
+
+		TEST(strcmp(w->zip_code, "13000") == 0);
 	}
 
-	// Tests de la fonction change postal.
-	delete_worker(w);
+	// Tests de la fonction wrk_set_company
 	{
-		TEST(if(w)==NULL);
+		wrk_set_company(w, (void*)20);
+		
+		TEST(w->company == (void*)20);
 	}
+
+	// Tests de la fonction change wrk_get_state
+	{
+		w->company = (void*)20;
+		TEST(wrk_get_state(w) == EMPLOYED);
+
+		w->company = NULL;
+		TEST(wrk_get_state(w) == UNEMPLOYED);
+	}
+
+	wrk_delete(w);
 
 	printf("%d/%d\n", tests_reussis, tests_executes);
 

@@ -3,34 +3,37 @@
 #include "liste.h"
 #include "mylog.h"
 
-typedef struct
+#define UNEMPLOYED 0
+#define EMPLOYED 1
+
+typedef struct worker
 {
-  char * nom;
-  char * prenom;
-  char * mail;
-  char * postal;
-  node * skills;
-  node * collegues;
-  void * entreprise;
+  char* first_name;
+  char* last_name;
+  char* email;
+  char* zip_code;
+  node* skills;
+  node* colleagues;
+  void* company;
 } worker;
 
-//cree un nouvel employé/chercheur d'emploi
-worker* create_worker(char * nom, char * prenom, char * mail);
+// créé un nouvel travailleur qui peut etre employée ou chercheur d'emploi
+worker* wrk_create(char* first_name, char* last_name, char* email);
 
-//rajoute une competence au worker selctionner
-void add_skill(worker, char * skill);
+// supprime w
+void wrk_delete(worker* w);
 
-//rajoute collegue a worker selctionner
-void add_collegues(worker, char * collegue);
+// rajoute une compétence a w
+void wrk_add_skill(worker* w, char* skill);
 
-//change postal du worker selectionner
-void change_postal(worker, char * postal);
+// rajoute un collegue a w
+void wrk_add_colleague(worker* w, char* colleague);
 
-//change entreprise du worker selectionner
-void change_entreprise(worker, void * entreprise);
+// change le code postal de w
+void wrk_set_zip_code(worker* w, char* zip_code);
 
-//supprime le worker choisis
-void delete_worker(worker);
+// change l'entreprise de w
+void wrk_set_company(worker* w, void* company);
 
-//donne l'etat du worker employé ou chercheur d'emploi
-bool etat_employe(worker);
+// donne l'etat de w (EMPLOYED = employée, UNEMPLOYED = chercheur d'emploi)
+int wrk_get_state(worker* w);
