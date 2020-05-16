@@ -1,5 +1,6 @@
 #include "groupe.h"
 #include "mylog.h"
+#include "worker.h"
 
 #include <signal.h>
 #include <stddef.h>
@@ -432,6 +433,53 @@ int main()
 		TEST(g_index(g, 12) == NULL);
 		TEST(g_friends(g, 8, 12) == false);
 		TEST(g_linked(g, 8, 11) == false);
+	}
+
+//-----------------------------------TESTS WORKER--------------------------------------
+
+	worker* w = create_worker("chat","thomas","weebs@gmail.com");
+	// Tests de la fonction create_worker.
+	{
+		TEST(strcmp(w->nom,"chat")==0);
+		TEST(strcmp(w->prenom,"thomas")==0);
+		TEST(strcmp(w->mail,"weebs@gmail.com")==0);
+	}
+	// Tests de la fonction add_skill.
+	add_skill(w,"c");
+	add_skill(w,"overwatch");
+	{
+		TEST(strcmp(l_skip(w->skills,0),"c")==0);
+		TEST(strcmp(l_skip(w->skills,1),"overwatch")==0);
+	}
+
+	// Tests de la fonction add_collegues.
+	add_collegues(w,"Titouan");
+	add_collegues(w,"Maximilien");
+	{
+		TEST(strcmp(l_skip(w->collegues,0),"Titouan")==0);
+		TEST(strcmp(l_skip(w->collegues,1),"Maximilien")==0);
+	}
+
+	// Tests de la fonction change postal.
+	change_postal(w,"13000");
+	{
+		TEST(strcmp(w->postal,"13000"));
+	}
+
+	// Tests de la fonction change entreprise et etat_employe
+	change_entreprise(w,"google");
+	{
+		TEST(strcmp(w->entreprise,"google"));
+		TEST(etat_employe==1);
+		change_entreprise(w,NULL);
+		TEST(strcmp(w->entreprise,NULL));
+		TEST(etat_employe==0);
+	}
+
+	// Tests de la fonction change postal.
+	delete_worker(w);
+	{
+		TEST(if(w)==NULL);
 	}
 
 	printf("%d/%d\n", tests_reussis, tests_executes);

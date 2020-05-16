@@ -42,6 +42,13 @@ build/mylog.o: lib/mylog.c | build
 build/libmylog.a: build/mylog.o | build
 	ar crs build/libmylog.a build/mylog.o
 
+#------LIBWORKER-------
+build/worker.o: lib/worker.c | build
+	$(cc) $(flags) -c lib/worker.c -I ./lib -o build/worker.o
+
+build/libworker.a: build/worker.o | build
+	ar crs build/libworker.a build/worker.o
+
 #------TESTS-------
 build/test.o: test/main.c | build
 	$(cc) $(flags) -c test/main.c -I ./lib -o build/test.o
