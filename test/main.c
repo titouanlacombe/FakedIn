@@ -443,7 +443,7 @@ int main()
 		w = wrk_create("thomas", "billet", "weeb@gmail.com");
 		TEST(strcmp(w->first_name, "thomas") == 0);
 		TEST(strcmp(w->last_name, "billet") == 0);
-		TEST(strcmp(w->email, "weebs@gmail.com") == 0);
+		TEST(strcmp(w->email, "weeb@gmail.com") == 0);
 	}
 
 	// Tests de la fonction wrk_add_skill.
