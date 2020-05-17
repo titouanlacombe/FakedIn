@@ -478,7 +478,7 @@ int main()
 		TEST(w->company == (void*)20);
 	}
 
-	// Tests de la fonction change wrk_get_state
+	// Tests de la fonction wrk_get_state
 	{
 		w->company = (void*)20;
 		TEST(wrk_get_state(w) == EMPLOYED);
