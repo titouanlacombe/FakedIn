@@ -18,7 +18,7 @@ void wrk_add_skill(worker* w, char* skill)
 
 }
 
-void wrk_add_colleague(worker* w, char* colleague)
+void wrk_add_colleague(worker* w, worker* colleague)
 {
 
 }

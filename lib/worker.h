@@ -27,7 +27,7 @@ void wrk_delete(worker* w);
 void wrk_add_skill(worker* w, char* skill);
 
 // rajoute un collegue a w
-void wrk_add_colleague(worker* w, char* colleague);
+void wrk_add_colleague(worker* w, worker* colleague);
 
 // change le code postal de w
 void wrk_set_zip_code(worker* w, char* zip_code);

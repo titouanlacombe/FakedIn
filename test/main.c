@@ -437,6 +437,8 @@ int main()
 
 //-----------------------------------TESTS WORKER--------------------------------------
 	worker* w;
+	worker* w2;
+	worker* w3;
 
 	// Tests de la fonction wrk_create.
 	{
@@ -457,8 +459,10 @@ int main()
 
 	// Tests de la fonction wrk_add_colleague.
 	{
-		wrk_add_colleague(w, "Titouan");
-		wrk_add_colleague(w, "Maximilien");
+		w2= wrk_create("titouan","lacombe","nerd@gmail.com")
+		w3= wrk_create("maximilien","veran","banane@gmail.com")
+		wrk_add_colleague(w, w2);
+		wrk_add_colleague(w2, w3);
 
 		TEST(strcmp((char*)l_skip(w->colleagues, 0)->data, "Titouan") == 0);
 		TEST(strcmp((char*)l_skip(w->colleagues, 1)->data, "Maximilien") == 0);
