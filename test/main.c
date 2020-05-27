@@ -459,8 +459,8 @@ int main()
 
 	// Tests de la fonction wrk_add_colleague.
 	{
-		w2= wrk_create("titouan","lacombe","nerd@gmail.com")
-		w3= wrk_create("maximilien","veran","banane@gmail.com")
+		w2 = wrk_create("titouan","lacombe","nerd@gmail.com");
+		w3 = wrk_create("maximilien","veran","banane@gmail.com");
 		wrk_add_colleague(w, w2);
 		wrk_add_colleague(w2, w3);
 
