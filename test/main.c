@@ -355,6 +355,83 @@ int main()
 		TEST_FILE("test/db_modifiee.txt", "test/db_corrigee.txt");
 	}
 
+//-----------------------------------TESTS COMPANY--------------------------------------
+	company* c;
+
+	// Tests de la fonction cmp_create
+	{
+		c = cmp_create("SpaceX", "spacex@gmail.com", "42069");
+		TEST(c != NULL);
+		TEST(strcmp(c->name, "SpaceX") == 0);
+		TEST(strcmp(c->email, "spacex@gmail.com") == 0);
+		TEST(strcmp(c->zip_code, "42069") == 0);
+	}
+
+	// supprime c
+	cmp_delete(c);
+//-----------------------------------TESTS JOB--------------------------------------
+
+//-----------------------------------TESTS WORKER--------------------------------------
+	worker* w;
+	worker* w2;
+	worker* w3;
+
+	// Tests de la fonction wrk_create.
+	{
+		w = wrk_create("thomas", "billet", "weeb@gmail.com");
+		TEST(w != NULL);
+		TEST(strcmp(w->first_name, "thomas") == 0);
+		TEST(strcmp(w->last_name, "billet") == 0);
+		TEST(strcmp(w->email, "weeb@gmail.com") == 0);
+	}
+
+	// Tests de la fonction wrk_add_skill.
+	{
+		wrk_add_skill(w, "c");
+		wrk_add_skill(w, "overwatch");
+
+		TEST(strcmp((char*)l_skip(w->skills, 0)->data, "c") == 0);
+		TEST(strcmp((char*)l_skip(w->skills, 1)->data, "overwatch") == 0);
+	}
+
+	// Tests de la fonction wrk_add_colleague.
+	{
+		w2 = wrk_create("titouan","lacombe","nerd@gmail.com");
+		w3 = wrk_create("maximilien","veran","banane@gmail.com");
+		wrk_add_colleague(w, w2);
+		wrk_add_colleague(w2, w3);
+
+		TEST(strcmp((char*)l_skip(w->colleagues, 0)->data, "Titouan") == 0);
+		TEST(strcmp((char*)l_skip(w->colleagues, 1)->data, "Maximilien") == 0);
+	}
+
+	// Tests de la fonction wrk_set_zip_code.
+	{
+		wrk_set_zip_code(w, "13000");
+
+		TEST(strcmp(w->zip_code, "13000") == 0);
+	}
+
+	// Tests de la fonction wrk_set_company
+	{
+		wrk_set_company(w, (void*)20);
+		
+		TEST(w->company == (void*)20);
+	}
+
+	// Tests de la fonction wrk_get_state
+	{
+		w->company = (void*)20;
+		TEST(wrk_get_state(w) == EMPLOYED);
+
+		w->company = NULL;
+		TEST(wrk_get_state(w) == UNEMPLOYED);
+	}
+
+	wrk_delete(w);
+	wrk_delete(w2);
+	wrk_delete(w3);
+
 	//-----------------------------------TESTS GROUPES--------------------------------------
 	// Lecture de la DB vers une liste en mémoire.
 	groupe *g;
@@ -432,81 +509,9 @@ int main()
 		TEST(g_linked(g, 8, 11) == false);
 	}
 
-//-----------------------------------TESTS WORKER--------------------------------------
-	worker* w;
-	worker* w2;
-	worker* w3;
+	//-----------------------------------TESTS CSV-----------------------------------------
 
-	// Tests de la fonction wrk_create.
-	{
-		w = wrk_create("thomas", "billet", "weeb@gmail.com");
-		TEST(w != NULL);
-		TEST(strcmp(w->first_name, "thomas") == 0);
-		TEST(strcmp(w->last_name, "billet") == 0);
-		TEST(strcmp(w->email, "weeb@gmail.com") == 0);
-	}
-
-	// Tests de la fonction wrk_add_skill.
-	{
-		wrk_add_skill(w, "c");
-		wrk_add_skill(w, "overwatch");
-
-		TEST(strcmp((char*)l_skip(w->skills, 0)->data, "c") == 0);
-		TEST(strcmp((char*)l_skip(w->skills, 1)->data, "overwatch") == 0);
-	}
-
-	// Tests de la fonction wrk_add_colleague.
-	{
-		w2 = wrk_create("titouan","lacombe","nerd@gmail.com");
-		w3 = wrk_create("maximilien","veran","banane@gmail.com");
-		wrk_add_colleague(w, w2);
-		wrk_add_colleague(w2, w3);
-
-		TEST(strcmp((char*)l_skip(w->colleagues, 0)->data, "Titouan") == 0);
-		TEST(strcmp((char*)l_skip(w->colleagues, 1)->data, "Maximilien") == 0);
-	}
-
-	// Tests de la fonction wrk_set_zip_code.
-	{
-		wrk_set_zip_code(w, "13000");
-
-		TEST(strcmp(w->zip_code, "13000") == 0);
-	}
-
-	// Tests de la fonction wrk_set_company
-	{
-		wrk_set_company(w, (void*)20);
-		
-		TEST(w->company == (void*)20);
-	}
-
-	// Tests de la fonction wrk_get_state
-	{
-		w->company = (void*)20;
-		TEST(wrk_get_state(w) == EMPLOYED);
-
-		w->company = NULL;
-		TEST(wrk_get_state(w) == UNEMPLOYED);
-	}
-
-	wrk_delete(w);
-	wrk_delete(w2);
-	wrk_delete(w3);
-
-//-----------------------------------TESTS COMPANY--------------------------------------
-	company* c;
-
-	// Tests de la fonction cmp_create
-	{
-		c = cmp_create("SpaceX", "spacex@gmail.com", "42069");
-		TEST(c != NULL);
-		TEST(strcmp(c->name, "SpaceX") == 0);
-		TEST(strcmp(c->email, "spacex@gmail.com") == 0);
-		TEST(strcmp(c->zip_code, "42069") == 0);
-	}
-
-	// supprime c
-	cmp_delete(c);
+	//-----------------------------------TESTS SEARCH--------------------------------------
 
 	printf("%d/%d\n", tests_reussis, tests_executes);
 
