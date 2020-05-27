@@ -1,6 +1,6 @@
 #include "groupe.h"
-#include "mylog.h"
 #include "worker.h"
+#include "company.h"
 
 #include <signal.h>
 #include <stddef.h>
@@ -443,6 +443,7 @@ int main()
 	// Tests de la fonction wrk_create.
 	{
 		w = wrk_create("thomas", "billet", "weeb@gmail.com");
+		TEST(w != NULL);
 		TEST(strcmp(w->first_name, "thomas") == 0);
 		TEST(strcmp(w->last_name, "billet") == 0);
 		TEST(strcmp(w->email, "weeb@gmail.com") == 0);
@@ -492,6 +493,38 @@ int main()
 	}
 
 	wrk_delete(w);
+	wrk_delete(w2);
+	wrk_delete(w3);
+
+//-----------------------------------TESTS COMPANY--------------------------------------
+	company* c;
+
+	// Tests de la fonction cmp_create
+	{
+		c = cmp_create("SpaceX", "spacex@gmail.com", "42069");
+		TEST(c != NULL);
+		TEST(strcmp(c->name, "SpaceX") == 0);
+		TEST(strcmp(c->email, "spacex@gmail.com") == 0);
+		TEST(strcmp(c->zip_code, "42069") == 0);
+	}
+
+
+	// Tests de la fonction cmp_add_job
+	{
+		node *skills = l_make_node("very intelligent");
+		cmp_add_job(c, "Propulsion Engineer", skills);
+		TEST(strcmp(((job*)c->jobs->data)->name, "Propulsion Engineer") == 0);
+		TEST(strcmp((char *)((job*)c->jobs->data)->skills->data, "very intelligent") == 0);
+	}
+
+	// Tests de la fonction cmp_del_job
+	{
+		cmp_del_job(c, "Propulsion Engineer");
+		TEST(c->jobs == NULL);
+	}
+
+	// supprime c
+	cmp_delete(c);
 
 	printf("%d/%d\n", tests_reussis, tests_executes);
 
