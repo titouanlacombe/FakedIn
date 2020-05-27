@@ -21,20 +21,6 @@ all:
 check: build/test
 	./build/test
 
-#------LIBLISTE-------
-build/liste.o: lib/liste.c | build
-	$(cc) $(flags) -c lib/liste.c -I ./lib -o build/liste.o
-
-build/libliste.a: build/liste.o | build
-	ar crs build/libliste.a build/liste.o
-
-#------LIBGROUPE-------
-build/groupe.o: lib/groupe.c build/libliste.a | build
-	$(cc) $(flags) -c lib/groupe.c -I ./lib -lliste -o build/groupe.o
-
-build/libgroupe.a: build/groupe.o | build
-	ar crs build/libgroupe.a build/groupe.o
-
 #------LIBLOG-------
 build/mylog.o: lib/mylog.c | build
 	$(cc) $(flags) -c lib/mylog.c -I ./lib -o build/mylog.o
@@ -42,23 +28,50 @@ build/mylog.o: lib/mylog.c | build
 build/libmylog.a: build/mylog.o | build
 	ar crs build/libmylog.a build/mylog.o
 
-#------LIBWORKER-------
-build/worker.o: lib/worker.c build/libliste.a build/libmylog.a | build
-	$(cc) $(flags) -c lib/worker.c -I ./lib -o build/worker.o
+#------LIBLISTE-------
+build/liste.o: lib/liste.c build/libmylog.a | build
+	$(cc) $(flags) -c lib/liste.c -I ./lib -o build/liste.o
 
-build/libworker.a: build/worker.o | build
-	ar crs build/libworker.a build/worker.o
+build/libliste.a: build/liste.o | build
+	ar crs build/libliste.a build/liste.o
 
 #------LIBCOMPANY-------
-build/company.o: lib/company.c build/libliste.a build/libmylog.a | build
+build/company.o: lib/company.c build/libliste.a | build
 	$(cc) $(flags) -c lib/company.c -I ./lib -o build/company.o
 
 build/libcompany.a: build/company.o | build
 	ar crs build/libcompany.a build/company.o
 
-#------TESTS-------
-build/test.o: test/main.c | build
+#------LIBJOB-------
+build/job.o: lib/job.c build/libcompany.a | build
+	$(cc) $(flags) -c lib/job.c -I ./lib -o build/job.o
+
+build/libjob.a: build/job.o | build
+	ar crs build/libjob.a build/job.o
+
+#------LIBWORKER-------
+build/worker.o: lib/worker.c build/libjob.a | build
+	$(cc) $(flags) -c lib/worker.c -I ./lib -o build/worker.o
+
+build/libworker.a: build/worker.o | build
+	ar crs build/libworker.a build/worker.o
+
+#------LIBGROUPE-------
+build/groupe.o: lib/groupe.c build/libworker.a | build
+	$(cc) $(flags) -c lib/groupe.c -I ./lib -lliste -o build/groupe.o
+
+build/libgroupe.a: build/groupe.o | build
+	ar crs build/libgroupe.a build/groupe.o
+
+#------LIBCSV----------
+
+#------LIBSEARCH-------
+
+#------TEST------------
+build/test.o: test/main.c build/libgroupe.a | build
 	$(cc) $(flags) -c test/main.c -I ./lib -o build/test.o
 
-build/test: build/test.o build/libgroupe.a build/libmylog.a build/libworker.a  build/libcompany.a | build
-	$(cc) build/test.o -Lbuild -lgroupe -lliste -lmylog -lworker -lcompany -o build/test
+build/test: build/test.o | build
+	$(cc) build/test.o -Lbuild -lmylog -lliste -lcompany -ljob -lworker -lgroupe -o build/test
+
+#------RELEASE-------

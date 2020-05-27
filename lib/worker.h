@@ -1,20 +1,19 @@
 #pragma once
 
-#include "liste.h"
-#include "mylog.h"
+#include "job.h"
 
 #define UNEMPLOYED 0
 #define EMPLOYED 1
 
 typedef struct worker
 {
-  char* first_name;
-  char* last_name;
-  char* email;
-  char* zip_code;
-  node* skills;
-  node* colleagues;
-  void* company;
+	char* first_name;
+	char* last_name;
+	char* email;
+	char* zip_code;
+	node* skills;
+	node* colleagues;
+	void* company;
 } worker;
 
 // créé un nouvel travailleur qui peut etre employée ou chercheur d'emploi

@@ -4,6 +4,7 @@
 			"stdlib.h": "c",
 			"unordered_map": "c",
 			"cmath": "c",
-			"typeinfo": "c"
+			"typeinfo": "c",
+			"company.h": "c"
 		}
 }

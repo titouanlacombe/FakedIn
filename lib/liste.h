@@ -1,5 +1,7 @@
 #pragma once
 
+#include "mylog.h"
+
 typedef struct node
 {
 	void *data;
