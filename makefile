@@ -50,28 +50,31 @@ build/libjob.a: build/job.o | build
 	ar crs build/libjob.a build/job.o
 
 #------WORKER-------
-build/worker.o: lib/worker.cpp build/libjob.a | build
+build/worker.o: lib/worker.cpp build/libcompany.a | build
 	$(cc) $(flags) -c lib/worker.cpp -I ./lib -o build/worker.o
 
 build/libworker.a: build/worker.o | build
 	ar crs build/libworker.a build/worker.o
 
-#------GROUP-------
-build/group.o: lib/group.cpp build/libworker.a | build
-	$(cc) $(flags) -c lib/group.cpp -I ./lib -o build/group.o
+#------DATA BASE----------
+build/data_base.o: lib/data_base.cpp build/libworker.a build/libjob.a | build
+	$(cc) $(flags) -c lib/data_base.cpp -I ./lib -o build/data_base.o
 
-build/libgroup.a: build/group.o | build
-	ar crs build/libgroup.a build/group.o
+build/libdata_base.a: build/data_base.o | build
+	ar crs build/libdata_base.a build/data_base.o
 
-#------CSV----------
+#------NETWORK-------
+build/network.o: lib/network.cpp build/libdata_base.a | build
+	$(cc) $(flags) -c lib/network.cpp -I ./lib -o build/network.o
 
-#------SEARCH-------
+build/libnetwork.a: build/network.o | build
+	ar crs build/libnetwork.a build/network.o
 
 #------TEST------------
-build/test.o: test/test.cpp build/libgroup.a | build
+build/test.o: test/test.cpp build/libnetwork.a | build
 	$(cc) $(flags) -c test/test.cpp -I ./lib -o build/test.o
 
 build/test: build/test.o | build
-	$(cc) build/test.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -lgroup -o build/test
+	$(cc) build/test.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -ldata_base -lnetwork -o build/test
 
 #------RELEASE-------

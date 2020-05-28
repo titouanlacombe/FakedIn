@@ -1,6 +1,6 @@
 #pragma once
 
-#include "job.h"
+#include "company.h"
 
 class Worker
 {

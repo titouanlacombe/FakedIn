@@ -1,4 +1,4 @@
-#include "group.h"
+#include "network.h"
 
 #include <signal.h>
 #include <stddef.h>
@@ -125,6 +125,14 @@ int main()
 		auto w2 = Worker("T", "L", "T.L@gmail.com");
 		w.add_colleague(&w2);
 		// TEST(w.colleagues->first->data == &w2);
+	}
+
+	{
+		//----------------------DATA BASE---------------------
+	}
+
+	{
+		//----------------------NETWORK---------------------
 	}
 
 	std::cout << tests_reussis << "/" << tests_executes << std::endl;
