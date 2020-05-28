@@ -2,15 +2,14 @@
 
 #include "list.h"
 
-typedef struct company
+class Company
 {
+public:
 	char* name;
 	char* zip_code;
 	char* email;
-} company;
 
-// créé une nouvelle entreprise
-company* cmp_create(char* name, char* zip_code, char* email);
-
-// supprime c
-void cmp_delete(company* c);
+	Company();
+	Company(char* _name, char* _zip_code, char* _email);
+	~Company();
+};

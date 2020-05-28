@@ -1,12 +1,16 @@
 #include "company.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-
-company* cmp_create(char* name, char* zip_code, char* email) {
-	return NULL;
+Company::Company()
+{
+	
 }
 
-void cmp_delete(company* c) {
+Company::Company(char* _name, char* _zip_code, char* _email)
+{
+	
+}
+
+Company::~Company()
+{
 
 }
