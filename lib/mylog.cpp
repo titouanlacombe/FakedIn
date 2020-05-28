@@ -1,12 +1,9 @@
 #include "mylog.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-
-#define log_file_name "log.txt"
+#define LOG_FILE_NAME "log.txt"
 
 // File containing the logs
-FILE *mylog = NULL;
+FILE *log_file = NULL;
 
 void log_begin(void)
 {

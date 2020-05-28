@@ -1,4 +1,4 @@
-cc=gcc
+cc=g++
 flags=-Wall -pedantic -Werror
 
 .DEFAULT_GOAL := check
@@ -21,57 +21,57 @@ all:
 check: build/test
 	./build/test
 
-#------LIBLOG-------
-build/mylog.o: lib/mylog.c | build
-	$(cc) $(flags) -c lib/mylog.c -I ./lib -o build/mylog.o
+#------MYLOG-------
+build/mylog.o: lib/mylog.cpp | build
+	$(cc) $(flags) -c lib/mylog.cpp -I ./lib -o build/mylog.o
 
 build/libmylog.a: build/mylog.o | build
 	ar crs build/libmylog.a build/mylog.o
 
-#------LIBLISTE-------
-build/liste.o: lib/liste.c build/libmylog.a | build
-	$(cc) $(flags) -c lib/liste.c -I ./lib -o build/liste.o
+#------LIST-------
+build/list.o: lib/list.cpp build/libmylog.a | build
+	$(cc) $(flags) -c lib/list.cpp -I ./lib -o build/list.o
 
-build/libliste.a: build/liste.o | build
-	ar crs build/libliste.a build/liste.o
+build/liblist.a: build/list.o | build
+	ar crs build/liblist.a build/list.o
 
-#------LIBCOMPANY-------
-build/company.o: lib/company.c build/libliste.a | build
-	$(cc) $(flags) -c lib/company.c -I ./lib -o build/company.o
+#------COMPANY-------
+build/company.o: lib/company.cpp build/liblist.a | build
+	$(cc) $(flags) -c lib/company.cpp -I ./lib -o build/company.o
 
 build/libcompany.a: build/company.o | build
 	ar crs build/libcompany.a build/company.o
 
-#------LIBJOB-------
-build/job.o: lib/job.c build/libcompany.a | build
-	$(cc) $(flags) -c lib/job.c -I ./lib -o build/job.o
+#------JOB-------
+build/job.o: lib/job.cpp build/libcompany.a | build
+	$(cc) $(flags) -c lib/job.cpp -I ./lib -o build/job.o
 
 build/libjob.a: build/job.o | build
 	ar crs build/libjob.a build/job.o
 
-#------LIBWORKER-------
-build/worker.o: lib/worker.c build/libjob.a | build
-	$(cc) $(flags) -c lib/worker.c -I ./lib -o build/worker.o
+#------WORKER-------
+build/worker.o: lib/worker.cpp build/libjob.a | build
+	$(cc) $(flags) -c lib/worker.cpp -I ./lib -o build/worker.o
 
 build/libworker.a: build/worker.o | build
 	ar crs build/libworker.a build/worker.o
 
-#------LIBGROUPE-------
-build/groupe.o: lib/groupe.c build/libworker.a | build
-	$(cc) $(flags) -c lib/groupe.c -I ./lib -lliste -o build/groupe.o
+#------GROUP-------
+build/group.o: lib/group.cpp build/libworker.a | build
+	$(cc) $(flags) -c lib/group.cpp -I ./lib -o build/group.o
 
-build/libgroupe.a: build/groupe.o | build
-	ar crs build/libgroupe.a build/groupe.o
+build/libgroup.a: build/group.o | build
+	ar crs build/libgroup.a build/group.o
 
-#------LIBCSV----------
+#------CSV----------
 
-#------LIBSEARCH-------
+#------SEARCH-------
 
 #------TEST------------
-build/test.o: test/main.c build/libgroupe.a | build
-	$(cc) $(flags) -c test/main.c -I ./lib -o build/test.o
+build/test.o: test/test.cpp build/libgroup.a | build
+	$(cc) $(flags) -c test/test.cpp -I ./lib -o build/test.o
 
 build/test: build/test.o | build
-	$(cc) build/test.o -Lbuild -lmylog -lliste -lcompany -ljob -lworker -lgroupe -o build/test
+	$(cc) build/test.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -lgroup -o build/test
 
 #------RELEASE-------

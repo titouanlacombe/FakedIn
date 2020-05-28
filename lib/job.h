@@ -5,12 +5,12 @@
 typedef struct job
 {
 	char* name;
-	node* skills;
+	List<char*>* skills;
 	company* c;
 } job;
 
 // créé un nouveau job
-job* job_create(char* name, node* skills, company* c);
+job* job_create(char* name, List<char*>* skills, company* c);
 
 // supprime j
 void job_delete(job* j);

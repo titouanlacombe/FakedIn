@@ -11,8 +11,8 @@ typedef struct worker
 	char* last_name;
 	char* email;
 	char* zip_code;
-	node* skills;
-	node* colleagues;
+	List<char*>* skills;
+	List<struct worker>* colleagues;
 	void* company;
 } worker;
 
