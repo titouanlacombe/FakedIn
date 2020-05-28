@@ -1,8 +1,5 @@
 #include "worker.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-
 worker* wrk_create(char* first_name, char* last_name, char* email)
 {
 	return NULL;

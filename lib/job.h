@@ -2,15 +2,14 @@
 
 #include "company.h"
 
-typedef struct job
+class Job
 {
-	char* name;
-	List<char*>* skills;
-	Company* c;
-} job;
+public:
+	std::string name;
+	List<std::string>* skills;
+	Company* company;
 
-// créé un nouveau job
-job* job_create(char* name, List<char*>* skills, Company* c);
-
-// supprime j
-void job_delete(job* j);
+	Job();
+	Job(std::string _name, List<std::string>* _skills, Company* _company);
+	~Job();
+};

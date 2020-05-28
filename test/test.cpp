@@ -96,6 +96,16 @@ int main()
 		TEST(c.email == "spacex@gmail.com");
 	}
 
+	{
+		//----------------------JOB---------------------
+		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
+		auto l = List<std::string>();
+		auto j = Job("SpaceX", &l, &c);
+		TEST(j.name == "SpaceX");
+		TEST(j.skills == &l);
+		TEST(j.company == &c);
+	}
+
 	std::cout << tests_reussis << "/" << tests_executes << std::endl;
 
 	return tests_executes - tests_reussis;
