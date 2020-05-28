@@ -5,6 +5,7 @@
 class Company
 {
 public:
+	int id;
 	std::string name;
 	std::string zip_code;
 	std::string email;
