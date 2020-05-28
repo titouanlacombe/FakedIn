@@ -88,6 +88,14 @@ int main()
 		TEST(l.last == NULL);
 	}
 
+	{
+		//----------------------COMPANY---------------------
+		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
+		TEST(c.name == "SpaceX");
+		TEST(c.zip_code == "42069");
+		TEST(c.email == "spacex@gmail.com");
+	}
+
 	std::cout << tests_reussis << "/" << tests_executes << std::endl;
 
 	return tests_executes - tests_reussis;

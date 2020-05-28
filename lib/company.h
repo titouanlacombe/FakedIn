@@ -5,11 +5,11 @@
 class Company
 {
 public:
-	char* name;
-	char* zip_code;
-	char* email;
+	std::string name;
+	std::string zip_code;
+	std::string email;
 
 	Company();
-	Company(char* _name, char* _zip_code, char* _email);
+	Company(std::string _name, std::string _zip_code, std::string _email);
 	~Company();
 };

@@ -5,7 +5,7 @@ Company::Company()
 	
 }
 
-Company::Company(char* _name, char* _zip_code, char* _email)
+Company::Company(std::string _name, std::string _zip_code, std::string _email)
 {
 	
 }

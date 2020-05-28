@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-job* job_create(char* name, List<char*>* skills, company* c) {
+job* job_create(char* name, List<char*>* skills, Company* c) {
 	return NULL;
 }
 

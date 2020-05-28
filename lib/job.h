@@ -6,11 +6,11 @@ typedef struct job
 {
 	char* name;
 	List<char*>* skills;
-	company* c;
+	Company* c;
 } job;
 
 // créé un nouveau job
-job* job_create(char* name, List<char*>* skills, company* c);
+job* job_create(char* name, List<char*>* skills, Company* c);
 
 // supprime j
 void job_delete(job* j);

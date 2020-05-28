@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
 // Open the file containing the logs
 void log_begin(void);
