@@ -1,36 +1,41 @@
 #include "worker.h"
 
-worker* wrk_create(char* first_name, char* last_name, char* email)
-{
-	return NULL;
-}
-
-void wrk_delete(worker* w)
+Worker::Worker()
 {
 
 }
 
-void wrk_add_skill(worker* w, char* skill)
+Worker::Worker(std::string _first_name, std::string _last_name, std::string _email)
 {
 
 }
 
-void wrk_add_colleague(worker* w, worker* colleague)
+Worker::~Worker()
 {
 
 }
 
-void wrk_set_zip_code(worker* w, char* zip_code)
+void Worker::add_skill(std::string skill)
 {
 
 }
 
-void wrk_set_company(worker* w, void* company)
+void Worker::add_colleague(Worker* colleague)
 {
 
 }
 
-int wrk_get_state(worker* w)
+void Worker::set_zip_code(std::string zip_code)
 {
-	return 0;
+
+}
+
+void Worker::set_company(Company* company)
+{
+
+}
+
+bool Worker::employed()
+{
+	return false;
 }

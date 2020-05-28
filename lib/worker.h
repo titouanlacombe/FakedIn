@@ -2,37 +2,28 @@
 
 #include "job.h"
 
-#define UNEMPLOYED 0
-#define EMPLOYED 1
-
-typedef struct worker
+class Worker
 {
-	char* first_name;
-	char* last_name;
-	char* email;
-	char* zip_code;
-	List<char*>* skills;
-	List<struct worker>* colleagues;
-	void* company;
-} worker;
+public:
+	std::string first_name;
+	std::string last_name;
+	std::string email;
+	std::string zip_code;
+	List<std::string>* skills;
+	List<Worker*>* colleagues;
+	Company* company;
 
-// créé un nouvel travailleur qui peut etre employée ou chercheur d'emploi
-worker* wrk_create(char* first_name, char* last_name, char* email);
-
-// supprime w
-void wrk_delete(worker* w);
-
-// rajoute une compétence a w
-void wrk_add_skill(worker* w, char* skill);
-
-// rajoute un collegue a w
-void wrk_add_colleague(worker* w, worker* colleague);
-
-// change le code postal de w
-void wrk_set_zip_code(worker* w, char* zip_code);
-
-// change l'entreprise de w
-void wrk_set_company(worker* w, void* company);
-
-// donne l'etat de w (EMPLOYED = employée, UNEMPLOYED = chercheur d'emploi)
-int wrk_get_state(worker* w);
+	Worker();
+	Worker(std::string _first_name, std::string _last_name, std::string _email);
+	~Worker();
+	// rajoute une compétence a w
+	void add_skill(std::string skill);
+	// rajoute un collegue a w
+	void add_colleague(Worker* colleague);
+	// change le code postal de w
+	void set_zip_code(std::string zip_code);
+	// change l'entreprise de w
+	void set_company(Company* company);
+	// donne l'etat de w
+	bool employed();
+};
