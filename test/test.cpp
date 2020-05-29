@@ -117,23 +117,23 @@ int main()
 
 	{
 		//----------------------WORKER---------------------
-		// auto c = Company("SpaceX", "42069", "spacex@gmail.com");
-		// auto l = List<std::string>();
-		// auto w = Worker("Max", "Veran", "max.v@gmail.com");
-		// TEST(w.first_name == "Max");
-		// TEST(w.last_name == "Veran");
-		// TEST(w.email == "max.v@gmail.com");
-		// TEST(w.employed() == false);
-		// w.set_company(&c);
-		// TEST(w.employed() == true);
-		// TEST(w.company == &c);
-		// w.set_zip_code("234567");
-		// TEST(w.zip_code == "234567");
-		// w.add_skill("C");
-		// TEST(w.skills->first->data == "C");
-		// auto w2 = Worker("T", "L", "T.L@gmail.com");
-		// w.add_colleague(&w2);
-		// TEST(w.colleagues->first->data == &w2);
+		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
+		auto l = List<std::string>();
+		auto w = Worker("Max", "Veran", "max.v@gmail.com");
+		TEST(w.first_name == "Max");
+		TEST(w.last_name == "Veran");
+		TEST(w.email == "max.v@gmail.com");
+		TEST(w.employed() == false);
+		w.set_company(&c);
+		TEST(w.employed() == true);
+		TEST(w.company == &c);
+		w.set_zip_code("234567");
+		TEST(w.zip_code == "234567");
+		w.add_skill("C");
+		TEST(w.skills->first->data == "C");
+		auto w2 = Worker("T", "L", "T.L@gmail.com");
+		w.add_colleague(&w2);
+		TEST(w.colleagues->first->data == &w2);
 	}
 
 	{
