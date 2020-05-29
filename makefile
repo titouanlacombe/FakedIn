@@ -70,11 +70,18 @@ build/network.o: lib/network.cpp build/libdata_base.a | build
 build/libnetwork.a: build/network.o | build
 	ar crs build/libnetwork.a build/network.o
 
+#------UI-------
+build/UI.o: lib/UI.cpp build/libnetwork.a | build
+	$(cc) $(flags) -c lib/UI.cpp -I ./lib -o build/UI.o
+
+build/libUI.a: build/UI.o | build
+	ar crs build/libUI.a build/UI.o
+
 #------TEST------------
-build/test.o: test/test.cpp build/libnetwork.a | build
+build/test.o: test/test.cpp build/libUI.a | build
 	$(cc) $(flags) -c test/test.cpp -I ./lib -o build/test.o
 
 build/test: build/test.o | build
-	$(cc) build/test.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -ldata_base -lnetwork -o build/test
+	$(cc) build/test.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -ldata_base -lnetwork -lUI -o build/test
 
 #------RELEASE-------

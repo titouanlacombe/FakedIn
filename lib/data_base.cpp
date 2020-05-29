@@ -5,12 +5,12 @@
 #define DB_EMP_FILE_NAME "Employees.csv"
 #define DB_SKR_FILE_NAME "Seekers.csv"
 
-void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, std::string folder = "./data_base/")
+void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, std::string folder)
 {
 
 }
 
-void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, std::string folder = "./data_base/")
+void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, std::string folder)
 {
 
 }
