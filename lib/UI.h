@@ -14,11 +14,8 @@
 "| Polytech Marseille - Informatique 3A      |   \n" \
 "*********************************************   \n" 
 
-List<Company*>* companies;
-List<Job*>* jobs;
-List<Worker*>* workers;
-
 void home();
+void init_lists(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers);
 
 void pre_company();
 void create_cmp();

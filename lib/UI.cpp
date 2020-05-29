@@ -4,6 +4,10 @@
 
 using namespace std;
 
+List<Company*>* companies;
+List<Job*>* jobs;
+List<Worker*>* workers;
+
 void home()
 {
 	char choice;
@@ -38,6 +42,13 @@ void home()
 			loop = true; // cin invalid
 		}
 	} while (loop);
+}
+
+void init_lists(List<Company*>* _companies, List<Job*>* _jobs, List<Worker*>* _workers)
+{
+	companies = _companies;
+	jobs = _jobs;
+	workers = _workers;
 }
 
 void pre_company()
