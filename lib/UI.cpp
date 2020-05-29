@@ -8,10 +8,11 @@ void home()
 {
 	char choice;
 	bool loop;
+
+	cout << "====== Bienvenu sur FakedIn ! <insérez slogan> ======\n\n";
 	do
 	{
-		cout << "====== Bienvenu sur FakedIn ! <insérez slogan> ======\n\n"
-		"~~ Menu Principal ~~\n\n"
+		cout << "~~ Menu Principal ~~\n\n"
 		"Vous êtes :\n"
 			"\t1. Une entreprise\n"
 			"\t2. Un employé\n"
@@ -368,6 +369,7 @@ void search_seeker(Company* c)
 {
 	string zip, skill;
 	List<string>* all_skills = NULL;
+	//List<Worker*>* res;
 
 	cout << "~~ Menu de Parcour des Demandeurs d'Emploi ~~\n\n";
 	cout << "Indiquez une compétence que vous recherchez : ";
@@ -381,8 +383,8 @@ void search_seeker(Company* c)
 	}
 	cout << "Saisissez un code postal si vous souhaitez restreindre votre recherche, sinon tapez q :";
 	cin >> zip;
-	if(zip == "q") seek_search_skill(workers, all_skills);
-	else seek_search_skill(workers, all_skills, zip);
+	//if(zip == "q") res = seek_search_skill(workers, all_skills);
+	//else res = seek_search_skill(workers, all_skills, zip);
 
 	//afficher resultats
 	company(c);
@@ -396,13 +398,16 @@ void modify_wrk(Worker* w)
 	List<Worker*>* old_coworkers;
 	char choice, new_emp;
 
+	cout << "~~ Modification du Profil ~~\n\n"
+
+	"Voici votre Profil : \n"
+	<< w->first_name << " " << w->last_name << "\n" 
+	<< w->email << " " << w->zip_code << "\n";
+	if(w->employed()) cout << "travaille à " << w->company->name << "\n";
+	cout << "Vous avez " << w->colleagues->length << " anciens collègues sur FakedIn\n";
+
 	do
 	{
-		cout << "~~ Modification du Profil ~~\n\n"
-		"Voici votre Profil : \n"
-		<< w->first_name << " " << w->last_name << 
-		"\n" << w->email << " " << w->zip_code;
-		if(w->employed()) cout << "travaille à " << w->company->name << endl;
 		cout << "\nQue voulez vous modifier ?\n"
 			"\t1. Ajouter une compétence\n"
 			"\t2. Ajouter un ancien collègue de travail\n"
@@ -570,6 +575,7 @@ void search_wrk(Worker* w)
 	bool loop;
 	char choice;
 	string name;
+	//List<Worker*>* res;
 
 	do
 	{
@@ -588,12 +594,11 @@ void search_wrk(Worker* w)
 			cout << "Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues : ";
 			cin >> name;
 			cout << endl;
-			coll_search_cmp(w,cmp_search_name(companies,name));
+			//res = coll_search_cmp(w,cmp_search_name(companies,name));
 			//afficher resultat
 			break;
-
 		case '2':
-			coll_search_skill(w, jobs);
+			//res = coll_search_skill(w, jobs);
 			//afficher resultat
 			break;
 		default:
