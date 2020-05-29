@@ -25,12 +25,14 @@ List<Worker*>* cmp_search_wrk(List<Worker*> *w, Company *c, Job *j, std::string 
 	Node<Worker*>* cur = w->first;
 
 	while(cur){
-		if((zip_code == "") || (zip_code == cur->data->zip_code)){
-			if(compatibility(j->skills, cur->data->skills) > 0){
-				res->addlast(cur->data);
+		if(!cur->data->employed()){
+			if((zip_code == "") || (zip_code == cur->data->zip_code)){
+				if(compatibility(j->skills, cur->data->skills) > 0){
+					res->addlast(cur->data);
+				}
 			}
+			cur = cur->next;
 		}
-		cur = cur->next;
 	}
 
 	return res;
@@ -53,11 +55,24 @@ List<Worker*>* wrk_search_wrk_by_cmp(Worker *w, Company *c)
 
 List<Worker*>* wrk_search_wrk_by_skill(Worker *w, List<Job*> *j)
 {
-	// List<Worker*>* res = new List<Worker*>;
-	// Node<Worker*>* cur = w->colleagues->first;
+	List<Worker*>* res = new List<Worker*>;
+	Node<Worker*>* cur_w = w->colleagues->first;
+	Node<Job*>* cur_j = j->first;
 
+	while(cur_w){
+		while(cur_j){
+			if(cur_j->data->company == cur_w->data->company){
+				if(compatibility(cur_j->data->skills, w->skills) > 0){
+					res->addlast(cur_w->data);
+				}
+			}
+			cur_j = cur_j->next;
+		}
+		cur_w = cur_w->next;
+	}
+	
 
-	return NULL;
+	return res;
 }
 
 List<Job*>* wrk_search_job(Worker *w, List<Job*> *j, std::string zip_code)

@@ -8,11 +8,11 @@ int compatibility(List<std::string>* stra, List<std::string>* strb);
 // Recherche des seekers par skill et zip code (optionel) correspondant à un job
 List<Worker*>* cmp_search_wrk(List<Worker*> *w, Company *c, Job *j, std::string zip_code = "");
 
-// Recherche des colleagues par company (retourne colleagues employer par company)
+// Recherche des colleagues par company (retourne colleagues employés par company)
 List<Worker*>* wrk_search_wrk_by_cmp(Worker *w, Company *c);
 
-// Recherche des colleagues par skill (retourne colleagues 
-// employés aux companies qui propose un job qui nécessite les skill du seeker)
+// Recherche des colleagues par skill (retourne les anciencs collègues 
+// employés aux companies qui recherchent les skill du worker)
 List<Worker*>* wrk_search_wrk_by_skill(Worker *w, List<Job*> *j);
 
 // Recherche des jobs par skills et zip code (optionel)
