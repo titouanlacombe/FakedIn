@@ -7,7 +7,7 @@ using namespace std;
 void home()
 {
 	char choice;
-	bool loop = true;
+	bool loop;
 	do
 	{
 		cout << "====== Bienvenu sur FakedIn ! <insérez slogan> ======\n\n"
@@ -20,23 +20,22 @@ void home()
 		cin >> choice;
 		cout << endl;
 
+		loop = false;
 		switch(choice)
 		{
 		case '1':
 			pre_company();
-			loop = false;
 			break;
 		case '2':
 			pre_wrk(1);
-			loop = false;
 			break;
 		case '3':
 			pre_wrk(0);
-			loop = false;
 			break;
 		case 'q':
-			loop = false;
 			break;
+		default:
+			loop = true; // cin invalid
 		}
 	} while (loop);
 }
@@ -86,7 +85,7 @@ void create_cmp()
 void company(Company* c)
 {
 	char choice;
-	bool loop = true;
+	bool loop;
 	
 	do
 	{
@@ -99,31 +98,28 @@ void company(Company* c)
 		"Entrez votre choix ('q' pour quitter, 'p' pour menu principal) : ";
 		cin >> choice;
 	
+		loop = false;
 		switch(choice)
 		{
 		case '1':
 			delete_cmp(c);
-			loop = false;
 			break;
 		case '2':
 			create_job(c);
-			loop = false;
 			break;
 		case '3':
 			delete_job(c);
-			loop = false;
 			break;
 		case '4':
 			search_seeker(c);
-			loop = false;
 			break;
 		case 'p':
 			home();
-			loop = false;
 			break;
 		case 'q':
-			loop = false;
 			break;
+		default:
+			loop = true; // cin invalid
 		}
 	} while (loop);
 }
@@ -213,7 +209,7 @@ void create_wrk(bool emp)
 void employee(Worker* w)
 {
 	char choice;
-	bool loop = true;
+	bool loop;
 
 	do
 	{
@@ -226,31 +222,28 @@ void employee(Worker* w)
 		"Entrez votre choix ('q' pour quitter, 'p' pour menu principal) : ";
 		cin >> choice;
 
+		loop = false;
 		switch(choice)
 		{
 		case '1':
 			modify_wrk(w);
-			loop = false;
 			break;
 		case '2':
 			delete_wrk(w);
-			loop = false;
 			break;
 		case '3':
 			search_job(w);
-			loop = false;
 			break;
 		case '4':
 			search_wrk(w);
-			loop = false;
 			break;
 		case 'p':
 			home();
-			loop = false;
 			break;
 		case 'q':
-			loop = false;
 			break;
+		default:
+			loop = true; // cin invalid
 		}
 	} while (loop);
 }
@@ -258,7 +251,7 @@ void employee(Worker* w)
 void seeker(Worker* w)
 {
 	char choice;
-	bool loop = true;
+	bool loop;
 
 	do
 	{
@@ -271,31 +264,28 @@ void seeker(Worker* w)
 		"Entrez votre choix ('q' pour quitter, 'p' pour menu principal) : ";
 		cin >> choice;
 
+		loop = false;
 		switch(choice)
 		{
 		case '1':
 			modify_wrk(w);
-			loop = false;
 			break;
 		case '2':
 			delete_wrk(w);
-			loop = false;
 			break;
 		case '3':
 			search_job(w);
-			loop = false;
 			break;
 		case '4':
 			search_wrk(w);
-			loop = false;
 			break;
 		case 'p':
 			home();
-			loop = false;
 			break;
 		case 'q':
-			loop = false;
 			break;
+		default:
+			loop = true; // cin invalid
 		}
 	} while (loop);
 }
@@ -559,35 +549,39 @@ void search_job(Worker* w)
 
 void search_wrk(Worker* w)
 {
+	bool loop;
 	char choice;
 	string name;
 
 	do
 	{
-	cout << "~~ Menu de Recherche Parmis vos Anciens Collègues ~~\n\n"
+		cout << "~~ Menu de Recherche Parmis vos Anciens Collègues ~~\n\n"
 		"Voulez vous :\n"
-		"\t1. Trouver des anciens collegues travaillant dans une certaine entreprise\n"
-		"\t2. Trouver des anciens collegues travaillant dans une entreprise cherchant votre profil\n"
+			"\t1. Trouver des anciens collegues travaillant dans une certaine entreprise\n"
+			"\t2. Trouver des anciens collegues travaillant dans une entreprise cherchant votre profil\n"
 		"Entrez votre choix : ";
 		cin >> choice;
 		cout << endl;
-	} while (choice != '1' && choice != '2' && choice != 'q');
 
-	switch(choice)
-	{
-	case '1':
-		cout << "Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues : ";
-		cin >> name;
-		cout << endl;
-		coll_search_cmp(w,cmp_search_name(companies,name));
-		//afficher resultat
-		break;
+		loop = false;
+		switch(choice)
+		{
+		case '1':
+			cout << "Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues : ";
+			cin >> name;
+			cout << endl;
+			coll_search_cmp(w,cmp_search_name(companies,name));
+			//afficher resultat
+			break;
 
-	case '2':
-		coll_search_skill(w, jobs);
-		//afficher resultat
-		break;
-	}
+		case '2':
+			coll_search_skill(w, jobs);
+			//afficher resultat
+			break;
+		default:
+			loop = true; // cin invalid
+		}
+	}while(loop);
 
 	if(w->employed()) employee(w);
 	else seeker(w);
