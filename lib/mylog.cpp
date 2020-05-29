@@ -1,21 +1,19 @@
 #include "mylog.h"
 
-#define LOG_FILE_NAME "log.txt"
-
 // File containing the logs
-FILE *log_file = NULL;
+std::ofstream log_file;
 
-void log_begin(void)
+void log_begin(std::string folder)
 {
-
+  log_file.open("./" + folder + "/log.txt");
 }
 
-void log_write(char *str)
+void log_write(std::string str)
 {
-	
+  log_file << str << "\n";
 }
 
 void log_end(void)
 {
-	
+  log_file.close();
 }
