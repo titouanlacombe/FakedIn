@@ -63,15 +63,15 @@ build/data_base.o: lib/data_base.cpp build/libworker.a build/libjob.a | build
 build/libdata_base.a: build/data_base.o | build
 	ar crs build/libdata_base.a build/data_base.o
 
-#------NETWORK-------
-build/network.o: lib/network.cpp build/libdata_base.a | build
-	$(cc) $(flags) -c lib/network.cpp -I ./lib -o build/network.o
+#------SEARCH-------
+build/search.o: lib/search.cpp build/libdata_base.a | build
+	$(cc) $(flags) -c lib/search.cpp -I ./lib -o build/search.o
 
-build/libnetwork.a: build/network.o | build
-	ar crs build/libnetwork.a build/network.o
+build/libsearch.a: build/search.o | build
+	ar crs build/libsearch.a build/search.o
 
 #------UI-------
-build/UI.o: lib/UI.cpp build/libnetwork.a | build
+build/UI.o: lib/UI.cpp build/libsearch.a | build
 	$(cc) $(flags) -c lib/UI.cpp -I ./lib -o build/UI.o
 
 build/libUI.a: build/UI.o | build
@@ -82,6 +82,6 @@ build/test.o: test/test.cpp build/libUI.a | build
 	$(cc) $(flags) -c test/test.cpp -I ./lib -o build/test.o
 
 build/test: build/test.o | build
-	$(cc) build/test.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -ldata_base -lnetwork -lUI -o build/test
+	$(cc) build/test.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -ldata_base -lsearch -lUI -o build/test
 
 #------RELEASE-------
