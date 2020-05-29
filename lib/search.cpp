@@ -82,7 +82,7 @@ List<Worker*>* seek_search_skill(List<Worker*> *w, List<std::string>* skills, st
 	while(cur){
 		if(!cur->data->employed()){
 			if((zip_code == "") || (zip_code == cur->data->zip_code)){
-				if(compatibility(j->skills, cur->data->skills) > 0){
+				if(compatibility(skills, cur->data->skills) > 0){
 					res->addlast(cur->data);
 				}
 			}
