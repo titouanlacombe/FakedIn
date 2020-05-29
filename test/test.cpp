@@ -90,10 +90,10 @@ int main()
 
 	{
 		//----------------------COMPANY---------------------
-		// auto c = Company("SpaceX", "42069", "spacex@gmail.com");
-		// TEST(c.name == "SpaceX");
-		// TEST(c.zip_code == "42069");
-		// TEST(c.email == "spacex@gmail.com");
+		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
+		TEST(c.name == "SpaceX");
+		TEST(c.zip_code == "42069");
+		TEST(c.email == "spacex@gmail.com");
 	}
 
 	{
