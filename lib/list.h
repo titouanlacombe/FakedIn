@@ -41,8 +41,12 @@ public:
 	// void addfirst(T e);
 	void addlast(T e);
 	int get_pos(T e);
+	Node<T>* get_node(T e);
 	void remove(T e);
+	void remove(Node<T>* tmp);
+	List<T>& operator-=(List<T>& l);
 	T& operator[](int n);
+	void print();
 };
 
 template <typename T>
@@ -99,13 +103,26 @@ int List<T>::get_pos(T e)
 }
 
 template <typename T>
-void List<T>::remove(T e)
+Node<T>* List<T>::get_node(T e)
 {
 	auto tmp = first;
 	while (tmp != NULL && tmp->data != e)
 	{
 		tmp = tmp->next;
 	}
+	return tmp;
+}
+
+template <typename T>
+void List<T>::remove(T e)
+{
+	auto n = get_node(e);
+	remove(n);
+}
+
+template <typename T>
+void List<T>::remove(Node<T>* tmp)
+{
 	if (tmp == first && tmp == last)
 	{
 		first = NULL;
@@ -131,6 +148,18 @@ void List<T>::remove(T e)
 }
 
 template <typename T>
+List<T>& List<T>::operator-=(List<T>& l)
+{
+	auto tmp = l.first;
+	while (tmp != NULL)
+	{
+		remove(tmp->data);
+		tmp = tmp->next;
+	}
+	return *this;
+}
+
+template <typename T>
 T& List<T>::operator[](int n)
 {
 	int i = 0;
@@ -141,4 +170,14 @@ T& List<T>::operator[](int n)
 		tmp = tmp->next;
 	}
 	return tmp->data;
+}
+
+template <typename T>
+void List<T>::print()
+{
+	Node<T> *tmp = first;
+	while (tmp != NULL) {
+		std::cout << tmp->data;
+		tmp = tmp->_next;
+	}
 }

@@ -160,6 +160,8 @@ int main()
 		//test des searchs
 	}
 
+	home();
+
 	std::cout << tests_reussis << "/" << tests_executes << std::endl;
 
 	return tests_executes - tests_reussis;
