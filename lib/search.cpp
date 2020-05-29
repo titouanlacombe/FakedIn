@@ -74,7 +74,7 @@ Job* job_search_name(List<Job*>* j, Company* c, std::string name)
 	return res;
 }
 
-List<Worker*>* seek_search_skill(List<Worker*> *w, Company *c, Job *j, std::string zip_code)
+List<Worker*>* seek_search_skill(List<Worker*> *w, List<std::string>* skills, std::string zip_code)
 {
 	List<Worker*>* res = new List<Worker*>;
 	Node<Worker*>* cur = w->first;
