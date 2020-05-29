@@ -19,6 +19,57 @@ int compatibility(List<std::string>* str_a, List<std::string>* str_b){
 	return res;
 }
 
+Company* cmp_search_name(List<Company*>* c, std::string name){
+	Company* res = new Company;
+	Node<Company*>* cur = c->first;
+
+	while(cur){
+		if(cur->data->name == name){
+			res = cur->data;
+		}
+		cur = cur->next;
+	}
+
+	if(res->name == ""){
+		res = NULL;
+	}
+	return res;
+}
+
+Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname){
+	Worker* res = new Worker;
+	Node<Worker*>* cur = w->first;
+
+	while(cur){
+		if(cur->data->first_name == name && cur->data->last_name == surname){
+			res = cur->data;
+		}
+		cur = cur->next;
+	}
+
+	if(res->first_name == ""){
+		res = NULL;
+	}
+	return res;
+}
+
+Job* job_search_name(List<Job*>* j, Company* c, std::string name,){
+	Job* res = new Job;
+	Node<Job*>* cur = j->first;
+
+	while(cur){
+		if(cur->data->name == name && cur->data->company == c){
+			res = cur->data;
+		}
+		cur = cur->next;
+	}
+
+	if(res->name == ""){
+		res = NULL;
+	}
+	return res;
+}
+
 List<Worker*>* cmp_search_wrk(List<Worker*> *w, Company *c, Job *j, std::string zip_code)
 {
 	List<Worker*>* res = new List<Worker*>;
@@ -86,6 +137,20 @@ List<Job*>* wrk_search_job(Worker *w, List<Job*> *j, std::string zip_code)
 				res->addlast(cur->data);
 			}
 		}	
+		cur = cur->next;
+	}
+
+	return res;
+}
+
+List<Job*>* cmp_search_job(List<Job*> *j, Company *c){
+	List<Job*>* res = new List<Job*>;
+	Node<Job*>* cur = j->first;
+
+	while(cur){
+		if(cur->data->company == c){
+			res->addlast(cur->data);
+		}
 		cur = cur->next;
 	}
 
