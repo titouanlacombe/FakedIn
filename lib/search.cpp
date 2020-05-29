@@ -41,7 +41,7 @@ Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname)
 	Node<Worker*>* cur = w->first;
 
 	while(cur){
-		if(cur->data->first_name == name && cur->data->last_name == surname){
+		if(cur->data->first_name == surname && cur->data->last_name == name){
 			res = cur->data;
 		}
 		cur = cur->next;
@@ -53,7 +53,7 @@ Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname)
 	return res;
 }
 
-Job* job_search_name_cmp(List<Job*>* j, Company* c, std::string name){
+Job* job_search_name(List<Job*>* j, Company* c, std::string name){
 	Job* res = new Job;
 	Node<Job*>* cur = j->first;
 
@@ -70,7 +70,7 @@ Job* job_search_name_cmp(List<Job*>* j, Company* c, std::string name){
 	return res;
 }
 
-List<Worker*>* seek_search_skill(List<Worker*> *w, Company *c, Job *j, std::string zip_code)
+List<Worker*>* seek_search_skill(List<Worker*> *w, List<std::string>* skills, std::string zip_code)
 {
 	List<Worker*>* res = new List<Worker*>;
 	Node<Worker*>* cur = w->first;
@@ -78,7 +78,7 @@ List<Worker*>* seek_search_skill(List<Worker*> *w, Company *c, Job *j, std::stri
 	while(cur){
 		if(!cur->data->employed()){
 			if((zip_code == "") || (zip_code == cur->data->zip_code)){
-				if(compatibility(j->skills, cur->data->skills) > 0){
+				if(compatibility(skills, cur->data->skills) > 0){
 					res->addlast(cur->data);
 				}
 			}
@@ -104,7 +104,7 @@ List<Worker*>* coll_search_cmp(Worker *w, Company *c)
 	return res;
 }
 
-List<Worker*>* emp_search_job(Worker *w, List<Job*> *j)
+List<Worker*>* coll_search_skill(Worker *w, List<Job*> *j)
 {
 	List<Worker*>* res = new List<Worker*>;
 	Node<Worker*>* cur_w = w->colleagues->first;
