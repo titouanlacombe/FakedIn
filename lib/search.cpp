@@ -1,6 +1,7 @@
 #include "search.h"
 
-int compatibility(List<std::string>* str_a, List<std::string>* str_b){
+int compatibility(List<std::string>* str_a, List<std::string>* str_b)
+{
 	int res = 0;
 	Node<std::string>* cur_a = str_a->first;
 	Node<std::string>* cur_b;
@@ -19,7 +20,8 @@ int compatibility(List<std::string>* str_a, List<std::string>* str_b){
 	return res;
 }
 
-Company* cmp_search_name(List<Company*>* c, std::string name){
+Company* cmp_search_name(List<Company*>* c, std::string name)
+{
 	Company* res = new Company;
 	Node<Company*>* cur = c->first;
 
@@ -36,7 +38,8 @@ Company* cmp_search_name(List<Company*>* c, std::string name){
 	return res;
 }
 
-Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname){
+Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname)
+{
 	Worker* res = new Worker;
 	Node<Worker*>* cur = w->first;
 
@@ -53,7 +56,8 @@ Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname)
 	return res;
 }
 
-Job* job_search_name_cmp(List<Job*>* j, Company* c, std::string name){
+Job* job_search_name_cmp(List<Job*>* j, Company* c, std::string name)
+{
 	Job* res = new Job;
 	Node<Job*>* cur = j->first;
 
@@ -143,7 +147,8 @@ List<Job*>* job_search_skill(Worker *w, List<Job*> *j, std::string zip_code)
 	return res;
 }
 
-List<Job*>* job_search_cmp(List<Job*> *j, Company *c){
+List<Job*>* job_search_cmp(List<Job*> *j, Company *c)
+{
 	List<Job*>* res = new List<Job*>;
 	Node<Job*>* cur = j->first;
 

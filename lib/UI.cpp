@@ -16,7 +16,8 @@ using namespace std;
 "| Polytech Marseille - Informatique 3A      |   \n" \
 "*********************************************   \n" 
 
-void home(){
+void home()
+{
 	char choice;
     bool loop = true;
 	do{
@@ -53,7 +54,8 @@ void home(){
 	return;
 }
 
-void pre_company(){
+void pre_company()
+{
 	string name;
 	cout << "~~ Menu Entreprise ~~\n\n"
 	"Pour vous connecter saisissez le nom de votre entreprise \n"
@@ -76,7 +78,8 @@ void pre_company(){
 	return;
 }
 
-void create_cmp(){
+void create_cmp()
+{
 	string name, zip, mail;
     Company* c;
 
@@ -99,7 +102,8 @@ void create_cmp(){
 	return;
 }
 
-void company(Company* c){
+void company(Company* c)
+{
 	char choice;
     bool loop = true;
 	do{
@@ -143,7 +147,8 @@ void company(Company* c){
 	return;
 }
 
-void pre_wrk(bool emp){
+void pre_wrk(bool emp)
+{
 	string name, surname;
 	cout << "~~ Profil utilisateur ~~\n\n"
 	"Pour vous connecter saisissez votre nom \n"
@@ -170,7 +175,8 @@ void pre_wrk(bool emp){
 	return;
 }
 
-void create_wrk(bool emp){
+void create_wrk(bool emp)
+{
 	string name, surname, mail, zip, skill, company_name;
 	Worker* coll = NULL;
 	Company* c = NULL;
@@ -237,7 +243,8 @@ void create_wrk(bool emp){
 	return;
 }
 
-void employee(Worker* w){
+void employee(Worker* w)
+{
 	char choice;
     bool loop = true;
 
@@ -282,7 +289,8 @@ void employee(Worker* w){
 	return;
 }
 
-void seeker(Worker* w){
+void seeker(Worker* w)
+{
 	char choice;
     bool loop = true;
 
@@ -327,7 +335,8 @@ void seeker(Worker* w){
 	return;
 }
 
-void delete_cmp(Company* c){
+void delete_cmp(Company* c)
+{
 	char choice;
     List<Job*>* cmp_job;
 
@@ -353,7 +362,8 @@ void delete_cmp(Company* c){
 	return;
 }
 
-void create_job(Company* c){
+void create_job(Company* c)
+{
 	string title, skill;
 	List<string>* all_skills;
     Job* j;
@@ -379,7 +389,8 @@ void create_job(Company* c){
 	return;
 }
 
-void delete_job(Company* c){
+void delete_job(Company* c)
+{
 	string job_name;
 	Job* j = NULL;
 
@@ -399,7 +410,8 @@ void delete_job(Company* c){
 	return;
 }
 
-void search_seeker(Company* c){
+void search_seeker(Company* c)
+{
 	string zip, skill;
 	List<string>* all_skills;
 
@@ -426,10 +438,14 @@ void search_seeker(Company* c){
 	return;
 }
 
-void modify_wrk(Worker* w){
-	string zip, skill, company;
-	List<string>* all_skills;
-	char choice, cur_emp;
+void modify_wrk(Worker* w)
+{
+	string zip, skill, company, name, surname;
+    Worker* coll;
+    Company* c;
+    List<Worker*>* old_coworkers;
+
+	char choice, new_emp;
 
 	do{
 		cout << "~~ Menu de Modification de Profil d'Employe ~~\n\n"
@@ -449,56 +465,81 @@ void modify_wrk(Worker* w){
 	switch(choice)
 	{
 		case '1':
-			cout << "\tIndiquez l'une de vos nouvelles compétence (entrez 'q' pour annuler) : ";
-			cin >> skill;
-			while(skill != "q"){
-				all_skills->addlast(skill);
-				cout << "\tSi besoin indiquez une autre nouvelle compétence, sinon entrez 'q' : ";
-				cin >> skill;
-			}
-			//modifier worker
+            do{
+                cout << "\tIndiquez l'une de vos compétence : (entrez 'q' si vous avez terminé)";
+                cin >> skill;
+                if(skill != "q") {
+                    w->add_skill(skill);
+                }
+            }while(skill != "q");
 			log_write("New skills added on a Worker");
 			break;
 		case '2':
-			//search colleague
+            do{
+                cout << "\tIndiquez le prénom d'un de vos ancien collègues : (entrez 'q' pour quitter)";
+                cin >> surname;
+                if(surname != "q"){
+                    cout << "\tIndiquez le nom de famille de cet ancien collègue :";
+                    cin >> name;
+                    coll = wrk_search_name(workers, name, surname);
+                    if(coll == NULL){
+                        cout << surname << " " << name << " n'est pas inscrit sur FakedIn." << endl;
+                    }
+                    else {
+                        w->add_colleague(coll);
+                        cout << surname << " " << name << " ajouté à vos anciens collègues" << endl;
+                    }
+                }
+            }while(surname != "q");
 			log_write("New colleagues added on a Worker");
 			break;
 		case '3':
 			cout << "Entrez votre nouveau code postal (entrez 'q' pour annuler) : ";
 			cin >> zip;
-			//modifier worker
+			w->set_zip_code(zip);
 			log_write("zip_code modified on a Worker");
 			break;
 		case '4':
 			cout << "Si vous avez actuellement un Emploi, saisissez 1, sinon saisissez 0 :";
-			cin >> cur_emp;
+			cin >> new_emp;
 
-			if(true && cur_emp){//if : a trouve un emploi
+			if(!w->employed() && new_emp){ // = a trouve un emploi
 				//case '5'
 			}
 			else {
-				if(true && !cur_emp){// if : a perdu son emploi
-				//employee => seeker
-				//search workers same company => colleagues
+				if(w->employed() && !new_emp){// = a perdu son emploi
+                old_coworkers = coll_search_cmp(w, w->company);
+                //old_coworkers => collegues de w
+    			w->set_company(NULL);
 				log_write("Worker transfered from employee to seeker");
 				}
 				break;
 			}
 		case '5':
-			cout << "Entrez votre nouvelle entreprise (entrez 'q' pour annuler) : ";
-			cin >> company;
-			cout << endl;
+            while(c == NULL){
+                cout << "Entrez le nom de votre nouvelle entreprise (entrez 'q' pour annuler) : ";
+                cin >> company;
+                cout << endl;
+                if(company != "q"){
+                    c = cmp_search_name(companies, company);
+                    if(c == NULL){
+                        cout << "L'entreprise " << company << " n'est pas sur FakedIn." << endl;
+                    }
+                }
+            }
 			if(company != "q"){
-				if(true){//if employe
-					//modifier employee
+				if(w->employed()){ 
+                    old_coworkers = coll_search_cmp(w, w->company);
+                    //old_coworkers => collegues de w
+					w->set_company(c);
 					log_write("Company modified on a Worker");
 				} 
 				else {
-					//transfert seeker => employee
+					w->set_company(c);
 					log_write("Worker transfered from seeker to employee");
 				}
-				break;
 			}
+            break;
 	}
 
     if(w->employed()){ 
@@ -510,7 +551,8 @@ void modify_wrk(Worker* w){
 	return;
 }
 
-void delete_wrk(Worker* w){
+void delete_wrk(Worker* w)
+{
 	char choice;
 
 	do{
@@ -538,7 +580,8 @@ void delete_wrk(Worker* w){
 	return;
 }
 
-void search_job(Worker* w){
+void search_job(Worker* w)
+{
 	string zip;
 	cout << "~~ Menu de Parcour des Offres d'Emploi ~~\n\n"
 		"Saisissez un code postal si vous souhaitez limitez votre recherche, sinon entrez 'q' : ";
@@ -560,7 +603,8 @@ void search_job(Worker* w){
 	return;
 }
 
-void search_wrk(Worker* w){
+void search_wrk(Worker* w)
+{
 	char choice;
 	string name;
 
@@ -599,7 +643,8 @@ void search_wrk(Worker* w){
 	return;
 }
 
-int main(void){
+int main(void)
+{
 	log_begin();
 	cout << ASCII_ART << endl;
 
