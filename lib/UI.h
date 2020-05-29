@@ -1,6 +1,6 @@
 #pragma once
 
-#include "network.h"
+#include "search.h"
 
 void home();
 
