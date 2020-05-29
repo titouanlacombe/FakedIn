@@ -12,20 +12,20 @@ Company* cmp_search_name(List<Company*>* c, std::string name);
 Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname);
 
 // Rechercher un job à partir d'un titre et d'une companie
-Job* job_search_name(List<Job*>* j, Company* c,std::string name);
+Job* job_search_name_cmp(List<Job*>* j, Company* c,std::string name);
 
 // Recherche des seekers par skill et zip code (optionel) correspondant à un job
-List<Worker*>* cmp_search_wrk(List<Worker*> *w, Company *c, Job *j, std::string zip_code = "");
+List<Worker*>* seek_search_skill(List<Worker*> *w, Company *c, Job *j, std::string zip_code = "");
 
 // Recherche des colleagues par company (retourne colleagues employés par company)
-List<Worker*>* wrk_search_wrk_by_cmp(Worker *w, Company *c);
+List<Worker*>* coll_search_cmp(Worker *w, Company *c);
 
 // Recherche des colleagues par skill (retourne les anciencs collègues 
 // employés aux companies qui recherchent les skill du worker)
-List<Worker*>* wrk_search_wrk_by_skill(Worker *w, List<Job*> *j);
+List<Worker*>* emp_search_job(Worker *w, List<Job*> *j);
 
 // Recherche des jobs par skills et zip code (optionel)
-List<Job*>* wrk_search_job(Worker *w, List<Job*> *j, std::string zip_code = "");
+List<Job*>* job_search_skill(Worker *w, List<Job*> *j, std::string zip_code = "");
 
 // Retourne une liste des jobs proposés par une companie
-List<Job*>* cmp_search_job(List<Job*> *j, Company *c);
+List<Job*>* job_search_cmp(List<Job*> *j, Company *c);

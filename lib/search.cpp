@@ -53,7 +53,7 @@ Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname)
 	return res;
 }
 
-Job* job_search_name(List<Job*>* j, Company* c, std::string name,){
+Job* job_search_name_cmp(List<Job*>* j, Company* c, std::string name){
 	Job* res = new Job;
 	Node<Job*>* cur = j->first;
 
@@ -70,7 +70,7 @@ Job* job_search_name(List<Job*>* j, Company* c, std::string name,){
 	return res;
 }
 
-List<Worker*>* cmp_search_wrk(List<Worker*> *w, Company *c, Job *j, std::string zip_code)
+List<Worker*>* seek_search_skill(List<Worker*> *w, Company *c, Job *j, std::string zip_code)
 {
 	List<Worker*>* res = new List<Worker*>;
 	Node<Worker*>* cur = w->first;
@@ -89,7 +89,7 @@ List<Worker*>* cmp_search_wrk(List<Worker*> *w, Company *c, Job *j, std::string 
 	return res;
 }
 
-List<Worker*>* wrk_search_wrk_by_cmp(Worker *w, Company *c)
+List<Worker*>* coll_search_cmp(Worker *w, Company *c)
 {
 	List<Worker*>* res = new List<Worker*>;
 	Node<Worker*>* cur = w->colleagues->first;
@@ -104,7 +104,7 @@ List<Worker*>* wrk_search_wrk_by_cmp(Worker *w, Company *c)
 	return res;
 }
 
-List<Worker*>* wrk_search_wrk_by_skill(Worker *w, List<Job*> *j)
+List<Worker*>* emp_search_job(Worker *w, List<Job*> *j)
 {
 	List<Worker*>* res = new List<Worker*>;
 	Node<Worker*>* cur_w = w->colleagues->first;
@@ -126,7 +126,7 @@ List<Worker*>* wrk_search_wrk_by_skill(Worker *w, List<Job*> *j)
 	return res;
 }
 
-List<Job*>* wrk_search_job(Worker *w, List<Job*> *j, std::string zip_code)
+List<Job*>* job_search_skill(Worker *w, List<Job*> *j, std::string zip_code)
 {
 	List<Job*>* res = new List<Job*>;
 	Node<Job*>* cur = j->first;
@@ -143,7 +143,7 @@ List<Job*>* wrk_search_job(Worker *w, List<Job*> *j, std::string zip_code)
 	return res;
 }
 
-List<Job*>* cmp_search_job(List<Job*> *j, Company *c){
+List<Job*>* job_search_cmp(List<Job*> *j, Company *c){
 	List<Job*>* res = new List<Job*>;
 	Node<Job*>* cur = j->first;
 
