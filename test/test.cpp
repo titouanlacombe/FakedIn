@@ -155,8 +155,6 @@ int main()
 		auto w = Worker("Max", "Veran", "max.v@gmail.com");
 		auto w2 = Worker("Thomas", "Billet", "t.b@gmail.com");
 		auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
-		w.add_colleague(&w2);
-		w2.add_colleague(&w);
 		//test des searchs
 	}
 
