@@ -5,7 +5,6 @@
 class Job
 {
 public:
-	int id;
 	std::string name;
 	List<std::string>* skills;
 	Company* company;

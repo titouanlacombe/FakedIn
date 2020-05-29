@@ -155,6 +155,7 @@ int main()
 		TEST(n.size() == 3);
 		TEST(linked(&w,&w2));
 		TEST(!linked(&w,&w3));
+		// test des searchs
 	}
 
 	std::cout << tests_reussis << "/" << tests_executes << std::endl;
