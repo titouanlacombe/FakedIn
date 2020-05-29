@@ -155,6 +155,7 @@ List<T>& List<T>::operator-=(List<T>& l)
 		remove(tmp->data);
 		tmp = tmp->next;
 	}
+	return *this;
 }
 
 template <typename T>

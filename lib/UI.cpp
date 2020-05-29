@@ -308,8 +308,9 @@ void delete_cmp(Company* c)
 	{
 		cmp_job = job_search_cmp(jobs, c);
 		log_write("Company deleted: " + c->name);
-		//remove cmp_job de jobs
-		//del entreprise
+		*jobs -= *cmp_job;
+		companies->remove(c);
+		delete c;
 		cout << "Entreprise supprimée\n" << endl;
 		home();
 	}
@@ -318,7 +319,7 @@ void delete_cmp(Company* c)
 void create_job(Company* c)
 {
 	string title, skill;
-	List<string>* all_skills;
+	List<string>* all_skills = NULL;
 	Job* j;
 
 	cout << "~~ Création d'Offre d'Emploi' ~~\n\n"
@@ -328,14 +329,15 @@ void create_job(Company* c)
 	cout << "Indiquez une compétence requise pour ce poste : ";
 	cin >> skill;
 
-	while(skill != "q")
-	{
+	do{
 		all_skills->addlast(skill);
 		cout << "Le cas échéant indiquez une autre compétence requise, sinon entrez 'q' : ";
 		cin >> skill;
-	}
+	}while(skill != "q");
 
 	j = new Job(title, all_skills, c);
+	jobs->addlast(j);
+
 	log_write("New Job created");
 	cout << "Offre d'emploi créée" << endl;
 	company(c);
@@ -356,6 +358,7 @@ void delete_job(Company* c)
 	}
 
 	jobs->remove(j);
+	delete j;
 	log_write("Job deleted");
 	cout << "Offre d'emploi supprimée" << endl;
 	company(c);
@@ -364,7 +367,7 @@ void delete_job(Company* c)
 void search_seeker(Company* c)
 {
 	string zip, skill;
-	List<string>* all_skills;
+	List<string>* all_skills = NULL;
 
 	cout << "~~ Menu de Parcour des Demandeurs d'Emploi ~~\n\n";
 	cout << "Indiquez une compétence que vous recherchez : ";
@@ -395,15 +398,17 @@ void modify_wrk(Worker* w)
 
 	do
 	{
-		cout << "~~ Menu de Modification de Profil d'Employe ~~\n\n"
-		"Voici votre Profil : \n";
-		//afficher profil
-		cout << "Que voulez vous modifier ?\n"
+		cout << "~~ Modification du Profil ~~\n\n"
+		"Voici votre Profil : \n"
+		<< w->first_name << " " << w->last_name << 
+		"\n" << w->email << " " << w->zip_code;
+		if(w->employed()) cout << "travaille à " << w->company->name << endl;
+		cout << "\nQue voulez vous modifier ?\n"
 			"\t1. Ajouter une compétence\n"
 			"\t2. Ajouter un ancien collègue de travail\n"
 			"\t3. Nouveau code postal\n"
 			"\t4. Nouveau Statut"
-			"\t5. Nouvelle entreprise\n\n";
+			"\t5. Nouvelle entreprise\n\n"
 		"Entrez votre choix ('q' pour annuler) : ";
 		cin >> choice;
 		cout << endl;
@@ -461,7 +466,13 @@ void modify_wrk(Worker* w)
 			{
 				// = a perdu son emploi
 				old_coworkers = coll_search_cmp(w, w->company);
-				//old_coworkers => collegues de w
+				auto tmp = old_coworkers->first;
+				while(tmp != NULL)
+				{
+					w->add_colleague(tmp->data);
+					tmp = tmp->next;
+				}
+
 				w->set_company(NULL);
 				log_write("Worker transfered from employee to seeker");
 			}
@@ -482,9 +493,16 @@ void modify_wrk(Worker* w)
 		if(company != "q")
 		{
 			if(w->employed())
-			{ 
+			{ 	
+				//a changé d'entreprise
 				old_coworkers = coll_search_cmp(w, w->company);
-				//old_coworkers => collegues de w
+				auto tmp = old_coworkers->first;
+				while(tmp != NULL)
+				{
+					w->add_colleague(tmp->data);
+					tmp = tmp->next;
+				}
+
 				w->set_company(c);
 				log_write("Company modified on a Worker");
 			} 
@@ -515,7 +533,9 @@ void delete_wrk(Worker* w)
 
 	if (choice == 'y')
 	{
-		//supprimer profil
+		//remove des gens qui l'ont en collegue
+		workers->remove(w);
+		delete w;
 		log_write("Worker deleted");
 		cout << "Profil supprimé" << endl;
 		home();
@@ -530,18 +550,16 @@ void delete_wrk(Worker* w)
 void search_job(Worker* w)
 {
 	string zip;
+	//List<Job*>* j;
 	cout << "~~ Menu de Parcour des Offres d'Emploi ~~\n\n"
 		"Saisissez un code postal si vous souhaitez limitez votre recherche, sinon entrez 'q' : ";
 	cin >> zip;
 	cout << endl;
-	if(zip == "q")
-	{
-		//search competences
-	}
-	else
-	{
-		//searchc competences&zip
-	}
+
+	//if(zip == "q") j = job_search_skill(w, jobs);
+	//else j = job_search_skill(w, jobs, zip);
+
+	//afficher j liste des jobs ok
 
 	if(w->employed()) employee(w);
 	else seeker(w);

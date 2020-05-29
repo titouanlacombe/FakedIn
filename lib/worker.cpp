@@ -24,6 +24,12 @@ Worker::Worker(std::string _first_name, std::string _last_name, std::string _ema
 
 Worker::~Worker()
 {
+	auto tmp = colleagues->first;
+	while(tmp != NULL)
+	{
+		colleagues->first->data->colleagues->remove(this);
+		tmp = tmp->next;
+	}
 	delete skills;
 	delete colleagues;
 }
