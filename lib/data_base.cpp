@@ -201,7 +201,7 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 			<< wrk_it->data->first_name << ","
 			<< wrk_it->data->last_name << ","
 			<< wrk_it->data->email << ","
-			<< wrk_it->data->zip_code << std::endl;
+			<< wrk_it->data->zip_code << ",";
 		}
 		else
 		{
@@ -209,7 +209,7 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 			<< wrk_it->data->first_name << ","
 			<< wrk_it->data->last_name << ","
 			<< wrk_it->data->email << ","
-			<< wrk_it->data->zip_code << std::endl;
+			<< wrk_it->data->zip_code << ",";
 		}
 		
 		// Skills
@@ -234,11 +234,10 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 			coll_it = coll_it->next;
 		}
 		if (wrk_it->data->employed()) emp_file << workers->get_pos(coll_it->data) << ",";
-		else skr_file << workers->get_pos(coll_it->data) << ",";
+		else skr_file << workers->get_pos(coll_it->data) << std::endl;
 		
 		// company
 		if (wrk_it->data->employed()) emp_file << companies->get_pos(wrk_it->data->company) << std::endl;
-		else skr_file << std::endl;
 
 		wrk_it = wrk_it->next;
 		id++;
