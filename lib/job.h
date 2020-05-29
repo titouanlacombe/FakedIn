@@ -5,11 +5,11 @@
 class Job
 {
 public:
-	std::string name;
+	std::string title;
 	List<std::string>* skills;
 	Company* company;
 
 	Job();
-	Job(std::string _name, List<std::string>* _skills, Company* _company);
+	Job(std::string _title, List<std::string>* _skills, Company* _company);
 	~Job();
 };

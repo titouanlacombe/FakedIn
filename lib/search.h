@@ -2,11 +2,11 @@
 
 #include "data_base.h"
 
-//retourne le nombre d'éléments en commun entre deux listes de string
-int compatibility(List<std::string>* stra, List<std::string>* strb);
+//determine s'il existe une chaine de collegues entre deux travailleurs
+bool linked(Worker *a, Worker *b);
 
-// Recherche d'une companie par son nom
-Company* cmp_search_name(List<Company*>* c, std::string name);
+// Recherche des seekers par skill et zip code (optionel) correspondant à un job
+List<Worker*>* cmp_search_wrk(Company *c, Job *j, bool zip_code = false);
 
 // Recherche d'un worker par son nom et prénom
 Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname);
@@ -25,7 +25,4 @@ List<Worker*>* coll_search_cmp(Worker *w, Company *c);
 List<Worker*>* coll_search_skill(Worker *w, List<Job*> *j);
 
 // Recherche des jobs par skills et zip code (optionel)
-List<Job*>* job_search_skill(Worker *w, List<Job*> *j, std::string zip_code = "");
-
-// Retourne une liste des jobs proposés par une companie
-List<Job*>* job_search_cmp(List<Job*> *j, Company *c);
+List<Worker*>* wrk_search_job(Worker *w, bool zip_code = false);

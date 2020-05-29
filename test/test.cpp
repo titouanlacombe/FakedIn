@@ -110,7 +110,7 @@ int main()
 		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
 		auto l = List<std::string>();
 		auto j = Job("SpaceX", &l, &c);
-		TEST(j.name == "SpaceX");
+		TEST(j.title == "SpaceX");
 		TEST(j.skills == &l);
 		TEST(j.company == &c);
 	}
@@ -138,15 +138,16 @@ int main()
 
 	{
 		//----------------------DATA BASE---------------------
-		// auto lc = List<Company*>();
-		// auto lj = List<Job*>();
-		// auto lw = List<Worker*>();
-		// load(&lc,&lj,&lw,"./data_base");
-		// save(&lc,&lj,&lw,"./data_base");
-		// TEST_FILE("test/data_base/Companies.csv","test/correction/Companies.csv");
-		// TEST_FILE("test/data_base/Jobs.csv","test/correction/Jobs.csv");
-		// TEST_FILE("test/data_base/Employees.csv","test/correction/Employees.csv");
-		// TEST_FILE("test/data_base/Seekers.csv","test/correction/Seekers.csv");
+		auto lc = List<Company*>();
+		auto lj = List<Job*>();
+		auto lw = List<Worker*>();
+		load(&lc,&lj,&lw,"test/in");
+		// std::cout << lc.first->data->name << std::endl;
+		save(&lc,&lj,&lw,"test/out");
+		TEST_FILE("test/out/Companies.csv","test/correction/Companies.csv");
+		TEST_FILE("test/out/Jobs.csv","test/correction/Jobs.csv");
+		TEST_FILE("test/out/Employees.csv","test/correction/Employees.csv");
+		TEST_FILE("test/out/Seekers.csv","test/correction/Seekers.csv");
 	}
 
 	{
@@ -154,6 +155,8 @@ int main()
 		auto w = Worker("Max", "Veran", "max.v@gmail.com");
 		auto w2 = Worker("Thomas", "Billet", "t.b@gmail.com");
 		auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
+		w.add_colleague(&w2);
+		w2.add_colleague(&w);
 		//test des searchs
 	}
 

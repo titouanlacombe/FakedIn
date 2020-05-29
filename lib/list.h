@@ -40,6 +40,7 @@ public:
 	~List();
 	// void addfirst(T e);
 	void addlast(T e);
+	int get_pos(T e);
 	void remove(T e);
 	T& operator[](int n);
 };
@@ -81,6 +82,20 @@ void List<T>::addlast(T e)
 		first = n;
 		last = n;
 	}
+}
+
+template <typename T>
+int List<T>::get_pos(T e)
+{
+	auto tmp = first;
+	int i = 0;
+	while (tmp != NULL && tmp->data != e)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	if (tmp != NULL) return i;
+	else return -1;
 }
 
 template <typename T>
