@@ -1,3 +1,6 @@
+cc=g++
+flags=-Wall -pedantic -Werror
+
 .DEFAULT_GOAL := check
 
 .PHONY: clean
@@ -15,26 +18,70 @@ build:
 all:
 
 # Lance le programme de test.
-check:
-	false
+check: build/test
+	./build/test
 
-#-------------IMPORTED--------------
-cc=gcc
+#------MYLOG-------
+build/mylog.o: lib/mylog.cpp | build
+	$(cc) $(flags) -c lib/mylog.cpp -I ./lib -o build/mylog.o
 
-build/liste.o: lib/liste.c | build
-	$(cc) -Wall -pedantic -g -c lib/liste.c -I ./lib -o build/liste.o
+build/libmylog.a: build/mylog.o | build
+	ar crs build/libmylog.a build/mylog.o
 
-build/groupe.o: lib/groupe.c build/libliste.a | build
-	$(cc) -Wall -pedantic -g -c lib/groupe.c -I ./lib -lliste -o build/groupe.o
+#------LIST-------
+build/list.o: lib/list.cpp build/libmylog.a | build
+	$(cc) $(flags) -c lib/list.cpp -I ./lib -o build/list.o
 
-build/libliste.a: build/liste.o | build
-	ar crs build/libliste.a build/liste.o
+build/liblist.a: build/list.o | build
+	ar crs build/liblist.a build/list.o
 
-build/libgroupe.a: build/groupe.o | build
-	ar crs build/libgroupe.a build/groupe.o
+#------COMPANY-------
+build/company.o: lib/company.cpp build/liblist.a | build
+	$(cc) $(flags) -c lib/company.cpp -I ./lib -o build/company.o
 
-build/test.o: test/main.c | build
-	$(cc) -Wall -pedantic -g -c test/main.c -I ./lib -o build/test.o
+build/libcompany.a: build/company.o | build
+	ar crs build/libcompany.a build/company.o
 
-build/test: build/test.o build/libgroupe.a | build
-	$(cc) build/test.o -Lbuild -lgroupe -lliste -o build/test
+#------JOB-------
+build/job.o: lib/job.cpp build/libcompany.a | build
+	$(cc) $(flags) -c lib/job.cpp -I ./lib -o build/job.o
+
+build/libjob.a: build/job.o | build
+	ar crs build/libjob.a build/job.o
+
+#------WORKER-------
+build/worker.o: lib/worker.cpp build/libcompany.a | build
+	$(cc) $(flags) -c lib/worker.cpp -I ./lib -o build/worker.o
+
+build/libworker.a: build/worker.o | build
+	ar crs build/libworker.a build/worker.o
+
+#------DATA BASE----------
+build/data_base.o: lib/data_base.cpp build/libworker.a build/libjob.a | build
+	$(cc) $(flags) -c lib/data_base.cpp -I ./lib -o build/data_base.o
+
+build/libdata_base.a: build/data_base.o | build
+	ar crs build/libdata_base.a build/data_base.o
+
+#------NETWORK-------
+build/network.o: lib/network.cpp build/libdata_base.a | build
+	$(cc) $(flags) -c lib/network.cpp -I ./lib -o build/network.o
+
+build/libnetwork.a: build/network.o | build
+	ar crs build/libnetwork.a build/network.o
+
+#------UI-------
+build/UI.o: lib/UI.cpp build/libnetwork.a | build
+	$(cc) $(flags) -c lib/UI.cpp -I ./lib -o build/UI.o
+
+build/libUI.a: build/UI.o | build
+	ar crs build/libUI.a build/UI.o
+
+#------TEST------------
+build/test.o: test/test.cpp build/libUI.a | build
+	$(cc) $(flags) -c test/test.cpp -I ./lib -o build/test.o
+
+build/test: build/test.o | build
+	$(cc) build/test.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -ldata_base -lnetwork -lUI -o build/test
+
+#------RELEASE-------
