@@ -15,7 +15,7 @@ Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname)
 Job* job_search_name(List<Job*>* j, Company* c,std::string name);
 
 // Recherche des seekers ayant au moins un skill d'une liste de skills (+ zip code optionel)
-List<Worker*>* seek_search_skill(List<Worker*> *w, skills, std::string zip_code = "");
+List<Worker*>* seek_search_skill(List<Worker*> *w, List<std::string>* skills, std::string zip_code = "");
 
 // Recherche des colleagues par company (retourne colleagues employés par company)
 List<Worker*>* coll_search_cmp(Worker *w, Company *c);
