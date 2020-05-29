@@ -46,6 +46,7 @@ public:
 	void remove(Node<T>* tmp);
 	List<T>& operator-=(List<T>& l);
 	T& operator[](int n);
+	void print();
 };
 
 template <typename T>
@@ -169,4 +170,14 @@ T& List<T>::operator[](int n)
 		tmp = tmp->next;
 	}
 	return tmp->data;
+}
+
+template <typename T>
+void List<T>::print()
+{
+	Node<T> *tmp = first;
+	while (tmp != NULL) {
+		std::cout << tmp->data;
+		tmp = tmp->_next;
+	}
 }
