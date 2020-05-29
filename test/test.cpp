@@ -138,15 +138,16 @@ int main()
 
 	{
 		//----------------------DATA BASE---------------------
-		// auto lc = List<Company*>();
-		// auto lj = List<Job*>();
-		// auto lw = List<Worker*>();
-		// load(&lc,&lj,&lw,"./data_base");
-		// save(&lc,&lj,&lw,"./data_base");
-		// TEST_FILE("test/data_base/Companies.csv","test/correction/Companies.csv");
-		// TEST_FILE("test/data_base/Jobs.csv","test/correction/Jobs.csv");
-		// TEST_FILE("test/data_base/Employees.csv","test/correction/Employees.csv");
-		// TEST_FILE("test/data_base/Seekers.csv","test/correction/Seekers.csv");
+		auto lc = List<Company*>();
+		auto lj = List<Job*>();
+		auto lw = List<Worker*>();
+		load(&lc,&lj,&lw,"test/data_base");
+		std::cout << lc.first->data->name << std::endl;
+		save(&lc,&lj,&lw,"test/data_base");
+		TEST_FILE("test/data_base/Companies.csv","test/correction/Companies.csv");
+		TEST_FILE("test/data_base/Jobs.csv","test/correction/Jobs.csv");
+		TEST_FILE("test/data_base/Employees.csv","test/correction/Employees.csv");
+		TEST_FILE("test/data_base/Seekers.csv","test/correction/Seekers.csv");
 	}
 
 	{

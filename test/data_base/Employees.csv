@@ -1,2 +1,2 @@
-id,nom,prenom,mail,code postal,competences,collegues,entreprise
+id,first name,last name,email,zip code,skills,colleagues,company
 2,Lacombe,Titouan,t.l@gmail.com,42069,rocket science,1,1
