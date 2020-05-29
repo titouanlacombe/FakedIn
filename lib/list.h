@@ -88,14 +88,12 @@ template <typename T>
 int List<T>::get_pos(T e)
 {
 	auto tmp = first;
-	int i;
-
+	int i = 0;
 	while (tmp != NULL && tmp->data != e)
 	{
 		tmp = tmp->next;
 		i++;
 	}
-	
 	if (tmp != NULL) return i;
 	else return -1;
 }

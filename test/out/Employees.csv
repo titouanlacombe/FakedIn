@@ -1,1 +1,7 @@
 id,first name,last name,email,zip code,skills,colleagues,company
+0,titouan,lacombe,titouan.lacombe99@gmail.com,23456
+boss;c;c++,1;2,0
+1,max,veran,max.veran@gmail.com,567
+boss;cats,0;2,0
+2,thomas,billets,thomas.billets@gmail.com,987
+argents;ow,0;1,1

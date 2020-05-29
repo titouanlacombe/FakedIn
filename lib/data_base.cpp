@@ -5,42 +5,146 @@
 #define EMP_FILE_NAME "/Employees.csv"
 #define SKR_FILE_NAME "/Seekers.csv"
 
+int mygetline(std::string& s, std::string& dest, char limit)
+{
+	int i = 0;
+	auto it = s.begin();
+	dest = "";
+	while (it != s.end() && *it != limit)
+	{
+		dest += *it;
+		it++;
+		i++;
+	}
+	s.erase(0, i+1);
+	return i;
+}
+
+void load_workers(List<Worker*>* workers, List<Company*>* companies, List<std::string>& colleagues_ids, std::ifstream &wrk_file, bool employed)
+{
+	std::string first_name, last_name, email, zip_code, line, skill;
+	List<std::string>* skills;
+	Company *company;
+
+	// first line
+	std::getline(wrk_file, line);
+	while (!wrk_file.eof())
+	{
+		std::getline(wrk_file, line, ','); // id
+		std::getline(wrk_file, line, ','); // first name
+		first_name = line;
+		std::getline(wrk_file, line, ','); // last name
+		last_name = line;
+		std::getline(wrk_file, line, ','); // email
+		email = line;
+		std::getline(wrk_file, line, ','); // zip code
+		zip_code = line;
+
+		std::getline(wrk_file, line, ','); // skills
+		skills = new List<std::string>();
+		while (mygetline(line, skill, ';'))
+		{
+			skills->addlast(skill);
+		}
+
+		if (employed) std::getline(wrk_file, line, ','); // colleagues
+		else std::getline(wrk_file, line);
+		colleagues_ids.addlast(line);
+		
+		if (employed) {
+			std::getline(wrk_file, line); // company
+			company = (*companies)[std::stoi(line)];
+		}
+		workers->addlast(new Worker(first_name, last_name, email));
+		workers->last->data->set_zip_code(zip_code);
+		workers->last->data->skills = skills;
+		if (employed) workers->last->data->set_company(company);
+	}
+}
+
 void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, std::string folder)
 {
-	std::ofstream cmp_file, job_file, emp_file, skr_file;
-	// int id;
+	std::ifstream cmp_file, job_file, emp_file, skr_file;
+	std::string line;
 
 	cmp_file.open("./" + folder + CMP_FILE_NAME, std::ios::in);
 	job_file.open("./" + folder + JOB_FILE_NAME, std::ios::in);
 	emp_file.open("./" + folder + EMP_FILE_NAME, std::ios::in);
 	skr_file.open("./" + folder + SKR_FILE_NAME, std::ios::in);
+	// int i, j;
 
 	// Loading companies
-	// std::string line, name, zip_code, email;
-	// cmp_file >> line;
-	// std::cout << line;
-	// int id;
-	// while (std::ios::getline(cmp_file, line))
-	// {
-	// 	std::cout << line << std::endl;
-		
-	// 	// companies->addlast(new Company(name, zip_code, email));
-	// 	// cmp_id.addlast(id);
-	// }
-
+	std::string name, zip_code, email;
+	// first line
+	std::getline(cmp_file, line);
+	while (!cmp_file.eof())
+	{
+		std::getline(cmp_file, line, ','); // id
+		std::getline(cmp_file, line, ','); // name
+		name = line;
+		std::getline(cmp_file, line, ','); // zip_code
+		zip_code = line;
+		std::getline(cmp_file, line); // email
+		email = line;
+		companies->addlast(new Company(name, zip_code, email));
+	}
+	
 	// Loading jobs
-	// Loading employees
+	std::string title, skill;
+	List<std::string>* skills;
+	Company *company;
+	// first line
+	std::getline(job_file, line);
+	while (!job_file.eof())
+	{
+		std::getline(job_file, line, ','); // id
+		std::getline(job_file, line, ','); // title
+		title = line;
+
+		std::getline(job_file, line, ','); // skills
+		skills = new List<std::string>();
+		while (mygetline(line, skill, ';'))
+		{
+			skills->addlast(skill);
+		}
+		
+		std::getline(job_file, line); // company
+		company = (*companies)[std::stoi(line)];
+		jobs->addlast(new Job(title, skills, company));
+	}
+	
+	// Loading workers
+	List<std::string> colleagues_ids = List<std::string>();
+	load_workers(workers, companies, colleagues_ids, emp_file, true);
+	load_workers(workers, companies, colleagues_ids, skr_file, false);
+
+	// Linking colleagues
+	List<Worker*>* colleagues;
+	std::string tmp;
+	auto wrk_it = workers->first;
+	auto id_it = colleagues_ids.first;
+	while (wrk_it != NULL)
+	{
+		colleagues = new List<Worker*>();
+		while (mygetline(id_it->data, tmp, ';'))
+		{
+			colleagues->addlast((*workers)[std::stoi(tmp)]);
+		}
+		wrk_it->data->colleagues = colleagues;
+
+		wrk_it = wrk_it->next;
+		id_it = id_it->next;
+	}
 }
 
 void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, std::string folder)
 {
 	std::ofstream cmp_file, job_file, emp_file, skr_file;
-	int id;
-
 	cmp_file.open("./" + folder + CMP_FILE_NAME, std::ios::out);
 	job_file.open("./" + folder + JOB_FILE_NAME, std::ios::out);
 	emp_file.open("./" + folder + EMP_FILE_NAME, std::ios::out);
 	skr_file.open("./" + folder + SKR_FILE_NAME, std::ios::out);
+	int id;
 
 	// Saving companies
 	auto cmp_it = companies->first;
