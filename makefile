@@ -21,6 +21,9 @@ all:
 check: build/test
 	./build/test
 
+launch: build/app
+	./build/fakedin
+
 #------MYLOG-------
 build/mylog.o: lib/mylog.cpp | build
 	$(cc) $(flags) -c lib/mylog.cpp -I ./lib -o build/mylog.o
@@ -84,4 +87,9 @@ build/test.o: test/test.cpp build/libUI.a | build
 build/test: build/test.o | build
 	$(cc) build/test.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -ldata_base -lsearch -lUI -o build/test
 
-#------RELEASE-------
+#------APPLICATION-------
+build/fakedin.o: app/app.cpp build/libUI.a | build
+	$(cc) $(flags) -c app/app.cpp -I ./lib -o build/fakedin.o
+
+build/fakedin: build/fakedin.o | build
+	$(cc) build/fakedin.o -Lbuild -lmylog -llist -lcompany -ljob -lworker -ldata_base -lsearch -lUI -o build/fakedin

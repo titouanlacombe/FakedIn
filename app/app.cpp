@@ -2,7 +2,8 @@
 
 #include "UI.h"
 
-int main() {
+int main()
+{
 	
 	return 0;
 }
