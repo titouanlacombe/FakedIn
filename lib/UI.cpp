@@ -23,8 +23,9 @@ List<Worker*>* workers;
 void home()
 {
 	char choice;
-    bool loop = true;
-	do{
+	bool loop = true;
+	do
+	{
 		cout << "====== Bienvenu sur FakedIn ! <insérez slogan> ======\n\n"
 		"~~ Menu Principal ~~\n\n"
 		"Vous êtes :\n"
@@ -32,30 +33,28 @@ void home()
 			"\t2. Un employé\n"
 			"\t3. À la recherche d'un emploi\n\n"
 		"Entrez votre choix ('q' pour quitter) : ";
-        cin >> choice;
-        cout << endl;
+		cin >> choice;
+		cout << endl;
 
-        switch(choice)
-        {
-            case '1':
-                pre_company();
-                loop = false;
-                break;
-            case '2':
-                pre_wrk(1);
-                loop = false;
-                break;
-            case '3':
-                pre_wrk(0);
-                loop = false;
-                break;
-            case 'q':
-                loop = false;
-                break;
-        }
-    }while(loop);
-
-	return;
+		switch(choice)
+		{
+		case '1':
+			pre_company();
+			loop = false;
+			break;
+		case '2':
+			pre_wrk(1);
+			loop = false;
+			break;
+		case '3':
+			pre_wrk(0);
+			loop = false;
+			break;
+		case 'q':
+			loop = false;
+			break;
+		}
+	} while (loop);
 }
 
 void pre_company()
@@ -103,8 +102,10 @@ void create_cmp()
 void company(Company* c)
 {
 	char choice;
-    bool loop = true;
-	do{
+	bool loop = true;
+	
+	do
+	{
 		cout << "~~ Menu Entreprise ~~\n\n"
 		"Vous voulez :\n"
 			"\t1. Supprimer le profil de votre entreprise\n"
@@ -114,35 +115,33 @@ void company(Company* c)
 		"Entrez votre choix ('q' pour quitter, 'p' pour menu principal) : ";
 		cin >> choice;
 	
-        switch(choice)
-        {
-            case '1':
-                delete_cmp(c);
-                loop = false;
-                break;
-            case '2':
-                create_job(c);
-                loop = false;
-                break;
-            case '3':
-                delete_job(c);
-                loop = false;
-                break;
-            case '4':
-                search_seeker(c);
-                loop = false;
-                break;
-            case 'p':
-                home();
-                loop = false;
-                break;
-            case 'q':
-                loop = false;
-                break;
-        }
-    }while(loop);
-
-	return;
+		switch(choice)
+		{
+		case '1':
+			delete_cmp(c);
+			loop = false;
+			break;
+		case '2':
+			create_job(c);
+			loop = false;
+			break;
+		case '3':
+			delete_job(c);
+			loop = false;
+			break;
+		case '4':
+			search_seeker(c);
+			loop = false;
+			break;
+		case 'p':
+			home();
+			loop = false;
+			break;
+		case 'q':
+			loop = false;
+			break;
+		}
+	} while (loop);
 }
 
 void pre_wrk(bool emp)
@@ -621,6 +620,6 @@ int main(void)
 	cout << "Merci de votre visite !" << endl;
 	save(companies, jobs, workers, "data_base");
 	log_end();
-	
+
 	return 0;
 }
