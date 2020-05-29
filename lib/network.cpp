@@ -2,27 +2,27 @@
 
 Network::Network()
 {
-
+  
 }
 
 Network::~Network()
 {
-
+  delete(workers);
 }
 
 int Network::size()
 {
-	return 0;
-	// return workers->length;
+	return (workers->length);
 }
 
 void Network::addWorker(Worker* w)
 {
-
+	workers->addlast(w);
 }
 
 bool linked(Worker *a, Worker *b)
 {
+	
 	return false;
 }
 
@@ -33,6 +33,7 @@ List<Worker*>* cmp_search_wrk(Company *c, Job *j, bool zip_code)
 
 List<Worker*>* wrk_search_wrk_by_cmp(Worker *w, Company *c)
 {
+	
 	return NULL;
 }
 
