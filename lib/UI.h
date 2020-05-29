@@ -4,18 +4,21 @@
 
 void home();
 
-void company();
-void employee();
-void seeker();
-
+void pre_company();
 void create_cmp();
-void delete_cmp();
-void create_job();
-void delete_job();
-void search_seeker();
+void company(Company* c);
 
-void create_wrk();
-void modify_wrk();
-void delete_wrk();
-void search_job();
-void search_wrk();
+void pre_wrk(bool emp);
+void create_wrk(bool emp);
+void employee(Worker* w);
+void seeker(Worker* w);
+
+void delete_cmp(Company* c);
+void create_job(Company* c);
+void delete_job(Company* c);
+void search_seeker(Company* c);
+
+void modify_wrk(Worker* w);
+void delete_wrk(Worker* w);
+void search_job(Worker* w);
+void search_wrk(Worker* w);
