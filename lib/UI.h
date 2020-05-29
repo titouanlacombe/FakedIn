@@ -2,6 +2,22 @@
 
 #include "search.h"
 
+#define ASCII_ART															       \
+"*********************************************   \n" \
+"|     ______      __            ______      |   \n" \
+"|    / ____/___ _/ /_____  ____/ /  _/___   |   \n" \
+"|   / /_  / __ `/ //_/ _ \\/ __  // // __ \\  | \n" \
+"|  / __/ / /_/ / ,< /  __/ /_/ // // / / /  |   \n" \
+"| /_/    \\__,_/_/|_|\\___/\\__,_/___/_/ /_/   |\n" \
+"|                                           |   \n" \
+"| Made by: Lacombe, Billet, Veran           |   \n" \
+"| Polytech Marseille - Informatique 3A      |   \n" \
+"*********************************************   \n" 
+
+List<Company*>* companies;
+List<Job*>* jobs;
+List<Worker*>* workers;
+
 void home();
 
 void pre_company();

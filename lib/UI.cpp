@@ -4,22 +4,6 @@
 
 using namespace std;
 
-#define ASCII_ART															       \
-"*********************************************   \n" \
-"|     ______      __            ______      |   \n" \
-"|    / ____/___ _/ /_____  ____/ /  _/___   |   \n" \
-"|   / /_  / __ `/ //_/ _ \\/ __  // // __ \\  | \n" \
-"|  / __/ / /_/ / ,< /  __/ /_/ // // / / /  |   \n" \
-"| /_/    \\__,_/_/|_|\\___/\\__,_/___/_/ /_/   |\n" \
-"|                                           |   \n" \
-"| Made by: Lacombe, Billet, Veran           |   \n" \
-"| Polytech Marseille - Informatique 3A      |   \n" \
-"*********************************************   \n" 
-
-List<Company*>* companies;
-List<Job*>* jobs;
-List<Worker*>* workers;
-
 void home()
 {
 	char choice;
@@ -607,19 +591,4 @@ void search_wrk(Worker* w)
 
 	if(w->employed()) employee(w);
 	else seeker(w);
-}
-
-int main(void)
-{
-	log_begin();
-	load(companies, jobs, workers, "data_base");
-	cout << ASCII_ART << endl;
-
-	home();
-
-	cout << "Merci de votre visite !" << endl;
-	save(companies, jobs, workers, "data_base");
-	log_end();
-
-	return 0;
 }

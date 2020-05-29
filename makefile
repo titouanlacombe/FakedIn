@@ -21,7 +21,7 @@ all:
 check: build/test
 	./build/test
 
-launch: build/app
+launch: build/fakedin
 	./build/fakedin
 
 #------MYLOG-------
