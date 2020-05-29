@@ -12,8 +12,8 @@ List<Worker*>* cmp_search_wrk(List<Worker*> *w, Company *c, Job *j, std::string 
 List<Worker*>* wrk_search_wrk_by_cmp(Worker *w, Company *c);
 
 // Recherche des colleagues par skill (retourne colleagues 
-// employer aux companies dont job require les skill du seeker)
-List<Worker*>* wrk_search_wrk_by_skill(Worker *w);
+// employés aux companies qui propose un job qui nécessite les skill du seeker)
+List<Worker*>* wrk_search_wrk_by_skill(Worker *w, List<Job*> *j);
 
 // Recherche des jobs par skills et zip code (optionel)
-List<Worker*>* wrk_search_job(Worker *w, bool zip_code = false);
+List<Job*>* wrk_search_job(Worker *w, List<Job*> *j, std::string zip_code = "");
