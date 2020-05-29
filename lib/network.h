@@ -12,6 +12,9 @@ public:
 
 	//retourne la taille du Network
 	int size();
-	//determine s'il existe une chaine de collegues entre deux travailleurs
-	bool linked(Worker *a, Worker *b);
+	void addWorker(Worker* w);
+	
 };
+
+//determine s'il existe une chaine de collegues entre deux travailleurs
+bool linked(Worker *a, Worker *b);

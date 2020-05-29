@@ -12,10 +12,16 @@ Network::~Network()
 
 int Network::size()
 {
-	return workers->length;
+	return 0;
+	// return workers->length;
 }
 
-bool Network::linked(Worker *a, Worker *b)
+void Network::addWorker(Worker* w)
+{
+	
+}
+
+bool linked(Worker *a, Worker *b)
 {
 	return false;
 }
