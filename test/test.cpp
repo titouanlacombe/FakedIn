@@ -65,6 +65,15 @@ int main()
 	sigaction(SIGSEGV, &sa, NULL);
 
 	{
+		//----------------------MYLOG---------------------
+		log_begin("test");
+		log_write("salut!");
+		log_write("ca va ?");
+		log_end();
+		TEST_FILE("test/log.txt","test/log_correction.txt");
+	}
+
+	{
 		//----------------------LIST---------------------
 		auto l = List<int>();
 		l.addlast(1);
