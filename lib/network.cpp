@@ -7,12 +7,12 @@ Network::Network()
 
 Network::~Network()
 {
-  delete(workers);
+  delete workers;
 }
 
 int Network::size()
 {
-	return (workers->length);
+	return workers->length;
 }
 
 void Network::addWorker(Worker* w)
@@ -33,8 +33,17 @@ List<Worker*>* cmp_search_wrk(Company *c, Job *j, bool zip_code)
 
 List<Worker*>* wrk_search_wrk_by_cmp(Worker *w, Company *c)
 {
-	
-	return NULL;
+	List<Worker*>* res = new List<Worker*>;
+	Node<Worker*>* temp = w->colleagues->first;
+
+	while(temp){
+		if(temp->data->company == c){
+			res->addlast(temp->data);
+		}
+		temp = temp->next;
+	}
+
+	return res;
 }
 
 List<Worker*>* wrk_search_wrk_by_skill(Worker *w)

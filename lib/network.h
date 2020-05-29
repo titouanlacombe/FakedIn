@@ -21,7 +21,7 @@ bool linked(Worker *a, Worker *b);
 // Recherche des seekers par skill et zip code (optionel) correspondant à un job
 List<Worker*>* cmp_search_wrk(Company *c, Job *j, bool zip_code = false);
 
-// Recherche des colleagues par company (retoune colleagues employer par company)
+// Recherche des colleagues par company (retourne colleagues employer par company)
 List<Worker*>* wrk_search_wrk_by_cmp(Worker *w, Company *c);
 // Recherche des colleagues par skill (retourne colleagues 
 // employer aux companies dont job require les skill du seeker)

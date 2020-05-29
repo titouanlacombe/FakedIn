@@ -151,20 +151,20 @@ int main()
 
 	{
 		//----------------------NETWORK---------------------
-		// auto n = Network();
-		// auto w = Worker("Max", "Veran", "max.v@gmail.com");
-		// auto w2 = Worker("Thomas", "Billet", "t.b@gmail.com");
-		// auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
-		// w.add_colleague(&w2);
-		// w2.add_colleague(&w);
-		// TEST(n.size() == 0);
-		// n.addWorker(&w);
-		// n.addWorker(&w2);
-		// n.addWorker(&w3);
-		// TEST(n.size() == 3);
-		// TEST(linked(&w,&w2));
-		// TEST(!linked(&w,&w3));
-		// test des searchs
+		auto n = Network();
+		auto w = Worker("Max", "Veran", "max.v@gmail.com");
+		auto w2 = Worker("Thomas", "Billet", "t.b@gmail.com");
+		auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
+		w.add_colleague(&w2);
+		w2.add_colleague(&w);
+		TEST(n.size() == 0);
+		n.addWorker(&w);
+		n.addWorker(&w2);
+		n.addWorker(&w3);
+		TEST(n.size() == 3);
+		TEST(linked(&w,&w2));
+		TEST(!linked(&w,&w3));
+		//test des searchs
 	}
 
 	std::cout << tests_reussis << "/" << tests_executes << std::endl;
