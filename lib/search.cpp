@@ -56,7 +56,7 @@ Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname)
 	return res;
 }
 
-Job* job_search_name_cmp(List<Job*>* j, Company* c, std::string name)
+Job* job_search_name(List<Job*>* j, Company* c, std::string name)
 {
 	Job* res = new Job;
 	Node<Job*>* cur = j->first;
