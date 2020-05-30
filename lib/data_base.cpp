@@ -251,3 +251,8 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		id++;
 	}
 }
+
+void load_db()
+{
+	return;
+}

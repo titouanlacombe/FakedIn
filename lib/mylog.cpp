@@ -17,3 +17,8 @@ void log_end(void)
 {
   log_file.close();
 }
+
+void load_log()
+{
+	return;
+}

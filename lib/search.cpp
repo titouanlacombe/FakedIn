@@ -161,3 +161,8 @@ List<Job*>* job_search_cmp(List<Job*> *j, Company *c)
 
 	return res;
 }
+
+void load_srch()
+{
+	return;
+}

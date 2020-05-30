@@ -181,3 +181,5 @@ void List<T>::print()
 		tmp = tmp->_next;
 	}
 }
+
+void load_list();

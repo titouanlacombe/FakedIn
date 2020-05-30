@@ -618,3 +618,8 @@ void search_wrk(Worker* w)
 	if(w->employed()) employee(w);
 	else seeker(w);
 }
+
+void load_UI()
+{
+	return;
+}

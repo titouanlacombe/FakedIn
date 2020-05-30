@@ -24,12 +24,6 @@ Worker::Worker(std::string _first_name, std::string _last_name, std::string _ema
 
 Worker::~Worker()
 {
-	auto tmp = colleagues->first;
-	while(tmp != NULL)
-	{
-		colleagues->first->data->colleagues->remove(this);
-		tmp = tmp->next;
-	}
 	delete skills;
 	delete colleagues;
 }
@@ -57,4 +51,19 @@ void Worker::set_company(Company* _company)
 bool Worker::employed()
 {
 	return company != NULL;
+}
+
+void Worker::remove_from_coll()
+{
+	auto tmp = colleagues->first;
+	while(tmp != NULL)
+	{
+		colleagues->first->data->colleagues->remove(this);
+		tmp = tmp->next;
+	}
+}
+
+void load_wrk()
+{
+	return;
 }

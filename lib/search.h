@@ -29,3 +29,5 @@ List<Job*>* job_search_skill(Worker *w, List<Job*> *j, std::string zip_code = ""
 
 // Retourne une liste des jobs proposés par une companie
 List<Job*>* job_search_cmp(List<Job*> *j, Company *c);
+
+void load_srch();

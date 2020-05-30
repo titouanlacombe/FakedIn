@@ -26,4 +26,7 @@ public:
 	void set_company(Company* company);
 	// donne l'etat de w
 	bool employed();
+	void remove_from_coll();
 };
+
+void load_wrk();

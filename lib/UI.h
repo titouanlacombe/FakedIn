@@ -35,3 +35,5 @@ void modify_wrk(Worker* w);
 void delete_wrk(Worker* w);
 void search_job(Worker* w);
 void search_wrk(Worker* w);
+
+void load_UI();

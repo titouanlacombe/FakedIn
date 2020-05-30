@@ -141,13 +141,12 @@ int main()
 		auto lc = List<Company*>();
 		auto lj = List<Job*>();
 		auto lw = List<Worker*>();
-		load(&lc,&lj,&lw,"test/in");
-		// std::cout << lc.first->data->name << std::endl;
-		save(&lc,&lj,&lw,"test/out");
-		TEST_FILE("test/out/Companies.csv","test/correction/Companies.csv");
-		TEST_FILE("test/out/Jobs.csv","test/correction/Jobs.csv");
-		TEST_FILE("test/out/Employees.csv","test/correction/Employees.csv");
-		TEST_FILE("test/out/Seekers.csv","test/correction/Seekers.csv");
+		load(&lc, &lj, &lw, "test/in");
+		save(&lc, &lj, &lw, "test/out");
+		TEST_FILE("test/out/Companies.csv", "test/correction/Companies.csv");
+		TEST_FILE("test/out/Jobs.csv", "test/correction/Jobs.csv");
+		TEST_FILE("test/out/Employees.csv", "test/correction/Employees.csv");
+		TEST_FILE("test/out/Seekers.csv", "test/correction/Seekers.csv");
 	}
 
 	{
@@ -159,8 +158,6 @@ int main()
 		w2.add_colleague(&w);
 		//test des searchs
 	}
-
-	home();
 
 	std::cout << tests_reussis << "/" << tests_executes << std::endl;
 

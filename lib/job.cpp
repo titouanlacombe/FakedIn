@@ -19,3 +19,8 @@ Job::~Job()
 {
 
 }
+
+void load_job()
+{
+	return;
+}

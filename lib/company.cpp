@@ -18,3 +18,8 @@ Company::~Company()
 {
   
 }
+
+void load_cmp()
+{
+	return;
+}
