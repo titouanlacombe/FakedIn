@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
 
 // Open the file containing the logs
 void log_begin(std::string folder = "");

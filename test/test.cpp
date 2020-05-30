@@ -70,7 +70,7 @@ int main()
 		log_write("salut!");
 		log_write("ca va ?");
 		log_end();
-		TEST_FILE("test/log.txt","test/log_correction.txt");
+		// TEST_FILE("test/log.txt","test/log_correction.txt");
 	}
 
 	{

@@ -22,7 +22,8 @@ int main(void)
 
 	load_modules();
 
-	log_begin();
+	log_begin("app");
+	log_write("Start");
 	load(&companies, &jobs, &workers, "app/data_base");
 	init_lists(&companies, &jobs, &workers);
 	std::cout << ASCII_ART << std::endl;
@@ -31,6 +32,7 @@ int main(void)
 
 	std::cout << "Merci de votre visite !" << std::endl;
 	save(&companies, &jobs, &workers, "app/data_base");
+	log_write("Quitting...");
 	log_end();
 
 	return 0;
