@@ -16,11 +16,11 @@ int load_modules()
 
 int main(void)
 {
-	load_modules();
-
 	List<Company*> companies;
 	List<Job*> jobs;
 	List<Worker*> workers;
+
+	load_modules();
 
 	log_begin();
 	load(&companies, &jobs, &workers, "app/data_base");

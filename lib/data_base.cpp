@@ -70,11 +70,10 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	std::ifstream cmp_file, job_file, emp_file, skr_file;
 	std::string line, tmp, tmp2;
 
-	cmp_file.open("./" + folder + CMP_FILE_NAME, std::ios::in);
-	job_file.open("./" + folder + JOB_FILE_NAME, std::ios::in);
-	emp_file.open("./" + folder + EMP_FILE_NAME, std::ios::in);
-	skr_file.open("./" + folder + SKR_FILE_NAME, std::ios::in);
-	// int i, j;
+	cmp_file.open("./" + folder + CMP_FILE_NAME);
+	job_file.open("./" + folder + JOB_FILE_NAME);
+	emp_file.open("./" + folder + EMP_FILE_NAME);
+	skr_file.open("./" + folder + SKR_FILE_NAME);
 
 	// Loading companies
 	std::string name, zip_code, email;
@@ -143,16 +142,22 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		wrk_it = wrk_it->next;
 		id_it = id_it->next;
 	}
+
+	cmp_file.close();
+	job_file.close();
+	emp_file.close();
+	skr_file.close();
 }
 
 void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, std::string folder)
 {
 	std::ofstream cmp_file, job_file, emp_file, skr_file;
-	cmp_file.open("./" + folder + CMP_FILE_NAME, std::ios::out);
-	job_file.open("./" + folder + JOB_FILE_NAME, std::ios::out);
-	emp_file.open("./" + folder + EMP_FILE_NAME, std::ios::out);
-	skr_file.open("./" + folder + SKR_FILE_NAME, std::ios::out);
 	int id;
+
+	cmp_file.open("./" + folder + CMP_FILE_NAME);
+	job_file.open("./" + folder + JOB_FILE_NAME);
+	emp_file.open("./" + folder + EMP_FILE_NAME);
+	skr_file.open("./" + folder + SKR_FILE_NAME);
 
 	// Saving companies
 	auto cmp_it = companies->first;
@@ -250,6 +255,11 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		wrk_it = wrk_it->next;
 		id++;
 	}
+
+	cmp_file.close();
+	job_file.close();
+	emp_file.close();
+	skr_file.close();
 }
 
 void load_db()
