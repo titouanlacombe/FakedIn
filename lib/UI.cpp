@@ -17,31 +17,33 @@ void home()
 {
 	string choice;
 
-	cout << "~~ Menu Principal ~~\n\n";
-	cout << "Vous êtes:\n";
-	cout << "\t1. Une Entreprise\n";
-	cout << "\t2. Un Travailleur\n";
-	cout << "\n";
-	
 	do
 	{
-		cout << "Entrez votre choix ('q' pour quitter): ";
-		cin >> choice;
-	} while (choice != "1" && choice != "2" && choice != "q");
+		cout << "\n~~ Menu Principal ~~\n\n";
+		cout << "Vous êtes:\n";
+		cout << "\t1. Une Entreprise\n";
+		cout << "\t2. Un Travailleur\n";
+		cout << "\n";
+		
+		do
+		{
+			cout << "Entrez votre choix ('q' pour quitter): ";
+			cin >> choice;
+			if (choice == "q") return;
+		} while (choice != "1" && choice != "2");
 
-	cout << "\n";
+		cout << "\n";
 
-	switch(choice[0])
-	{
-	case '1':
-		pre_company();
-		break;
-	case '2':
-		pre_worker();
-		break;
-	case 'q':
-		break;
-	}
+		switch(choice[0])
+		{
+		case '1':
+			pre_company();
+			break;
+		case '2':
+			pre_worker();
+			break;
+		}
+	} while (true);
 }
 
 void pre_company()
@@ -49,26 +51,26 @@ void pre_company()
 	string choice;
 
 	cout << "Vous souhaitez:\n";
-	cout << "\t1. Créér un nouveau compte Entreprise\n";
-	cout << "\t2. Vous connecter a votre compte Entreprise\n";
+	cout << "\t1. Vous connecter a votre compte Entreprise\n";
+	cout << "\t2. Créér un nouveau compte Entreprise\n";
+	cout << "\n";
 	
 	do
 	{
-		cout << "Entrez votre choix ('q' pour quitter): ";
+		cout << "Entrez votre choix ('q' pour annuler): ";
 		cin >> choice;
-	} while (choice != "1" && choice != "2" && choice != "q");
+		if (choice == "q") return;
+	} while (choice != "1" && choice != "2");
 
 	cout << "\n";
 
 	switch(choice[0])
 	{
 	case '1':
-		create_company();
-		break;
-	case '2':
 		login_company();
 		break;
-	case 'q':
+	case '2':
+		create_company();
 		break;
 	}
 }
@@ -79,8 +81,8 @@ void create_company()
 	Company* c;
 
 	cout << "~~ Création du compte Entreprise ~~\n\n";
+	
 	cout << "Merci d'indiquer:\n";
-
 	cout << "-Le nom de votre entreprise: ";
 	cin >> name;
 	cout << "-Le code postal de votre entreprise: ";
@@ -104,12 +106,13 @@ void login_company()
 	string name;
 
 	cout << "~~ Connexion Entreprise ~~\n\n";
+
 	do
 	{
-		cout << "Entrez le nom de votre Entreprise ('q' pour quitter): ";
+		cout << "Entrez le nom de votre Entreprise ('q' pour annuler): ";
 		cin >> name;
-
 		if (name == "q") return;
+
 		c = srch_cmp_list(companies, name);
 		if (c == NULL) cout << "Erreur: l'Entreprise '" << name << "' n'existe pas\n";
 	} while (c == NULL);
@@ -123,40 +126,42 @@ void company_menu(Company* c)
 {
 	string choice;
 	
-	cout << "~~ Menu Entreprise (" << c->name << ") ~~\n\n";
-	cout << "Vous voulez:\n";
-	cout << "\t1. Faire une recherche parmi les chercheurs d'emploi\n";
-	cout << "\t2. Créér une nouvelle offre d'emploi\n";
-	cout << "\t3. Supprimer une offre d'emploi\n";
-	cout << "\t4. Supprimer votre compte Entreprise\n";
-	cout << "\t5. Retour au menu principal\n";
-	cout <<	"\n";
-	
 	do
 	{
-		cout << "Entrez votre choix ('q' pour quitter): ";
-		cin >> choice;
-	} while (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "q");
+		cout << "\n~~ Menu Entreprise (" << c->name << ") ~~\n\n";
+		cout << "Vous voulez:\n";
+		cout << "\t1. Faire une recherche parmi les chercheurs d'emploi\n";
+		cout << "\t2. Créér une nouvelle offre d'emploi\n";
+		cout << "\t3. Supprimer une offre d'emploi\n";
+		cout << "\t4. Supprimer votre compte Entreprise\n";
+		cout << "\t5. Retour au menu principal\n";
+		cout <<	"\n";
+		
+		do
+		{
+			cout << "Entrez votre choix ('q' pour revenir au menu principal): ";
+			cin >> choice;
+			if (choice == "q") return;
+		} while (choice != "1" && choice != "2" && choice != "3" && choice != "4");
 
-	cout << "\n";
+		cout << "\n";
 
-	switch(choice[0])
-	{
-	case '1':
-		search_worker(c);
-		break;
-	case '2':
-		create_job(c);
-		break;
-	case '3':
-		delete_job(c);
-		break;
-	case '4':
-		delete_company(c);
-		break;
-	case 'q':
-		break;
-	}
+		switch(choice[0])
+		{
+		case '1':
+			search_worker(c);
+			break;
+		case '2':
+			create_job(c);
+			break;
+		case '3':
+			delete_job(c);
+			break;
+		case '4':
+			delete_company(c);
+			break;
+		}
+	} while (true);
 }
 
 void search_worker(Company* c)
@@ -201,8 +206,8 @@ void create_job(Company* c)
 	Job* j;
 
 	cout << "~~ Création d'offre d'emploi ~~\n\n";
+	
 	cout << "Merci d'indiquer:\n";
-
 	cout << "-Le titre du poste: ";
 	cin >> title;
 	cout << "-Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...): ";
@@ -230,10 +235,10 @@ void delete_job(Company* c)
 
 	do
 	{
-		cout << "Entrez le titre de l'offre d'emploi a suprimmer ('q' pour quitter): ";
+		cout << "Entrez le titre de l'offre d'emploi a suprimmer ('q' pour annuler): ";
 		cin >> title;
-
 		if (title == "q") return;
+		
 		j = srch_job_list(jobs, c, title);
 		if (j == NULL) cout << "Erreur: l'offre d'emploi '" << title << "' n'existe pas\n";
 	} while (j == NULL);
@@ -295,27 +300,26 @@ void pre_worker()
 	string choice;
 
 	cout << "Vous souhaitez:\n";
-	cout << "\t1. Créér un nouveau compte Travailleur\n";
-	cout << "\t2. Vous connecter a votre compte Travailleur\n";
+	cout << "\t1. Vous connecter a votre compte Travailleur\n";
+	cout << "\t2. Créér un nouveau compte Travailleur\n";
 	cout << "\n";
 
 	do
 	{
-		cout << "Entrez votre choix ('q' pour quitter): ";
+		cout << "Entrez votre choix ('q' pour annuler): ";
 		cin >> choice;
-	} while (choice != "1" && choice != "2" && choice != "q");
+		if (choice == "q") return;
+	} while (choice != "1" && choice != "2");
 
 	cout << "\n";
 	
 	switch(choice[0])
 	{
 	case '1':
-		create_worker();
-		break;
-	case '2':
 		login_worker();
 		break;
-	case 'q':
+	case '2':
+		create_worker();
 		break;
 	}
 }
@@ -328,6 +332,7 @@ void create_worker()
 	Company* c = NULL;
 
 	cout << "~~ Création de profil Travailleur ~~\n\n";
+	
 	cout << "Merci d'indiquer:\n";
 	cout << "-Votre nom: ";
 	cin >> last_name;
@@ -390,7 +395,7 @@ void login_worker()
 	cout << "~~ Connexion Travailleur ~~\n\n";
 	do
 	{
-		cout << "Entrez votre nom (nom prénom) ('q' pour quitter): ";
+		cout << "Entrez votre nom (nom prénom) ('q' pour annuler): ";
 		cin >> full_name;
 		if (full_name == "q") return;
 
@@ -408,40 +413,42 @@ void worker_menu(Worker* w)
 {
 	string choice;
 
-	cout << "~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n";
-	cout << "Vous voulez:\n";
-	cout << "\t1. Chercher un nouvel emploi\n";
-	cout << "\t2. Rechercher un profil parmis vos ancien collègue\n";
-	cout << "\t3. Modifier votre profil\n";
-	cout << "\t4. Supprimer votre profil\n";
-	cout << "\t5. Retour au menu principal\n";
-	cout << "\n";
-	
 	do
 	{
-		cout << "Entrez votre choix ('q' pour quitter): ";
-		cin >> choice;
-	} while (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "q");
+		cout << "\n~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n";
+		cout << "Vous voulez:\n";
+		cout << "\t1. Chercher un nouvel emploi\n";
+		cout << "\t2. Rechercher un profil parmis vos ancien collègue\n";
+		cout << "\t3. Modifier votre profil\n";
+		cout << "\t4. Supprimer votre profil\n";
+		cout << "\t5. Retour au menu principal\n";
+		cout << "\n";
+		
+		do
+		{
+			cout << "Entrez votre choix ('q' pour revenir au menu principal): ";
+			cin >> choice;
+			if (choice == "q") return;
+		} while (choice != "1" && choice != "2" && choice != "3" && choice != "4");
 
-	cout << "\n";
+		cout << "\n";
 
-	switch(choice[0])
-	{
-	case '1':
-		search_job(w);
-		break;
-	case '2':
-		search_coll(w);
-		break;
-	case '3':
-		modify_worker(w);
-		break;
-	case '4':
-		delete_worker(w);
-		break;
-	case 'q':
-		break;
-	}
+		switch(choice[0])
+		{
+		case '1':
+			search_job(w);
+			break;
+		case '2':
+			search_coll(w);
+			break;
+		case '3':
+			modify_worker(w);
+			break;
+		case '4':
+			delete_worker(w);
+			break;
+		}
+	} while (true);
 }
 
 void search_job(Worker* w)
@@ -480,7 +487,7 @@ void search_coll(Worker* w)
 	
 	do
 	{
-		cout << "Entrez votre choix ('q' pour quitter): ";
+		cout << "Entrez votre choix ('q' pour annuler): ";
 		cin >> choice;
 		if (choice == "q") return;
 	} while (choice != "1" && choice != "2");

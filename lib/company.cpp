@@ -32,6 +32,7 @@ Company* srch_cmp_list(List<Company*>* companies, std::string name)
 
 	while (cur != NULL)
 	{
+		std::cout << name << " " << cur->data->name << std::endl;
 		if (cur->data->name == name) c = cur->data;
 		cur = cur->next;
 	}

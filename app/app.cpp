@@ -44,7 +44,7 @@ int main(void)
 
 	home();
 
-	std::cout << "Merci de votre visite !" << std::endl;
+	std::cout << "\nMerci de votre visite !" << std::endl;
 
 	save(&companies, &jobs, &workers, "app/data_base");
 	
