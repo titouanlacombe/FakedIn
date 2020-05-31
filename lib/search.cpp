@@ -1,47 +1,5 @@
 #include "search.h"
 
-Company* cmp_login(List<Company*>* companies, std::string name)
-{
-	Company* c;
-	auto cur = companies->first;
-
-	while (cur != NULL)
-	{
-		if (cur->data->name == name) c = cur->data;
-		cur = cur->next;
-	}
-	if (cur == NULL) return NULL;
-	else return c;
-}
-
-Worker* wrk_login(List<Worker*>* workers, std::string first_name, std::string last_name)
-{
-	Worker* w;
-	auto cur = workers->first;
-
-	while (cur != NULL)
-	{
-		if (cur->data->first_name == first_name && cur->data->last_name == last_name) w = cur->data;
-		cur = cur->next;
-	}
-	if (cur == NULL) return NULL;
-	else return w;
-}
-
-Job* job_login(List<Job*>* jobs, Company* c, std::string title)
-{
-	Job* j;
-	auto cur = jobs->first;
-
-	while (cur != NULL)
-	{
-		if (cur->data->title == title && cur->data->company == c) j = cur->data;
-		cur = cur->next;
-	}
-	if (cur == NULL) return NULL;
-	else return j;
-}
-
 // Rechercher parmi les chercheurs d'emploi pour des profils qui 
 // correspondent à un poste à pourvoir (recherche par zip_code ou pas)
 List<Worker*>* srch_wrk_profile_job(List<Worker*> *workers, Job* j, bool zip_code)

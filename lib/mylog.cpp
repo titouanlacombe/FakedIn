@@ -21,7 +21,7 @@ std::string get_time_str(bool longstr = true)
 
 void log_begin(std::string folder)
 {
-  log_file.open("./" + folder + "/logs/log " + get_time_str() + ".txt");
+  log_file.open("./" + folder + "/log " + get_time_str() + ".txt");
 }
 
 void log_write(std::string str)

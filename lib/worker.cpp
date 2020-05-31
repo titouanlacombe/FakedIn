@@ -80,6 +80,31 @@ std::ostream& operator<<(std::ostream& os, const Worker& w)
 	return os;
 }
 
+Worker* srch_wrk_list(List<Worker*>* workers, std::string first_name, std::string last_name)
+{
+	Worker* w;
+	auto cur = workers->first;
+
+	while (cur != NULL)
+	{
+		if (cur->data->first_name == first_name && cur->data->last_name == last_name) w = cur->data;
+		cur = cur->next;
+	}
+	if (cur == NULL) return NULL;
+	else return w;
+}
+
+List<Worker*>* company_employees(List<Worker*>* workers, Company* c)
+{
+	List<Worker*>* l = new List<Worker*>;
+	auto tmp = workers->first;
+	while (tmp != NULL)
+	{
+		if (tmp->data->company == c) l->addlast(tmp->data);
+	}
+	return l;
+}
+
 void load_wrk()
 {
 	return;

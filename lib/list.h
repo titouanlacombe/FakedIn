@@ -49,6 +49,7 @@ public:
 	T& operator[](int n);
 	//retourne le nombre d'éléments en commun entre deux listes
 	int in_common(List<T>* l);
+	void delete_data();
 	void print();
 };
 
@@ -193,6 +194,16 @@ int List<T>::in_common(List<T>* l)
 		cur = cur->next;
 	}
 	return n;
+}
+
+template <typename T>
+void List<T>::delete_data()
+{
+	auto tmp = first;
+	while (tmp != NULL)
+	{
+		delete tmp->data;
+	}
 }
 
 template <typename T>

@@ -25,6 +25,20 @@ std::ostream& operator<<(std::ostream& os, const Company& c)
 	return os;
 }
 
+Company* srch_cmp_list(List<Company*>* companies, std::string name)
+{
+	Company* c;
+	auto cur = companies->first;
+
+	while (cur != NULL)
+	{
+		if (cur->data->name == name) c = cur->data;
+		cur = cur->next;
+	}
+	if (cur == NULL) return NULL;
+	else return c;
+}
+
 void load_cmp()
 {
 	return;

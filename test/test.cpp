@@ -66,7 +66,7 @@ int main()
 
 	{
 		//----------------------MYLOG---------------------
-		log_begin("test");
+		log_begin("test/logs");
 		log_write("salut!");
 		log_write("ca va ?");
 		log_end();

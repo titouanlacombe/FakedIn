@@ -15,4 +15,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Company& c);
 };
 
+// Recherche d'une companie par son nom
+Company* srch_cmp_list(List<Company*>* companies, std::string name);
+
 void load_cmp();
