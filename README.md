@@ -19,8 +19,8 @@ Vous n'êtes pas dans l'obligation de garder exactment les mêmes équipes que p
     - [Table de postes](#table-de-postes)
     - [Table de chercheur d'emploi](#table-de-chercheur-demploi)
     - [Table des employés](#table-des-employ%C3%A9s)
-    - [Langage de programmation et paramètres de compilateur](#langage-de-programmation-et-param%C3%A8tres-de-compilateur)
-    - [Journal](#journal)
+  - [Langage de programmation et paramètres de compilateur](#langage-de-programmation-et-param%C3%A8tres-de-compilateur)
+  - [Journal](#journal)
 - [Instructions de travail](#instructions-de-travail)
   - [Modules/Bibliothèques](#modulesbiblioth%C3%A8ques)
   - [Tests](#tests)
@@ -138,8 +138,8 @@ Lorsqu'un un employé quitte ou perd son emploi et est en recherche d'emploi, so
   - [ ] Recherche par compétences
   - [ ] Recherche par compétences et code postal
   - [ ] Résultats
-  - [ ] Titre du poste
-  - [ ] Nom de l'entreprise
+    - [ ] Titre du poste
+    - [ ] Nom de l'entreprise
     - [ ] Adresse mail de l'entreprise
     - [ ] Code postal de l'entreprise
 - [ ] Rechercher parmi les anciens collègues
