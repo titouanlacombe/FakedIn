@@ -213,7 +213,7 @@ void List<T>::print()
 	Node<T> *tmp = first;
 	while (tmp != NULL) {
 		std::cout << tmp->data << std::endl;
-		tmp = tmp->_next;
+		tmp = tmp->next;
 	}
 }
 
@@ -223,7 +223,7 @@ void List<T>::printl()
 	Node<T> *tmp = first;
 	while (tmp != last) {
 		std::cout << tmp->data << ", ";
-		tmp = tmp->_next;
+		tmp = tmp->next;
 	}
 	std::cout << tmp->data << std::endl;
 }

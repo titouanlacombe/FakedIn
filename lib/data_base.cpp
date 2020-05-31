@@ -5,7 +5,7 @@
 #define EMP_FILE_NAME "/Employees.csv"
 #define SKR_FILE_NAME "/Seekers.csv"
 
-int mygetline(std::string& s, std::string& dest, char limit = '\n')
+int mygetline(std::string& s, std::string& dest, char limit)
 {
 	int i = 0;
 	auto it = s.begin();

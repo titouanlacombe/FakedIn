@@ -17,11 +17,11 @@ void home()
 {
 	char choice;
 
-	cout << "~~ Menu Principal ~~\n\n"
-	"Vous êtes:\n"
-	"\t1. Une Entreprise\n"
-	"\t2. Un Travailleur\n"
-	"\n";
+	cout << "~~ Menu Principal ~~\n\n";
+	cout << "Vous êtes:\n";
+	cout << "\t1. Une Entreprise\n";
+	cout << "\t2. Un Travailleur\n";
+	cout << "\n";
 	
 	do
 	{
@@ -47,9 +47,9 @@ void pre_company()
 {
 	char choice;
 
-	cout << "Vous souhaitez:\n"
-	"\t1. Créér un nouveau compte Entreprise\n"
-	"\t2. Vous connecter a votre compte Entreprise\n";
+	cout << "Vous souhaitez:\n";
+	cout << "\t1. Créér un nouveau compte Entreprise\n";
+	cout << "\t2. Vous connecter a votre compte Entreprise\n";
 	
 	do
 	{
@@ -120,14 +120,14 @@ void company_menu(Company* c)
 {
 	char choice;
 	
-	cout << "~~ Menu Entreprise (" << c->name << ") ~~\n\n"
-	"Vous voulez:\n"
-	"\t1. Faire une recherche parmi les chercheurs d'emploi\n"
-	"\t2. Créér une nouvelle offre d'emploi\n"
-	"\t3. Supprimer une offre d'emploi\n"
-	"\t4. Supprimer votre compte Entreprise\n"
-	"\t5. Retour au menu principal\n"
-	"\n";
+	cout << "~~ Menu Entreprise (" << c->name << ") ~~\n\n";
+	cout << "Vous voulez:\n";
+	cout << "\t1. Faire une recherche parmi les chercheurs d'emploi\n";
+	cout << "\t2. Créér une nouvelle offre d'emploi\n";
+	cout << "\t3. Supprimer une offre d'emploi\n";
+	cout << "\t4. Supprimer votre compte Entreprise\n";
+	cout << "\t5. Retour au menu principal\n";
+	cout <<	"\n";
 	
 	do
 	{
@@ -282,13 +282,13 @@ void delete_company(Company* c)
 	}
 }
 
-void pre_worker(bool emp)
+void pre_worker()
 {
 	char choice;
 
-	cout << "Vous souhaitez:\n"
-	"\t1. Créér un nouveau compte Travailleur\n"
-	"\t2. Vous connecter a votre compte Travailleur\n";
+	cout << "Vous souhaitez:\n";
+	cout << "\t1. Créér un nouveau compte Travailleur\n";
+	cout << "\t2. Vous connecter a votre compte Travailleur\n";
 
 	do
 	{
@@ -310,7 +310,7 @@ void pre_worker(bool emp)
 	}
 }
 
-void create_worker(bool emp)
+void create_worker()
 {
 	string first_name, last_name, email, zip;
 	string skills_raw, coll_str, company_name, tmp;
@@ -396,18 +396,18 @@ void worker_menu(Worker* w)
 {
 	char choice;
 
-	cout << "~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n"
-	"Vous voulez:\n"
-	"\t1. Chercher un nouvel emploi\n"
-	"\t2. Rechercher un profil parmis vos ancien collègue\n"
-	"\t3. Modifier votre profil\n"
-	"\t4. Supprimer votre profil\n"
-	"\t5. Retour au menu principal\n";
-	"\n";
+	cout << "~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n";
+	cout << "Vous voulez:\n";
+	cout << "\t1. Chercher un nouvel emploi\n";
+	cout << "\t2. Rechercher un profil parmis vos ancien collègue\n";
+	cout << "\t3. Modifier votre profil\n";
+	cout << "\t4. Supprimer votre profil\n";
+	cout << "\t5. Retour au menu principal\n";
+	cout << "\n";
 	
 	do
 	{
-		"Entrez votre choix ('q' pour quitter): ";
+		cout << "Entrez votre choix ('q' pour quitter): ";
 		cin >> choice;
 	} while (choice != '1' && choice != '2' && choice != '3' && choice != '4' && choice != 'q');
 
@@ -460,15 +460,15 @@ void search_coll(Worker* w)
 	string name;
 	char choice;
 
-	cout << "~~ Recherche parmis vos anciens collègues ~~\n\n"
-	"Voulez vous:\n"
-	"\t1. Trouver des anciens collegues travaillant dans une certaine entreprise\n"
-	"\t2. Trouver des anciens collegues travaillant dans une entreprise cherchant votre profil\n"
-	"\n";
+	cout << "~~ Recherche parmis vos anciens collègues ~~\n\n";
+	cout << "Voulez vous:\n";
+	cout << "\t1. Trouver des anciens collegues travaillant dans une certaine entreprise\n";
+	cout << "\t2. Trouver des anciens collegues travaillant dans une entreprise cherchant votre profil\n";
+	cout << "\n";
 	
 	do
 	{
-		"Entrez votre choix ('q' pour quitter): ";
+		cout << "Entrez votre choix ('q' pour quitter): ";
 		cin >> choice;
 		if (choice == 'q') return;
 	} while (choice != '1' && choice != '2');
@@ -516,16 +516,16 @@ void modify_worker(Worker* w)
 	w->colleagues->printl();
 	cout << endl;
 
-	cout << "Que voulez vous modifier ?\n"
-	"\t1. Ajouter une compétence\n"
-	"\t2. Ajouter un collègue de travail\n"
-	"\t3. Nouveau code postal\n"
-	"\t4. Nouvelle entreprise\n"
-	"\n";
+	cout << "Que voulez vous modifier ?\n";
+	cout << "\t1. Ajouter une compétence\n";
+	cout << "\t2. Ajouter un collègue de travail\n";
+	cout << "\t3. Nouveau code postal\n";
+	cout << "\t4. Nouvelle entreprise\n";
+	cout << "\n";
 
 	do
 	{
-		"Entrez votre choix ('q' pour annuler): ";
+		cout << "Entrez votre choix ('q' pour annuler): ";
 		cin >> choice;
 		if (choice == 'q') return;
 		cout << endl;
