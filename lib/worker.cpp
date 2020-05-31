@@ -65,18 +65,16 @@ void Worker::remove_from_coll()
 
 std::ostream& operator<<(std::ostream& os, const Worker& w)
 {
-	if (w.employed()) os << "Employé: ";
-	else os << "Chercheur d'emploi: ";
-	os << w.first_name << " " << w.last_name;
-	if (w.employed()) os << ", Employé a: " << w.company->name;
-	os << ", Compétences: ";
-	auto tmp = w.skills->first;
-	while (tmp != w.skills->last)
-	{
-		os << tmp->data << ", ";
-		tmp = tmp->next;
-	}
-	os << tmp->data;
+	os << w.first_name << " " << w.last_name << " email: " << w.email;
+	if (w.employed()) os << " employé a: " << w.company->name;
+	// os << ", Compétences: ";
+	// auto tmp = w.skills->first;
+	// while (tmp != w.skills->last)
+	// {
+	// 	os << tmp->data << ", ";
+	// 	tmp = tmp->next;
+	// }
+	// os << tmp->data;
 	return os;
 }
 

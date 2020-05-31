@@ -22,14 +22,16 @@ Job::~Job()
 
 std::ostream& operator<<(std::ostream& os, const Job& j)
 {
-	os << "Offre d'emploi: " << j.title << ", Entreprise: " << j.company->name << ", Compétences requises: ";
-	auto tmp = j.skills->first;
-	while (tmp != j.skills->last)
-	{
-		os << tmp->data << ", ";
-		tmp = tmp->next;
-	}
-	os << tmp->data;
+	os << "Offre d'emploi: " << j.title << " a " << j.company->name << "(email: "
+	<< j.company->email << " Code postal: " << j.company->zip_code << ")";
+	// auto tmp = j.skills->first;
+	// os << " Compétences requises: ";
+	// while (tmp != j.skills->last)
+	// {
+	// 	os << tmp->data << ", ";
+	// 	tmp = tmp->next;
+	// }
+	// os << tmp->data;
 	return os;
 }
 

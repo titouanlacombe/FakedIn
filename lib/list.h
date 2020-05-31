@@ -51,6 +51,7 @@ public:
 	int in_common(List<T>* l);
 	void delete_data();
 	void print();
+	void printl();
 };
 
 template <typename T>
@@ -214,6 +215,17 @@ void List<T>::print()
 		std::cout << tmp->data << std::endl;
 		tmp = tmp->_next;
 	}
+}
+
+template <typename T>
+void List<T>::printl()
+{
+	Node<T> *tmp = first;
+	while (tmp != last) {
+		std::cout << tmp->data << ", ";
+		tmp = tmp->_next;
+	}
+	std::cout << tmp->data << std::endl;
 }
 
 void load_list();

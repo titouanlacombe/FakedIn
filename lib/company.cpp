@@ -21,7 +21,7 @@ Company::~Company()
 
 std::ostream& operator<<(std::ostream& os, const Company& c)
 {
-	os << "Entreprise: " << c.name << ", Code postal: " << c.zip_code << ", email: " << c.email;
+	os << "Entreprise: " << c.name << " Code postal: " << c.zip_code << " email: " << c.email;
 	return os;
 }
 
