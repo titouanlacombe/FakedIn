@@ -80,16 +80,15 @@ std::ostream& operator<<(std::ostream& os, const Worker& w)
 
 Worker* srch_wrk_list(List<Worker*>* workers, std::string first_name, std::string last_name)
 {
-	Worker* w;
+	Worker* w = NULL;
 	auto cur = workers->first;
 
-	while (cur != NULL)
+	while (cur != NULL && w == NULL)
 	{
 		if (cur->data->first_name == first_name && cur->data->last_name == last_name) w = cur->data;
 		cur = cur->next;
 	}
-	if (cur == NULL) return NULL;
-	else return w;
+	return w;
 }
 
 List<Worker*>* company_employees(List<Worker*>* workers, Company* c)

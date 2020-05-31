@@ -23,7 +23,7 @@ void home()
 		cout << "Vous êtes:\n";
 		cout << "\t1. Une Entreprise\n";
 		cout << "\t2. Un Travailleur\n";
-		cout << "\n";
+		cout << std::endl;
 		
 		do
 		{
@@ -32,7 +32,7 @@ void home()
 			if (choice == "q") return;
 		} while (choice != "1" && choice != "2");
 
-		cout << "\n";
+		cout << std::endl;
 
 		switch(choice[0])
 		{
@@ -53,7 +53,7 @@ void pre_company()
 	cout << "Vous souhaitez:\n";
 	cout << "\t1. Vous connecter a votre compte Entreprise\n";
 	cout << "\t2. Créér un nouveau compte Entreprise\n";
-	cout << "\n";
+	cout << std::endl;
 	
 	do
 	{
@@ -62,7 +62,7 @@ void pre_company()
 		if (choice == "q") return;
 	} while (choice != "1" && choice != "2");
 
-	cout << "\n";
+	cout << std::endl;
 
 	switch(choice[0])
 	{
@@ -117,7 +117,7 @@ void login_company()
 		if (c == NULL) cout << "Erreur: l'Entreprise '" << name << "' n'existe pas\n";
 	} while (c == NULL);
 	
-	cout << "\n";
+	cout << std::endl;
 	
 	company_menu(c);
 }
@@ -128,14 +128,13 @@ void company_menu(Company* c)
 	
 	do
 	{
-		cout << "\n~~ Menu Entreprise (" << c->name << ") ~~\n\n";
+		cout << "~~ Menu Entreprise (" << c->name << ") ~~\n\n";
 		cout << "Vous voulez:\n";
 		cout << "\t1. Faire une recherche parmi les chercheurs d'emploi\n";
 		cout << "\t2. Créér une nouvelle offre d'emploi\n";
 		cout << "\t3. Supprimer une offre d'emploi\n";
 		cout << "\t4. Supprimer votre compte Entreprise\n";
-		cout << "\t5. Retour au menu principal\n";
-		cout <<	"\n";
+		cout <<	std::endl;
 		
 		do
 		{
@@ -144,7 +143,7 @@ void company_menu(Company* c)
 			if (choice == "q") return;
 		} while (choice != "1" && choice != "2" && choice != "3" && choice != "4");
 
-		cout << "\n";
+		cout << std::endl;
 
 		switch(choice[0])
 		{
@@ -181,7 +180,7 @@ void search_worker(Company* c)
 		if (c == NULL) cout << "Erreur: le poste '" << title << "' n'existe pas\n";
 	} while (c == NULL);
 
-	cout << "\n";
+	cout << std::endl;
 
 	do
 	{
@@ -189,12 +188,14 @@ void search_worker(Company* c)
 		cin >> zip;
 	} while (zip != "o" && zip != "n");
 
-	cout << "\n";
+	cout << std::endl;
 
 	resultats = srch_wrk_profile_job(workers, j, zip == "o");
 
 	cout << "Résultats:\n";
 	resultats->print();
+	cout << "\nEntrez une touche pour revenir au menu Entreprise.";
+	cin >> title;
 
 	delete resultats;
 }
@@ -216,7 +217,7 @@ void create_job(Company* c)
 	while (mygetline(skills_raw, tmp, ','))
 	{
 		skills->addlast(tmp);
-		skills_str += tmp;
+		skills_str += tmp + " ";
 	}
 	
 	j = new Job(title, skills, c);
@@ -243,7 +244,7 @@ void delete_job(Company* c)
 		if (j == NULL) cout << "Erreur: l'offre d'emploi '" << title << "' n'existe pas\n";
 	} while (j == NULL);
 	
-	cout << "\n";
+	cout << std::endl;
 	
 	jobs->remove(j);
 
@@ -265,7 +266,7 @@ void delete_company(Company* c)
 	cout << "Entrez 'o' pour confirmer: ";
 	cin >> choice;
 
-	cout << "\n";
+	cout << std::endl;
 
 	if(choice == "o")
 	{
@@ -284,14 +285,14 @@ void delete_company(Company* c)
 
 		companies->remove(c);
 
-		cout << "Entreprise supprimée" << endl;
+		cout << "Entreprise supprimée\n" << endl;
 		log_write("Company deleted: " + c->name);
 		
 		delete c;
 	}
 	else
 	{
-		cout << "Suppression annulée" << endl;
+		cout << "Suppression annulée\n" << endl;
 	}
 }
 
@@ -302,7 +303,7 @@ void pre_worker()
 	cout << "Vous souhaitez:\n";
 	cout << "\t1. Vous connecter a votre compte Travailleur\n";
 	cout << "\t2. Créér un nouveau compte Travailleur\n";
-	cout << "\n";
+	cout << std::endl;
 
 	do
 	{
@@ -311,7 +312,7 @@ void pre_worker()
 		if (choice == "q") return;
 	} while (choice != "1" && choice != "2");
 
-	cout << "\n";
+	cout << std::endl;
 	
 	switch(choice[0])
 	{
@@ -404,7 +405,7 @@ void login_worker()
 		if (w == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas\n";
 	} while (w == NULL);
 	
-	cout << "\n";
+	cout << std::endl;
 
 	worker_menu(w);
 }
@@ -415,14 +416,13 @@ void worker_menu(Worker* w)
 
 	do
 	{
-		cout << "\n~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n";
+		cout << "~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n";
 		cout << "Vous voulez:\n";
 		cout << "\t1. Chercher un nouvel emploi\n";
 		cout << "\t2. Rechercher un profil parmis vos ancien collègue\n";
 		cout << "\t3. Modifier votre profil\n";
 		cout << "\t4. Supprimer votre profil\n";
-		cout << "\t5. Retour au menu principal\n";
-		cout << "\n";
+		cout << std::endl;
 		
 		do
 		{
@@ -431,7 +431,7 @@ void worker_menu(Worker* w)
 			if (choice == "q") return;
 		} while (choice != "1" && choice != "2" && choice != "3" && choice != "4");
 
-		cout << "\n";
+		cout << std::endl;
 
 		switch(choice[0])
 		{
@@ -454,7 +454,7 @@ void worker_menu(Worker* w)
 void search_job(Worker* w)
 {
 	List<Job*>* results;
-	char zip;
+	string zip;
 
 	cout << "~~ Recherche d'offre d'emploi ~~\n\n";
 
@@ -462,12 +462,14 @@ void search_job(Worker* w)
 	{
 		cout << "Voulez vous ne voir que les travailleur du même code postal (o/n): ";
 		cin >> zip;
-	} while (zip != 'o' && zip != 'n');
+	} while (zip != "o" && zip != "n");
 	
-	cout << "\n";
+	cout << std::endl;
 
-	results = srch_job_profile_wrk(jobs, w, zip == 'o');
+	results = srch_job_profile_wrk(jobs, w, zip == "o");
 	results->print();
+	cout << "\nEntrez une touche pour revenir au menu Travailleur.";
+	cin >> zip;
 
 	delete results;
 }
@@ -483,7 +485,7 @@ void search_coll(Worker* w)
 	cout << "Voulez vous:\n";
 	cout << "\t1. Trouver des anciens collegues travaillant dans une certaine entreprise\n";
 	cout << "\t2. Trouver des anciens collegues travaillant dans une entreprise cherchant votre profil\n";
-	cout << "\n";
+	cout << std::endl;
 	
 	do
 	{
@@ -492,7 +494,7 @@ void search_coll(Worker* w)
 		if (choice == "q") return;
 	} while (choice != "1" && choice != "2");
 	
-	cout << "\n";
+	cout << std::endl;
 
 	switch(choice[0])
 	{
@@ -514,6 +516,9 @@ void search_coll(Worker* w)
 		break;
 	}
 	delete results;
+	
+	cout << "\nEntrez une touche pour revenir au menu Travailleur.";
+	cin >> name;
 }
 
 void modify_worker(Worker* w)
@@ -526,8 +531,8 @@ void modify_worker(Worker* w)
 	cout << "~~ Modification du compte Travailleur ~~\n\n"
 
 	"Votre profil actuel: \n"
-	<< w->first_name << " " << w->last_name << "\n" 
-	<< "email: " << w->email << " Code postal: " << w->zip_code << "\n";
+	<< w->first_name << " " << w->last_name << std::endl 
+	<< "email: " << w->email << " Code postal: " << w->zip_code << std::endl;
 	if(w->employed()) cout << "Travaille à: " << w->company;
 	cout << "Skills: ";
 	w->skills->printl();
@@ -540,7 +545,7 @@ void modify_worker(Worker* w)
 	cout << "\t2. Ajouter un collègue de travail\n";
 	cout << "\t3. Nouveau code postal\n";
 	cout << "\t4. Nouvelle entreprise\n";
-	cout << "\n";
+	cout << std::endl;
 
 	do
 	{
@@ -550,7 +555,7 @@ void modify_worker(Worker* w)
 		cout << endl;
 	} while (choice != "1" && choice != "2" && choice != "3" && choice != "4");
 	
-	cout << "\n";
+	cout << std::endl;
 	
 	switch(choice[0])
 	{
@@ -562,7 +567,7 @@ void modify_worker(Worker* w)
 		while (mygetline(skills_raw, tmp, ','))
 		{
 			w->add_skill(tmp);
-			skills_str += tmp;
+			skills_str += tmp + " ";
 		}
 		log_write("Added skills to " + w->first_name + " " + w->last_name + ": " + skills_str);
 		break;
@@ -579,7 +584,7 @@ void modify_worker(Worker* w)
 				if (coll == NULL) cout << "Erreur: le Travailleur '" + tmp + " " + coll_raw + "' n'existe pas\n";
 				else {
 					w->add_colleague(coll);
-					coll_str += tmp;
+					coll_str += tmp + " ";
 				}
 			}
 		} while (coll_raw != "");
@@ -619,21 +624,21 @@ void delete_worker(Worker* w)
 	cout << "Voulez vous vraiment suprimer votre compte ?\n";
 	cout << "Entrez 'o' pour confirmer: ";
 	cin >> choice;
-	cout << "\n";
+	cout << std::endl;
 
 	if(choice == "o")
 	{
 		workers->remove(w);
 		w->remove_from_coll();
 
-		cout << "Travailleur supprimée" << endl;
+		cout << "Travailleur supprimée\n" << endl;
 		log_write("Worker deleted: " + w->first_name + " " + w->last_name);
 		
 		delete w;
 	}
 	else
 	{
-		cout << "Suppression annulée" << endl;
+		cout << "Suppression annulée\n" << endl;
 	}
 }
 

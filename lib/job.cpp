@@ -48,16 +48,15 @@ List<Job*>* company_jobs(List<Job*>* jobs, Company* c)
 
 Job* srch_job_list(List<Job*>* jobs, Company* c, std::string title)
 {
-	Job* j;
+	Job* j = NULL;
 	auto cur = jobs->first;
 
-	while (cur != NULL)
+	while (cur != NULL && j == NULL)
 	{
 		if (cur->data->title == title && cur->data->company == c) j = cur->data;
 		cur = cur->next;
 	}
-	if (cur == NULL) return NULL;
-	else return j;
+	return j;
 }
 
 void load_job()
