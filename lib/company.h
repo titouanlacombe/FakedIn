@@ -12,6 +12,7 @@ public:
 	Company();
 	Company(std::string _name, std::string _zip_code, std::string _email);
 	~Company();
+	friend std::ostream& operator<<(std::ostream& os, const Company& c);
 };
 
 void load_cmp();

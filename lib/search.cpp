@@ -1,147 +1,113 @@
 #include "search.h"
 
-int compatibility(List<std::string>* str_a, List<std::string>* str_b)
+Company* cmp_login(List<Company*>* companies, std::string name)
 {
-	int res = 0;
-	auto cur_a = str_a->first;
-	Node<std::string>* cur_b;
+	Company* c;
+	auto cur = companies->first;
 
-	while (cur_a)
+	while (cur != NULL)
 	{
-		cur_b = str_b->first;
-		while (cur_b)
-		{
-			if (cur_a->data == cur_b->data) res++;
-			cur_b = cur_b->next;
-		}
-		cur_a = cur_a->next;
-	}
-	return res;
-}
-
-Company* cmp_search_name(List<Company*>* c, std::string name)
-{
-	Company* res = new Company;
-	auto cur = c->first;
-
-	while (cur)
-	{
-		if (cur->data->name == name) res = cur->data;
+		if (cur->data->name == name) c = cur->data;
 		cur = cur->next;
 	}
-	if (res->name == "") res = NULL;
-	return res;
+	if (cur == NULL) return NULL;
+	else return c;
 }
 
-Worker* wrk_search_name(List<Worker*>* w, std::string name, std::string surname)
+Worker* wrk_login(List<Worker*>* workers, std::string first_name, std::string last_name)
 {
-	Worker* res = new Worker;
-	auto cur = w->first;
+	Worker* w;
+	auto cur = workers->first;
 
-	while (cur)
+	while (cur != NULL)
 	{
-		if (cur->data->first_name == name && cur->data->last_name == surname) res = cur->data;
+		if (cur->data->first_name == first_name && cur->data->last_name == last_name) w = cur->data;
 		cur = cur->next;
 	}
-	if (res->first_name == "") res = NULL;
-	return res;
+	if (cur == NULL) return NULL;
+	else return w;
 }
 
-Job* job_search_name(List<Job*>* j, Company* c, std::string name)
+Job* job_login(List<Job*>* jobs, Company* c, std::string title)
 {
-	Job* res = new Job;
-	auto cur = j->first;
+	Job* j;
+	auto cur = jobs->first;
 
-	while (cur)
+	while (cur != NULL)
 	{
-		if (cur->data->title == name && cur->data->company == c) res = cur->data;
+		if (cur->data->title == title && cur->data->company == c) j = cur->data;
 		cur = cur->next;
 	}
-	if (res->title == "") res = NULL;
-	return res;
+	if (cur == NULL) return NULL;
+	else return j;
 }
 
-List<Worker*>* seek_search_skill(List<Worker*> *w, List<std::string>* skills, std::string zip_code)
+// Rechercher parmi les chercheurs d'emploi pour des profils qui 
+// correspondent à un poste à pourvoir (recherche par zip_code ou pas)
+List<Worker*>* srch_wrk_profile_job(List<Worker*> *workers, Job* j, bool zip_code)
 {
-	List<Worker*>* res = new List<Worker*>;
-	auto cur = w->first;
+	List<Worker*>* l = new List<Worker*>;
+	auto cur = workers->first;
 
-	while (cur)
+	while (cur != NULL)
 	{
 		if (!cur->data->employed())
 		{
-			if ((zip_code == "") || (zip_code == cur->data->zip_code))
+			if (zip_code)
 			{
-				if (compatibility(skills, cur->data->skills) > 0) res->addlast(cur->data);
+				if (j->company->zip_code == cur->data->zip_code && j->skills->in_common(cur->data->skills) > 0) l->addlast(cur->data);
+			}
+			else
+			{
+				if (j->skills->in_common(cur->data->skills) > 0) l->addlast(cur->data);
 			}
 			cur = cur->next;
 		}
 	}
+	return l;
+}
 
+// Rechercher parmi les jobs ceux qui correspondent
+// au profil de w (recherche par zip_code ou pas)
+List<Job*>* srch_job_profile_wrk(List<Job*> *jobs, Worker* w, bool zip_code)
+{
+	List<Job*>* res = new List<Job*>;
+	auto cur = jobs->first;
+
+	while (cur)
+	{
+		if ((zip_code) || (w->zip_code == cur->data->company->zip_code))
+		{
+			if (cur->data->skills->in_common(w->skills) > 0) res->addlast(cur->data);
+		}
+		cur = cur->next;
+	}
 	return res;
 }
 
-List<Worker*>* coll_search_cmp(Worker *w, Company *c)
+// Retourne colleagues employés par company
+List<Worker*>* srch_coll_from_cmp(Worker *w, Company *c)
 {
-	List<Worker*>* res = new List<Worker*>;
+	List<Worker*>* l = new List<Worker*>;
 	auto cur = w->colleagues->first;
 
-	while (cur)
+	while (cur != NULL)
 	{
-		if (cur->data->company == c) res->addlast(cur->data);
+		if (cur->data->company == c) l->addlast(cur->data);
 		cur = cur->next;
 	}
-	return res;
+	return l;
 }
 
-List<Worker*>* emp_search_job(Worker *w, List<Job*> *j)
+// retourne les anciens collègues employés aux entreprises 
+// qui recherchent les compétences de w
+List<Worker*>* srch_coll_skills(Worker *w, List<Job*> *jobs)
 {
-	List<Worker*>* res = new List<Worker*>;
-	auto cur_w = w->colleagues->first;
-	auto cur_j = j->first;
-
-	while (cur_w)
-	{
-		while (cur_j)
-		{
-			if (cur_j->data->company == cur_w->data->company)
-			{
-				if (compatibility(cur_j->data->skills, w->skills) > 0) res->addlast(cur_w->data);
-			}
-			cur_j = cur_j->next;
-		}
-		cur_w = cur_w->next;
-	}
-	return res;
-}
-
-List<Job*>* job_search_skill(Worker *w, List<Job*> *j, std::string zip_code)
-{
-	List<Job*>* res = new List<Job*>;
-	auto cur = j->first;
-
-	while (cur)
-	{
-		if ((zip_code == "") || (zip_code == cur->data->company->zip_code))
-		{
-			if (compatibility(cur->data->skills, w->skills)) res->addlast(cur->data);
-		}	
-		cur = cur->next;
-	}
-	return res;
-}
-
-List<Job*>* job_search_cmp(List<Job*> *j, Company *c)
-{
-	List<Job*>* res = new List<Job*>;
-	auto cur = j->first;
-
-	while (cur)
-	{
-		if (cur->data->company == c) res->addlast(cur->data);
-		cur = cur->next;
-	}
-	return res;
+	List<Worker*>* l = new List<Worker*>;
+	// rechercher les jobs qui demande skills
+	// convertir en companies
+	// coll_search_cmp
+	return l;
 }
 
 void load_srch()

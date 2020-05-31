@@ -25,8 +25,9 @@ public:
 	// change l'entreprise de w
 	void set_company(Company* company);
 	// donne l'etat de w
-	bool employed();
+	bool employed() const;
 	void remove_from_coll();
+	friend std::ostream& operator<<(std::ostream& os, const Worker& w);
 };
 
 void load_wrk();

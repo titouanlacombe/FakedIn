@@ -64,7 +64,7 @@ void pre_company()
 	if (name == "n") create_cmp();
 	else if (name != "p")
 	{
-		Company* c = cmp_search_name(companies, name);
+		Company* c = cmp_login(companies, name);
 		company(c);
 	}
 	else home();
@@ -147,7 +147,7 @@ void pre_wrk(bool emp)
 	else if (name == "p") home();
 	else
 	{
-		Worker* w = wrk_search_name(workers, name, surname);
+		Worker* w = wrk_login(workers, name, surname);
 		if (w->employed()) employee(w);
 		else seeker(w);
 	}
@@ -185,7 +185,7 @@ void create_wrk(bool emp)
 		{
 			cout << "\tIndiquez le nom de votre Entreprise : ";
 			cin >> name;
-			c = cmp_search_name(companies, company_name);
+			c = cmp_login(companies, company_name);
 			if(c == NULL) cout << "L'entreprise " << company_name << " n'est pas sur FakedIn." << endl;
 		}
 		w->set_company(c);
@@ -199,7 +199,7 @@ void create_wrk(bool emp)
 		{
 			cout << "\tIndiquez le nom de famille de cet ancien collègue :";
 			cin >> name;
-			coll = wrk_search_name(workers, name, surname);
+			coll = wrk_login(workers, name, surname);
 			if(coll == NULL) cout << surname << " " << name << " n'est pas inscrit sur FakedIn." << endl;
 			else
 			{
@@ -316,7 +316,7 @@ void delete_cmp(Company* c)
 	if(choice == 'n') company(c);
 	else
 	{
-		cmp_job = job_search_cmp(jobs, c);
+		cmp_job = company_jobs(jobs, c);
 		log_write("Company deleted: " + c->name);
 		*jobs -= *cmp_job;
 		companies->remove(c);
@@ -364,7 +364,7 @@ void delete_job(Company* c)
 		"\tIndiquez le titre de l'offre à supprimer : ";
 		cin >> job_name;
 
-		j = job_search_name(jobs, c, job_name);
+		j = job_login(jobs, c, job_name);
 	}
 
 	jobs->remove(j);
@@ -448,7 +448,7 @@ void modify_wrk(Worker* w)
 			{
 				cout << "\tIndiquez le nom de famille de cet ancien collègue :";
 				cin >> name;
-				coll = wrk_search_name(workers, name, surname);
+				coll = wrk_login(workers, name, surname);
 				if(coll == NULL) cout << surname << " " << name << " n'est pas inscrit sur FakedIn." << endl;
 				else
 				{
@@ -479,7 +479,7 @@ void modify_wrk(Worker* w)
 			if (w->employed() && !new_emp)
 			{
 				// = a perdu son emploi
-				old_coworkers = coll_search_cmp(w, w->company);
+				old_coworkers = srch_coll_from_cmp(w, w->company);
 				auto tmp = old_coworkers->first;
 				while(tmp != NULL)
 				{
@@ -500,7 +500,7 @@ void modify_wrk(Worker* w)
 			cout << endl;
 			if(company != "q")
 			{
-				c = cmp_search_name(companies, company);
+				c = cmp_login(companies, company);
 				if(c == NULL) cout << "L'entreprise " << company << " n'est pas sur FakedIn." << endl;
 			}
 		}
@@ -509,7 +509,8 @@ void modify_wrk(Worker* w)
 			if(w->employed())
 			{ 	
 				//a changé d'entreprise
-				old_coworkers = coll_search_cmp(w, w->company);
+				// old_coworkers = company_coll(w, w->company);
+				old_coworkers = new List<Worker *>;
 				auto tmp = old_coworkers->first;
 				while(tmp != NULL)
 				{
@@ -603,7 +604,7 @@ void search_wrk(Worker* w)
 			cout << "Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues : ";
 			cin >> name;
 			cout << endl;
-			//res = coll_search_cmp(w,cmp_search_name(companies,name));
+			//res = coll_search_cmp(w,cmp_login(companies,name));
 			//afficher resultat
 			break;
 		case '2':

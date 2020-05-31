@@ -42,10 +42,13 @@ public:
 	void addlast(T e);
 	int get_pos(T e);
 	Node<T>* get_node(T e);
-	void remove(T e);
+	bool has(T e);
 	void remove(Node<T>* tmp);
+	void remove(T e);
 	List<T>& operator-=(List<T>& l);
 	T& operator[](int n);
+	//retourne le nombre d'éléments en commun entre deux listes
+	int in_common(List<T>* l);
 	void print();
 };
 
@@ -114,10 +117,9 @@ Node<T>* List<T>::get_node(T e)
 }
 
 template <typename T>
-void List<T>::remove(T e)
+bool List<T>::has(T e)
 {
-	auto n = get_node(e);
-	remove(n);
+	return (get_node(e) != NULL);
 }
 
 template <typename T>
@@ -148,6 +150,13 @@ void List<T>::remove(Node<T>* tmp)
 }
 
 template <typename T>
+void List<T>::remove(T e)
+{
+	auto n = get_node(e);
+	if (n != NULL) remove(n);
+}
+
+template <typename T>
 List<T>& List<T>::operator-=(List<T>& l)
 {
 	auto tmp = l.first;
@@ -173,11 +182,25 @@ T& List<T>::operator[](int n)
 }
 
 template <typename T>
+int List<T>::in_common(List<T>* l)
+{
+	auto cur = l->first;
+	int n = 0;
+
+	while (cur != NULL)
+	{
+		if (has(cur->data)) n++;
+		cur = cur->next;
+	}
+	return n;
+}
+
+template <typename T>
 void List<T>::print()
 {
 	Node<T> *tmp = first;
 	while (tmp != NULL) {
-		std::cout << tmp->data;
+		std::cout << tmp->data << std::endl;
 		tmp = tmp->_next;
 	}
 }

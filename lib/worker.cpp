@@ -48,7 +48,7 @@ void Worker::set_company(Company* _company)
 	company = _company;
 }
 
-bool Worker::employed()
+bool Worker::employed() const
 {
 	return company != NULL;
 }
@@ -61,6 +61,23 @@ void Worker::remove_from_coll()
 		colleagues->first->data->colleagues->remove(this);
 		tmp = tmp->next;
 	}
+}
+
+std::ostream& operator<<(std::ostream& os, const Worker& w)
+{
+	if (w.employed()) os << "Employé: ";
+	else os << "Chercheur d'emploi: ";
+	os << w.first_name << " " << w.last_name;
+	if (w.employed()) os << ", Employé a: " << w.company->name;
+	os << ", Compétences: ";
+	auto tmp = w.skills->first;
+	while (tmp != w.skills->last)
+	{
+		os << tmp->data << ", ";
+		tmp = tmp->next;
+	}
+	os << tmp->data;
+	return os;
 }
 
 void load_wrk()

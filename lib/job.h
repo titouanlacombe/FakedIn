@@ -12,6 +12,9 @@ public:
 	Job();
 	Job(std::string _title, List<std::string>* _skills, Company* _company);
 	~Job();
+	friend std::ostream& operator<<(std::ostream& os, const Job& j);
 };
+
+List<Job*>* company_jobs(List<Job*>* jobs, Company* c);
 
 void load_job();
