@@ -24,6 +24,6 @@ List<Worker*>* srch_coll_from_cmp(Worker *w, Company *c);
 
 // retourne les anciens collègues employés aux entreprises 
 // qui recherchent les compétences de w
-List<Worker*>* srch_coll_skills(Worker *w, List<Job*> *jobs);
+List<Worker*>* srch_coll_skills(List<Job*> *jobs, Worker *w);
 
 void load_srch();

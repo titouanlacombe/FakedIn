@@ -71,18 +71,22 @@ List<Worker*>* srch_wrk_profile_job(List<Worker*> *workers, Job* j, bool zip_cod
 // au profil de w (recherche par zip_code ou pas)
 List<Job*>* srch_job_profile_wrk(List<Job*> *jobs, Worker* w, bool zip_code)
 {
-	List<Job*>* res = new List<Job*>;
+	List<Job*>* l = new List<Job*>;
 	auto cur = jobs->first;
 
-	while (cur)
+	while (cur != NULL)
 	{
-		if ((zip_code) || (w->zip_code == cur->data->company->zip_code))
+		if (zip_code)
 		{
-			if (cur->data->skills->in_common(w->skills) > 0) res->addlast(cur->data);
+			if (w->zip_code == cur->data->company->zip_code && cur->data->skills->in_common(w->skills) > 0) l->addlast(cur->data);
+		}
+		else
+		{
+			if (cur->data->skills->in_common(w->skills) > 0) l->addlast(cur->data);
 		}
 		cur = cur->next;
 	}
-	return res;
+	return l;
 }
 
 // Retourne colleagues employés par company
@@ -101,13 +105,32 @@ List<Worker*>* srch_coll_from_cmp(Worker *w, Company *c)
 
 // retourne les anciens collègues employés aux entreprises 
 // qui recherchent les compétences de w
-List<Worker*>* srch_coll_skills(Worker *w, List<Job*> *jobs)
+List<Worker*>* srch_coll_skills(List<Job*> *jobs, Worker *w)
 {
-	List<Worker*>* l = new List<Worker*>;
-	// rechercher les jobs qui demande skills
+	List<Job*>* lj = srch_job_profile_wrk(jobs, w, false);
+	List<Company*>* lc = new List<Company*>;
+	List<Worker*>* lw = new List<Worker*>;
+
 	// convertir en companies
-	// coll_search_cmp
-	return l;
+	auto tmp = lj->first;
+	while (tmp != NULL)
+	{
+		if (!lc->has(tmp->data->company)) lc->addlast(tmp->data->company);
+		tmp = tmp->next;
+	}
+	
+	// construire la liste de workers collègues
+	auto tmp2 = w->colleagues->first;
+	while (tmp2 != NULL)
+	{
+		if (lc->has(tmp2->data->company)) lw->addlast(tmp2->data);
+		tmp2 = tmp2->next;
+	}
+	
+	delete lj;
+	delete lc;
+	
+	return lw;
 }
 
 void load_srch()
