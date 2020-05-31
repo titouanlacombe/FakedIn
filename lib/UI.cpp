@@ -15,7 +15,7 @@ void init_lists(List<Company*>* _companies, List<Job*>* _jobs, List<Worker*>* _w
 
 void home()
 {
-	char choice;
+	string choice;
 
 	cout << "~~ Menu Principal ~~\n\n";
 	cout << "Vous êtes:\n";
@@ -27,10 +27,11 @@ void home()
 	{
 		cout << "Entrez votre choix ('q' pour quitter): ";
 		cin >> choice;
-		cout << "\n";
-	} while (choice != '1' && choice != '2' && choice != 'q');
+	} while (choice != "1" && choice != "2" && choice != "q");
 
-	switch(choice)
+	cout << "\n";
+
+	switch(choice[0])
 	{
 	case '1':
 		pre_company();
@@ -45,7 +46,7 @@ void home()
 
 void pre_company()
 {
-	char choice;
+	string choice;
 
 	cout << "Vous souhaitez:\n";
 	cout << "\t1. Créér un nouveau compte Entreprise\n";
@@ -55,10 +56,11 @@ void pre_company()
 	{
 		cout << "Entrez votre choix ('q' pour quitter): ";
 		cin >> choice;
-		cout << "\n";
-	} while (choice != '1' && choice != '2' && choice != 'q');
+	} while (choice != "1" && choice != "2" && choice != "q");
 
-	switch(choice)
+	cout << "\n";
+
+	switch(choice[0])
 	{
 	case '1':
 		create_company();
@@ -106,19 +108,20 @@ void login_company()
 	{
 		cout << "Entrez le nom de votre Entreprise ('q' pour quitter): ";
 		cin >> name;
-		cout << "\n";
 
 		if (name == "q") return;
 		c = srch_cmp_list(companies, name);
 		if (c == NULL) cout << "Erreur: l'Entreprise '" << name << "' n'existe pas\n";
 	} while (c == NULL);
 	
+	cout << "\n";
+	
 	company_menu(c);
 }
 
 void company_menu(Company* c)
 {
-	char choice;
+	string choice;
 	
 	cout << "~~ Menu Entreprise (" << c->name << ") ~~\n\n";
 	cout << "Vous voulez:\n";
@@ -133,10 +136,11 @@ void company_menu(Company* c)
 	{
 		cout << "Entrez votre choix ('q' pour quitter): ";
 		cin >> choice;
-		cout << "\n";
-	} while (choice != '1' && choice != '2' && choice != '3' && choice != '4' && choice != 'q');
+	} while (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "q");
 
-	switch(choice)
+	cout << "\n";
+
+	switch(choice[0])
 	{
 	case '1':
 		search_worker(c);
@@ -158,9 +162,8 @@ void company_menu(Company* c)
 void search_worker(Company* c)
 {
 	List<Worker*>* resultats;
-	string title;
+	string title, zip;
 	Job *j;
-	char zip;
 
 	cout << "~~ Recherche de travailleur ~~\n\n";
 
@@ -168,7 +171,6 @@ void search_worker(Company* c)
 	{
 		cout << "Entrez le titre du poste vacant: ";
 		cin >> title;
-		cout << "\n";
 
 		j = srch_job_list(jobs, c, title);
 		if (c == NULL) cout << "Erreur: le poste '" << title << "' n'existe pas\n";
@@ -180,12 +182,11 @@ void search_worker(Company* c)
 	{
 		cout << "Voulez vous ne voir que les travailleur du même code postal (o/n): ";
 		cin >> zip;
-		cout << "\n";
-	} while (zip != 'o' && zip != 'n');
+	} while (zip != "o" && zip != "n");
 
 	cout << "\n";
 
-	resultats = srch_wrk_profile_job(workers, j, zip == 'o');
+	resultats = srch_wrk_profile_job(workers, j, zip == "o");
 
 	cout << "Résultats:\n";
 	resultats->print();
@@ -196,7 +197,7 @@ void search_worker(Company* c)
 void create_job(Company* c)
 {
 	List<string>* skills = new List<string>;
-	string title, skills_raw, tmp;
+	string title, skills_raw, tmp, skills_str;
 	Job* j;
 
 	cout << "~~ Création d'offre d'emploi ~~\n\n";
@@ -210,13 +211,14 @@ void create_job(Company* c)
 	while (mygetline(skills_raw, tmp, ','))
 	{
 		skills->addlast(tmp);
+		skills_str += tmp;
 	}
 	
 	j = new Job(title, skills, c);
 	jobs->addlast(j);
 
 	cout << "Offre d'emploi créée" << endl;
-	log_write("New Job created: " + title + ", skills: " + skills_raw);
+	log_write("New Job created: " + title + ", skills: " + skills_str);
 }
 
 void delete_job(Company* c)
@@ -230,12 +232,13 @@ void delete_job(Company* c)
 	{
 		cout << "Entrez le titre de l'offre d'emploi a suprimmer ('q' pour quitter): ";
 		cin >> title;
-		cout << "\n";
 
 		if (title == "q") return;
 		j = srch_job_list(jobs, c, title);
 		if (j == NULL) cout << "Erreur: l'offre d'emploi '" << title << "' n'existe pas\n";
 	} while (j == NULL);
+	
+	cout << "\n";
 	
 	jobs->remove(j);
 
@@ -249,16 +252,17 @@ void delete_company(Company* c)
 {
 	List<Job*>* lj;
 	List<Worker*>* lw;
-	char choice;
+	string choice;
 
 	cout << "~~ Suppression de compte Entreprise ~~\n\n";
 	
 	cout << "Voulez vous vraiment suprimer votre compte ?\n";
 	cout << "Entrez 'o' pour confirmer: ";
 	cin >> choice;
+
 	cout << "\n";
 
-	if(choice == 'o')
+	if(choice == "o")
 	{
 		lj = company_jobs(jobs, c);
 		*jobs -= *lj;
@@ -280,24 +284,30 @@ void delete_company(Company* c)
 		
 		delete c;
 	}
+	else
+	{
+		cout << "Suppression annulée" << endl;
+	}
 }
 
 void pre_worker()
 {
-	char choice;
+	string choice;
 
 	cout << "Vous souhaitez:\n";
 	cout << "\t1. Créér un nouveau compte Travailleur\n";
 	cout << "\t2. Vous connecter a votre compte Travailleur\n";
+	cout << "\n";
 
 	do
 	{
 		cout << "Entrez votre choix ('q' pour quitter): ";
 		cin >> choice;
-		cout << "\n";
-	} while (choice != '1' && choice != '2' && choice != 'q');
+	} while (choice != "1" && choice != "2" && choice != "q");
 
-	switch(choice)
+	cout << "\n";
+	
+	switch(choice[0])
 	{
 	case '1':
 		create_worker();
@@ -388,13 +398,15 @@ void login_worker()
 		w = srch_wrk_list(workers, first_name, full_name);
 		if (w == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas\n";
 	} while (w == NULL);
+	
+	cout << "\n";
 
 	worker_menu(w);
 }
 
 void worker_menu(Worker* w)
 {
-	char choice;
+	string choice;
 
 	cout << "~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n";
 	cout << "Vous voulez:\n";
@@ -409,11 +421,11 @@ void worker_menu(Worker* w)
 	{
 		cout << "Entrez votre choix ('q' pour quitter): ";
 		cin >> choice;
-	} while (choice != '1' && choice != '2' && choice != '3' && choice != '4' && choice != 'q');
+	} while (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "q");
 
 	cout << "\n";
 
-	switch(choice)
+	switch(choice[0])
 	{
 	case '1':
 		search_job(w);
@@ -458,7 +470,7 @@ void search_coll(Worker* w)
 	List<Worker*>* results;
 	Company* c;
 	string name;
-	char choice;
+	string choice;
 
 	cout << "~~ Recherche parmis vos anciens collègues ~~\n\n";
 	cout << "Voulez vous:\n";
@@ -470,12 +482,12 @@ void search_coll(Worker* w)
 	{
 		cout << "Entrez votre choix ('q' pour quitter): ";
 		cin >> choice;
-		if (choice == 'q') return;
-	} while (choice != '1' && choice != '2');
+		if (choice == "q") return;
+	} while (choice != "1" && choice != "2");
 	
 	cout << "\n";
 
-	switch(choice)
+	switch(choice[0])
 	{
 	case '1':
 		do
@@ -499,10 +511,10 @@ void search_coll(Worker* w)
 
 void modify_worker(Worker* w)
 {
-	string skills_raw, tmp, coll_str, zip;
+	string skills_raw, tmp, coll_raw, zip, skills_str, coll_str;
 	Worker* coll;
 	Company* c;
-	char choice;
+	string choice;
 
 	cout << "~~ Modification du compte Travailleur ~~\n\n"
 
@@ -527,11 +539,13 @@ void modify_worker(Worker* w)
 	{
 		cout << "Entrez votre choix ('q' pour annuler): ";
 		cin >> choice;
-		if (choice == 'q') return;
+		if (choice == "q") return;
 		cout << endl;
-	} while (choice != '1' && choice != '2' && choice != '3' && choice != '4');
+	} while (choice != "1" && choice != "2" && choice != "3" && choice != "4");
 	
-	switch(choice)
+	cout << "\n";
+	
+	switch(choice[0])
 	{
 	case '1':
 		// Compétences
@@ -541,23 +555,27 @@ void modify_worker(Worker* w)
 		while (mygetline(skills_raw, tmp, ','))
 		{
 			w->add_skill(tmp);
+			skills_str += tmp;
 		}
-		log_write("Added skills to " + w->first_name + " " + w->last_name + ": " + skills_raw);
+		log_write("Added skills to " + w->first_name + " " + w->last_name + ": " + skills_str);
 		break;
 	case '2':
 		// Collegues
 		do
 		{
 			cout << "Entrez le nom d'un collègue (nom prénom) (vide pour arreter): ";
-			cin >> coll_str;
-			if (coll_str != "")
+			cin >> coll_raw;
+			if (coll_raw != "")
 			{
-				mygetline(coll_str, tmp, ' ');
-				coll = srch_wrk_list(workers, tmp, coll_str);
-				if (coll == NULL) cout << "Erreur: le Travailleur '" + tmp + " " + coll_str + "' n'existe pas\n";
-				else w->add_colleague(coll);
+				mygetline(coll_raw, tmp, ' ');
+				coll = srch_wrk_list(workers, tmp, coll_raw);
+				if (coll == NULL) cout << "Erreur: le Travailleur '" + tmp + " " + coll_raw + "' n'existe pas\n";
+				else {
+					w->add_colleague(coll);
+					coll_str += tmp;
+				}
 			}
-		} while (coll_str != "");
+		} while (coll_raw != "");
 		log_write("New colleagues added to " + w->first_name + " " + w->last_name + ": " + coll_str);
 		break;
 	case '3':
@@ -587,7 +605,7 @@ void modify_worker(Worker* w)
 
 void delete_worker(Worker* w)
 {
-	char choice;
+	string choice;
 
 	cout << "~~ Suppression de compte Travailleur ~~\n\n";
 	
@@ -596,7 +614,7 @@ void delete_worker(Worker* w)
 	cin >> choice;
 	cout << "\n";
 
-	if(choice == 'o')
+	if(choice == "o")
 	{
 		workers->remove(w);
 		w->remove_from_coll();
@@ -605,6 +623,10 @@ void delete_worker(Worker* w)
 		log_write("Worker deleted: " + w->first_name + " " + w->last_name);
 		
 		delete w;
+	}
+	else
+	{
+		cout << "Suppression annulée" << endl;
 	}
 }
 
