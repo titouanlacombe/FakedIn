@@ -57,7 +57,7 @@ void create_skr_file(std::string folder)
 	skr_file.close();
 }
 
-void dump(std::string s)
+void dump_str(std::string s)
 {
   for (unsigned int n = 0; n < s.length(); n++)
   {
@@ -225,13 +225,10 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 			}
 			wrk_it->data->colleagues = colleagues;
 		}
-		std::cout << wrk_it->data->first_name;
-		wrk_it->data->colleagues->printl();
 
 		wrk_it = wrk_it->next;
 		id_it = id_it->next;
 	}
-	std::cout << "hi" << std::endl;
 
 	cmp_file.close();
 	job_file.close();
