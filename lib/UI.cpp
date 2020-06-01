@@ -539,7 +539,15 @@ void modify_worker(Worker* w)
 	cout << "Skills: ";
 	w->skills->printl();
 	cout << "Collègues: ";
-	w->colleagues->printl();
+	auto it = w->colleagues->first;
+	while (it != w->colleagues->last)
+	{
+		cout << it->data->first_name << " " << it->data->last_name << ", ";
+		it = it->next;
+	}
+	if (it != NULL) cout << it->data->first_name << " " << it->data->last_name;
+	else cout << "Aucun";
+	cout << endl;
 	cout << endl;
 
 	cout << "Que voulez vous modifier ?\n";
