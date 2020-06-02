@@ -52,10 +52,10 @@ public:
 	bool has(T e);
 	void remove(Node<T>* tmp);
 	void remove(T e);
-	void remove(List<T>* l);
+	void remove(List<T>& l);
 	T& operator[](int n);
 	//retourne le nombre d'éléments en commun entre deux listes
-	int in_common(List<T>* l);
+	int in_common(List<T>& l);
 	void delete_data();
 	void print();
 	void printl();
@@ -134,19 +134,13 @@ int List<T>::get_pos(T e)
 template <typename T>
 Node<T>* List<T>::get_node(T e)
 {
-	auto tmp = first;
-	while (tmp != NULL && tmp->data != e)
-	{
-		tmp = tmp->next;
-	}
-	return tmp;
+	auto tmp = begin();
+	while (tmp != end() && *tmp != e) tmp++;
+	return tmp.node;
 }
 
 template <typename T>
-bool List<T>::has(T e)
-{
-	return (get_node(e) != NULL);
-}
+bool List<T>::has(T e) {return (get_node(e) != NULL);}
 
 template <typename T>
 void List<T>::remove(Node<T>* tmp)
@@ -183,13 +177,13 @@ void List<T>::remove(T e)
 }
 
 template <typename T>
-void List<T>::remove(List<T>* l)
+void List<T>::remove(List<T>& l)
 {
-	auto tmp = l->first;
-	while (tmp != NULL)
+	auto tmp = l.begin();
+	while (tmp != l.end())
 	{
-		remove(tmp->data);
-		tmp = tmp->next;
+		remove(*tmp);
+		tmp++;
 	}
 }
 
@@ -207,15 +201,15 @@ T& List<T>::operator[](int n)
 }
 
 template <typename T>
-int List<T>::in_common(List<T>* l)
+int List<T>::in_common(List<T>& l)
 {
-	auto cur = l->first;
+	auto it = l.begin();
 	int n = 0;
 
-	while (cur != NULL)
+	while (it != l.end())
 	{
-		if (has(cur->data)) n++;
-		cur = cur->next;
+		if (has(*it)) n++;
+		it++;
 	}
 	return n;
 }
@@ -223,27 +217,29 @@ int List<T>::in_common(List<T>* l)
 template <typename T>
 void List<T>::delete_data()
 {
-	auto tmp = first;
-	while (tmp != NULL)
+	auto tmp = begin();
+	while (tmp != end())
 	{
-		delete tmp->data;
+		delete *tmp;
+		tmp++;
 	}
 }
 
 template <typename T>
 void List<T>::print()
 {
-	Node<T> *tmp = first;
-	while (tmp != NULL) {
-		std::cout << tmp->data << std::endl;
-		tmp = tmp->next;
+	auto tmp = begin();
+	while (tmp != end())
+	{
+		std::cout << *tmp << std::endl;
+		tmp++;
 	}
 }
 
 template <typename T>
 void List<T>::printl()
 {
-	Node<T> *tmp = first;
+	auto tmp = first;
 	while (tmp != last) {
 		std::cout << tmp->data << ", ";
 		tmp = tmp->next;

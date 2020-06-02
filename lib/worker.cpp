@@ -6,8 +6,8 @@ Worker::Worker()
 	last_name = "";
 	email = "";
 	zip_code = "";
-	skills = NULL;
-	co_workers = NULL;
+	skills = List<std::string>();
+	co_workers = List<Worker*>();
 	company = NULL;
 }
 
@@ -17,25 +17,24 @@ Worker::Worker(std::string _first_name, std::string _last_name, std::string _ema
 	last_name = _last_name;
 	email = _email;
 	zip_code = "";
-	skills = new List<std::string>();
-	co_workers = new List<Worker*>();
+	skills = List<std::string>();
+	co_workers = List<Worker*>();
 	company = NULL;
 }
 
 Worker::~Worker()
 {
-	delete skills;
-	delete co_workers;
+	return;
 }
 
 void Worker::add_skill(std::string skill)
 {
-	skills->addlast(skill);
+	skills.addlast(skill);
 }
 
-void Worker::add_co_worker(Worker* co_worker)
+void Worker::add_co_worker(Worker& co_worker)
 {
-	co_workers->addlast(co_worker);
+	co_workers.addlast(&co_worker);
 }
 
 void Worker::set_zip_code(std::string _zip_code)
@@ -55,11 +54,11 @@ bool Worker::employed() const
 
 void Worker::remove_from_coll()
 {
-	auto tmp = co_workers->first;
-	while(tmp != NULL)
+	auto tmp = co_workers.begin();
+	while(tmp != co_workers.end())
 	{
-		co_workers->first->data->co_workers->remove(this);
-		tmp = tmp->next;
+		(*tmp)->co_workers.remove(this);
+		tmp++;
 	}
 }
 
@@ -88,32 +87,32 @@ std::ostream& operator<<(std::ostream& os, const Worker& w)
 	return os;
 }
 
-Worker* srch_wrk_list(List<Worker*>* workers, std::string first_name, std::string last_name)
+Worker* srch_wrk_list(List<Worker*>& workers, std::string first_name, std::string last_name)
 {
 	Worker* w = NULL;
-	auto cur = workers->first;
+	auto it = workers.begin();
 
-	while (cur != NULL && w == NULL)
+	while (it != workers.end() && w == NULL)
 	{
-		if (cur->data->first_name == first_name && cur->data->last_name == last_name) w = cur->data;
-		cur = cur->next;
+		if ((*it)->first_name == first_name && (*it)->last_name == last_name) w = (*it);
+		it++;
 	}
 	return w;
 }
 
-bool wrk_exist(List<Worker*>* workers, std::string first_name, std::string last_name)
+bool wrk_exist(List<Worker*>& workers, std::string first_name, std::string last_name)
 {
 	return srch_wrk_list(workers, first_name, last_name) != NULL;
 }
 
-List<Worker*>* company_employees(List<Worker*>* workers, Company* c)
+List<Worker*>* company_employees(List<Worker*>& workers, Company& c)
 {
-	List<Worker*>* l = new List<Worker*>;
-	auto tmp = workers->first;
-	while (tmp != NULL)
+	List<Worker*>* l = new List<Worker*>();
+	auto tmp = workers.begin();
+	while (tmp != workers.end())
 	{
-		if (tmp->data->company == c) l->addlast(tmp->data);
-		tmp = tmp->next;
+		if (*(*tmp)->company == c) l->addlast(*tmp);
+		tmp++;
 	}
 	return l;
 }

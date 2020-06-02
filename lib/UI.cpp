@@ -2,15 +2,15 @@
 
 using namespace std;
 
-List<Company*>* companies;
-List<Job*>* jobs;
-List<Worker*>* workers;
+List<Company*>* companies = NULL;
+List<Job*>* jobs = NULL;
+List<Worker*>* workers = NULL;
 
-void init_lists(List<Company*>* _companies, List<Job*>* _jobs, List<Worker*>* _workers)
+void init_lists(List<Company*>& _companies, List<Job*>& _jobs, List<Worker*>& _workers)
 {
-	companies = _companies;
-	jobs = _jobs;
-	workers = _workers;
+	companies = &_companies;
+	jobs = &_jobs;
+	workers = &_workers;
 }
 
 bool valid_email(string email)
@@ -76,7 +76,7 @@ string request_cmp_name()
 	{
 		cout << "-Le nom de votre entreprise: ";
 		getline(cin, name);
-		if (cmp_exist(companies, name)) cout << "Erreur: l'entreprise '" << name << "' existe déjà." << endl;
+		if (cmp_exist(*companies, name)) cout << "Erreur: l'entreprise '" << name << "' existe déjà." << endl;
 		else if (name.empty()) cout << "Erreur: le nom est vide." << endl;
 		else if (name == "q") cout << "Erreur: le nom ne peut pas etre 'q'." << endl;
 		else loop = false;
@@ -94,7 +94,7 @@ Company* request_cmp_login(string request_line)
 		cout << request_line;
 		getline(cin, name);
 		if (name == "q") return NULL;
-		c = srch_cmp_list(companies, name);
+		c = srch_cmp_list(*companies, name);
 		if (c == NULL) cout << "Erreur: l'Entreprise '" << name << "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
@@ -130,7 +130,7 @@ string request_zip()
 	return zip;
 }
 
-string request_job_title(Company* c)
+string request_job_title(Company& c)
 {
 	string title;
 	bool loop = true;
@@ -138,7 +138,7 @@ string request_job_title(Company* c)
 	{
 		cout << "-Le titre du poste: ";
 		getline(cin, title);
-		if (job_exist(jobs, c, title)) cout << "Erreur: l'offre '" << title << "' existe déjà dans votre entreprise." << endl;
+		if (job_exist(*jobs, c, title)) cout << "Erreur: l'offre '" << title << "' existe déjà dans votre entreprise." << endl;
 		else if (title.empty()) cout << "Erreur: le titre de l'offre est vide." << endl;
 		else if (title == "q") cout << "Erreur: le titre de l'offre ne peut pas etre 'q'." << endl;
 		else loop = false;
@@ -146,9 +146,9 @@ string request_job_title(Company* c)
 	return title;
 }
 
-Job* request_job_login(Company* c, string request_phrase)
+Job* request_job_login(Company& c, string request_phrase)
 {
-	Job* j;
+	Job *j;
 	string title;
 	bool loop = true;
 	do
@@ -156,7 +156,7 @@ Job* request_job_login(Company* c, string request_phrase)
 		cout << request_phrase;
 		getline(cin, title);
 		if (title == "q") return NULL;
-		j = srch_job_list(jobs, c, title);
+		j = srch_job_list(*jobs, c, title);
 		if (j == NULL) cout << "Erreur: l'offre d'emploi '" << title << "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
@@ -164,15 +164,15 @@ Job* request_job_login(Company* c, string request_phrase)
 }
 
 template <typename T>
-void request_skills(T* w, string request_phrase)
+void request_skills(T& w, string request_phrase)
 {
 	string skills_raw, tmp;
 	cout << request_phrase;
 	getline(cin, skills_raw);
 	while (mygetline(skills_raw, tmp, ',')) {
 		if (tmp.empty()) cout << "Une compétence a un nom vide, elle ne sera pas prise en compte" << endl;
-		else if (w->skills->has(tmp)) cout << "La compétence '" + tmp + "' est déjà dans la liste, elle ne sera pas prise en compte" << endl;
-		else w->add_skill(tmp);
+		else if (w.skills.has(tmp)) cout << "La compétence '" + tmp + "' est déjà dans la liste, elle ne sera pas prise en compte" << endl;
+		else w.add_skill(tmp);
 	}
 }
 
@@ -184,13 +184,13 @@ void request_wrk_name(string& first_name, string& full_name)
 		cout << "-Votre nom (nom prénom): ";
 		getline(cin, full_name);
 		mygetline(full_name, first_name, ' ');
-		if (wrk_exist(workers, first_name, full_name)) cout << "Erreur: le Travailleur '" << (first_name + " " + full_name) << "' existe déjà." << endl;
+		if (wrk_exist(*workers, first_name, full_name)) cout << "Erreur: le Travailleur '" << (first_name + " " + full_name) << "' existe déjà." << endl;
 		else if (full_name.empty() || first_name.empty()) cout << "Erreur: nom ou prénom vide" << endl;
 		else loop = false;
 	} while (loop);
 }
 
-void request_wrk_coll(Worker* w)
+void request_wrk_coll(Worker& w)
 {
 	Worker* coll;
 	string first_name, full_name;
@@ -202,16 +202,16 @@ void request_wrk_coll(Worker* w)
 		if (!full_name.empty())
 		{
 			mygetline(full_name, first_name, ' ');
-			coll = srch_wrk_list(workers, first_name, full_name);
+			coll = srch_wrk_list(*workers, first_name, full_name);
 			if (coll == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
-			else if (coll == w) cout << "Erreur: vous ne pouvez pas être votre propre collègue." << endl;
-			else w->add_co_worker(coll);
+			else if (*coll == w) cout << "Erreur: vous ne pouvez pas être votre propre collègue." << endl;
+			else w.add_co_worker(*coll);
 		}
 		else loop = false;
 	} while (loop);
 }
 
-void request_wrk_cmp(Worker* w)
+void request_wrk_cmp(Worker& w)
 {
 	Company* c;
 	string name;
@@ -222,17 +222,17 @@ void request_wrk_cmp(Worker* w)
 		getline(cin, name);
 		if (!name.empty())
 		{
-			c = srch_cmp_list(companies, name);
+			c = srch_cmp_list(*companies, name);
 			if (c == NULL) cout << "Erreur: l'Entreprise '" + name + "' n'existe pas" << endl;
 			else
 			{
-				w->set_company(c);
+				w.set_company(c);
 				loop = false;
 			}
 		}
 		else
 		{
-			w->set_company(NULL);
+			w.set_company(NULL);
 			loop = false;
 		}
 	} while (loop);
@@ -293,7 +293,7 @@ void pre_company()
 void create_company()
 {
 	string name, zip, email;
-	Company* c;
+	Company *c;
 
 	cout << "~~ Création du compte Entreprise ~~\n\n";
 	cout << "Merci d'indiquer:\n";
@@ -307,7 +307,7 @@ void create_company()
 
 	cout << "Compte Entreprise créé\n" << endl;
 	log_write("New Company created: " + name + ", " + zip + ", " + email);
-	company_menu(c);
+	company_menu(*c);
 }
 
 void login_company()
@@ -319,16 +319,16 @@ void login_company()
 	c = request_cmp_login("Entrez le nom de votre Entreprise ('q' pour annuler): ");
 	if (c == NULL) return;
 	
-	company_menu(c);
+	company_menu(*c);
 }
 
-void company_menu(Company* c)
+void company_menu(Company& c)
 {
 	int choice;
 	
 	do
 	{
-		cout << "\n~~ Menu Entreprise (" << c->name << ") ~~\n\n";
+		cout << "\n~~ Menu Entreprise (" << c.name << ") ~~\n\n";
 		cout << "Vous voulez:\n";
 		cout << "\t1. Faire une recherche parmi les chercheurs d'emploi\n";
 		cout << "\t2. Créér une nouvelle offre d'emploi\n";
@@ -358,9 +358,9 @@ void company_menu(Company* c)
 	} while (true);
 }
 
-void search_worker(Company* c)
+void search_worker(Company& c)
 {
-	List<Worker>* results;
+	List<Worker*>* results;
 	string title;
 	bool zip;
 	Job *j;
@@ -373,7 +373,7 @@ void search_worker(Company* c)
 	zip = request_yn_choice();
 	cout << endl;
 
-	results = srch_wrk_profile_job(workers, j, zip);
+	results = srch_wrk_profile_job(*workers, *j, zip);
 
 	cout << "Résultats:\n";
 	results->print();
@@ -382,24 +382,24 @@ void search_worker(Company* c)
 	delete results;
 }
 
-void create_job(Company* c)
+void create_job(Company& c)
 {
 	string title;
-	Job* j;
+	Job *j;
 
 	cout << "~~ Création d'offre d'emploi ~~\n\n";
 	cout << "Merci d'indiquer:\n";
 	title = request_job_title(c);
 
-	j = new Job(title, c);
+	j = new Job(title, &c);
 	jobs->addlast(j);
 
-	request_skills(j, "-Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...): ");
+	request_skills(*j, "-Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...): ");
 	cout << "Offre d'emploi créée" << endl;
 	log_write("New Job created: " + title);
 }
 
-void delete_job(Company* c)
+void delete_job(Company& c)
 {
 	string title;
 	Job* j;
@@ -410,11 +410,11 @@ void delete_job(Company* c)
 	jobs->remove(j);
 	cout << endl;
 	cout << "Offre d'emploi supprimée" << endl;
-	log_write("Job " + title + " from " + c->name + " deleted");
+	log_write("Job " + title + " from " + c.name + " deleted");
 	delete j;
 }
 
-void delete_company(Company* c)
+void delete_company(Company& c)
 {
 	List<Job*>* lj;
 	List<Worker*>* lw;
@@ -427,24 +427,24 @@ void delete_company(Company* c)
 
 	if(choice)
 	{
-		lj = company_jobs(jobs, c);
-		jobs->remove(lj);
+		lj = company_jobs(*jobs, c);
+		jobs->remove(*lj);
 		delete lj;
 
-		lw = company_employees(workers, c);
-		auto tmp = lw->first;
-		while (tmp != NULL)
+		lw = company_employees(*workers, c);
+		auto it = lw->begin();
+		while (it != lw->end())
 		{
-			tmp->data->set_company(NULL);
-			tmp = tmp->next;
+			(*it)->set_company(NULL);
+			it++;
 		}
 		delete lw;
 
-		companies->remove(c);
+		companies->remove(&c);
+		delete &c;
 
 		cout << "Entreprise supprimée" << endl;
-		log_write("Company deleted: " + c->name);
-		delete c;
+		log_write("Company deleted: " + c.name);
 	}
 	else cout << "Suppression annulée" << endl;
 }
@@ -476,7 +476,7 @@ void pre_worker()
 void create_worker()
 {
 	string first_name, full_name, email, zip;
-	Worker* w;
+	Worker *w;
 
 	cout << "~~ Création de profil Travailleur ~~\n\n";
 	cout << "Merci d'indiquer:\n";
@@ -489,12 +489,12 @@ void create_worker()
 	workers->addlast(w);
 
 	// Compétences
-	request_skills(w, "-Indiquez vos compétences (Compétence 1,Compétence 2...): ");
-	request_wrk_coll(w);
-	request_wrk_cmp(w);
+	request_skills(*w, "-Indiquez vos compétences (Compétence 1,Compétence 2...): ");
+	request_wrk_coll(*w);
+	request_wrk_cmp(*w);
 	cout << "\nProfil créé\n" << endl;
 	log_write("New worker created: " + first_name + " " + full_name);
-	worker_menu(w);
+	worker_menu(*w);
 }
 
 void login_worker()
@@ -511,21 +511,21 @@ void login_worker()
 		getline(cin, full_name);
 		if (full_name == "q") return;
 		mygetline(full_name, first_name, ' ');
-		w = srch_wrk_list(workers, first_name, full_name);
+		w = srch_wrk_list(*workers, first_name, full_name);
 		if (w == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
 	
-	worker_menu(w);
+	worker_menu(*w);
 }
 
-void worker_menu(Worker* w)
+void worker_menu(Worker& w)
 {
 	int choice;
 
 	do
 	{
-		cout << "\n~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n";
+		cout << "\n~~ Menu Employé (" << w.first_name << " " << w.last_name << ") ~~\n\n";
 		cout << "Vous voulez:\n";
 		cout << "\t1. Chercher un nouvel emploi\n";
 		cout << "\t2. Rechercher un profil parmis vos ancien collègue\n";
@@ -555,9 +555,9 @@ void worker_menu(Worker* w)
 	} while (true);
 }
 
-void search_job(Worker* w)
+void search_job(Worker& w)
 {
-	List<Job>* results;
+	List<Job*>* results;
 	bool zip;
 	string tmp;
 
@@ -566,7 +566,7 @@ void search_job(Worker* w)
 	zip = request_yn_choice();
 	cout << endl;
 
-	results = srch_job_profile_wrk(jobs, w, zip);
+	results = srch_job_profile_wrk(*jobs, w, zip);
 	cout << "Résultats:\n";
 	results->print();
 	cout << "\nEntrez une touche pour revenir au menu Travailleur.";
@@ -574,9 +574,9 @@ void search_job(Worker* w)
 	delete results;
 }
 
-void search_coll(Worker* w)
+void search_coll(Worker& w)
 {
-	List<Worker>* results;
+	List<Worker*>* results;
 	Company* c;
 	string name;
 	int choice;
@@ -596,12 +596,12 @@ void search_coll(Worker* w)
 	case 1:
 		c = request_cmp_login("Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues ('q' pour annuler): ");
 		if (c == NULL) return;
-		results = srch_coll_from_cmp(w, c);
+		results = srch_coll_from_cmp(w, *c);
 		cout << "Résultats:\n";
 		results->print();
 		break;
 	case 2:
-		results = srch_coll_skills(jobs, w);
+		results = srch_coll_skills(*jobs, w);
 		cout << "Résultats:\n";
 		results->print();
 		break;
@@ -611,27 +611,27 @@ void search_coll(Worker* w)
 	delete results;
 }
 
-void modify_worker(Worker* w)
+void modify_worker(Worker& w)
 {
 	string zip;
 	int choice;
 
 	cout << "~~ Modification du compte Travailleur ~~\n\n"
 	"Votre profil actuel: \n"
-	<< w->first_name << " " << w->last_name << "\n"
-	<< "email: " << w->email << "\nCode postal: " << w->zip_code << endl;
-	if(w->employed()) cout << "Travaille à " << w->company->name << endl;
+	<< w.first_name << " " << w.last_name << "\n"
+	<< "email: " << w.email << "\nCode postal: " << w.zip_code << endl;
+	if(w.employed()) cout << "Travaille à " << w.company->name << endl;
 	else cout << "En recherche de travail" << endl;
 	cout << "Skills: ";
-	w->skills->printl();
+	w.skills.printl();
 	cout << "Collègues: ";
-	auto it = w->co_workers->first;
-	while (it != w->co_workers->last)
+	auto it = w.co_workers.begin();
+	while (it != w.co_workers.end())
 	{
-		cout << it->data->first_name << " " << it->data->last_name << ", ";
-		it = it->next;
+		cout << (*it)->first_name << " " << (*it)->last_name << ", ";
+		it++;
 	}
-	if (it != NULL) cout << it->data->first_name << " " << it->data->last_name;
+	if (it != w.co_workers.end()) cout << (*it)->first_name << " " << (*it)->last_name;
 	else cout << "Aucun";
 	cout << "\n\n";
 	cout << "Que voulez vous modifier ?\n";
@@ -650,16 +650,16 @@ void modify_worker(Worker* w)
 	case 1:
 		// Compétences
 		request_skills(w, "-Indiquez vos nouvelles compétences (Compétence 1,Compétence 2...): ");
-		log_write("Added skills to " + w->first_name + " " + w->last_name);
+		log_write("Added skills to " + w.first_name + " " + w.last_name);
 		break;
 	case 2:
 		request_wrk_coll(w);
-		log_write("New co_workers added to " + w->first_name + " " + w->last_name);
+		log_write("New co_workers added to " + w.first_name + " " + w.last_name);
 		break;
 	case 3:
 		zip = request_zip();
-		w->set_zip_code(zip);
-		log_write("zip code of " + w->first_name + " " + w->last_name + " modified: " + zip);
+		w.set_zip_code(zip);
+		log_write("zip code of " + w.first_name + " " + w.last_name + " modified: " + zip);
 		break;
 	case 4:
 		request_wrk_cmp(w);
@@ -667,7 +667,7 @@ void modify_worker(Worker* w)
 	}
 }
 
-void delete_worker(Worker* w)
+void delete_worker(Worker& w)
 {
 	bool choice;
 
@@ -678,11 +678,11 @@ void delete_worker(Worker* w)
 
 	if(choice)
 	{
-		workers->remove(w);
-		w->remove_from_coll();
+		workers->remove(&w);
+		w.remove_from_coll();
+		delete &w;
 		cout << "Travailleur supprimée" << endl;
-		log_write("Worker deleted: " + w->first_name + " " + w->last_name);
-		delete w;
+		log_write("Worker deleted: " + w.first_name + " " + w.last_name);
 	}
 	else cout << "Suppression annulée" << endl;
 }

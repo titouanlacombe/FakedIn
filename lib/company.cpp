@@ -35,20 +35,20 @@ std::ostream& operator<<(std::ostream& os, const Company& c)
 	return os;
 }
 
-Company* srch_cmp_list(List<Company*>* companies, std::string name)
+Company* srch_cmp_list(List<Company*>& companies, std::string name)
 {
 	Company* c = NULL;
-	auto cur = companies->first;
+	auto it = companies.begin();
 
-	while (cur != NULL && c == NULL)
+	while (it != companies.end() && c == NULL)
 	{
-		if (cur->data->name == name) c = cur->data;
-		cur = cur->next;
+		if ((*it)->name == name) c = *it;
+		it++;
 	}
 	return c;
 }
 
-bool cmp_exist(List<Company*>* companies, std::string name)
+bool cmp_exist(List<Company*>& companies, std::string name)
 {
 	return srch_cmp_list(companies, name) != NULL;
 }

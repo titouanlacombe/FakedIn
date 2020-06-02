@@ -6,7 +6,7 @@ class Job
 {
 public:
 	std::string title;
-	List<std::string>* skills;
+	List<std::string> skills;
 	Company* company;
 
 	Job();
@@ -19,11 +19,11 @@ public:
 };
 
 // Rechercher un job à partir d'un titre et d'une companie
-Job* srch_job_list(List<Job*>* jobs, Company* c, std::string title);
+Job* srch_job_list(List<Job*>& jobs, Company& c, std::string title);
 
 // Recherche si une companie existe déjà
-bool job_exist(List<Job*>* jobs, Company* c, std::string title);
+bool job_exist(List<Job*>& jobs, Company& c, std::string title);
 
-List<Job*>* company_jobs(List<Job*>* jobs, Company* c);
+List<Job*>* company_jobs(List<Job*>& jobs, Company& c);
 
 void load_job();

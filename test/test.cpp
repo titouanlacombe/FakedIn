@@ -112,7 +112,7 @@ int main()
 		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
 		auto j = Job("SpaceX", &c);
 		TEST(j.title == "SpaceX");
-		TEST(j.skills->length == 0);
+		TEST(j.skills.length == 0);
 		TEST(j.company == &c);
 	}
 
@@ -131,29 +131,30 @@ int main()
 		w.set_zip_code("234567");
 		TEST(w.zip_code == "234567");
 		w.add_skill("C");
-		TEST(w.skills->first->data == "C");
+		TEST(w.skills.first->data == "C");
 		auto w2 = Worker("T", "L", "T.L@gmail.com");
-		w.add_co_worker(&w2);
-		TEST(w.co_workers->first->data == &w2);
+		w.add_co_worker(w2);
+		TEST(w.co_workers.first->data == &w2);
 	}
 
 	{
 		//----------------------DATA BASE---------------------
-		Worker *w;
+		Worker w;
 		auto lc = List<Company*>();
 		auto lj = List<Job*>();
 		auto lw = List<Worker*>();
-		load(&lc, &lj, &lw, "test/in");
-		w = new Worker("first_name", "full_name", "email@e.com");
-		w->set_zip_code("zip");
-		lw.addlast(w);
-		save(&lc, &lj, &lw, "test/out");
+		load(lc, lj, lw, "test/in");
+		w = Worker("first_name", "full_name", "email@e.com");
+		w.set_zip_code("zip");
+		lw.addlast(&w);
+		save(lc, lj, lw, "test/out");
 		TEST_FILE("test/out/Companies.csv", "test/correction/Companies.csv");
 		TEST_FILE("test/out/Jobs.csv", "test/correction/Jobs.csv");
 		TEST_FILE("test/out/Employees.csv", "test/correction/Employees.csv");
 		TEST_FILE("test/out/Seekers.csv", "test/correction/Seekers.csv");
-		load(&lc, &lj, &lw, "test/out");
-		save(&lc, &lj, &lw, "test/out");
+		load(lc, lj, lw, "test/out");
+		TEST(lw.length == 7);
+		save(lc, lj, lw, "test/out");
 	}
 
 	{
@@ -161,8 +162,8 @@ int main()
 		auto w = Worker("Max", "Veran", "max.v@gmail.com");
 		auto w2 = Worker("Thomas", "Billet", "t.b@gmail.com");
 		auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
-		w.add_co_worker(&w2);
-		w2.add_co_worker(&w);
+		w.add_co_worker(w2);
+		w2.add_co_worker(w);
 		//test des searchs
 	}
 

@@ -36,8 +36,8 @@ int main(void)
 	log_begin("app/logs");
 	log_write("Start");
 
-	load(&companies, &jobs, &workers, "app/data_base");
-	init_lists(&companies, &jobs, &workers);
+	load(companies, jobs, workers, "app/data_base");
+	init_lists(companies, jobs, workers);
 
 	std::cout << ASCII_ART << std::endl;
 	std::cout << "=== Bienvenu sur FakedIn ! L'application qui réalise vos rêves ===" << std::endl;
@@ -46,7 +46,7 @@ int main(void)
 
 	std::cout << "Merci de votre visite !" << std::endl;
 
-	save(&companies, &jobs, &workers, "app/data_base");
+	save(companies, jobs, workers, "app/data_base");
 	
 	log_write("Quitting...");
 	log_end();

@@ -67,11 +67,11 @@ void create_skr_file(std::string folder)
 	skr_file.close();
 }
 
-void load_workers(List<Worker*>* workers, List<Company*>* companies, List<std::string>& co_workers_ids, std::ifstream &wrk_file, bool employed)
+void load_workers(List<Worker*>& workers, List<Company*>& companies, List<std::string>& co_workers_ids, std::ifstream &wrk_file, bool employed)
 {
 	std::string first_name, last_name, email, zip_code, line, tmp, tmp2;
-	List<std::string>* skills;
 	Company *company;
+	Worker *w;
 
 	std::getline(wrk_file, line);
 	while (!line.empty())
@@ -85,39 +85,39 @@ void load_workers(List<Worker*>* workers, List<Company*>* companies, List<std::s
 		email = tmp;
 		mygetline(line, tmp, ','); // zip code
 		zip_code = tmp;
+		
+		w = new Worker(first_name, last_name, email);
+		workers.addlast(w);
+		workers.last->data->set_zip_code(zip_code);
 
 		mygetline(line, tmp, ','); // skills
-		skills = new List<std::string>();
-		while (mygetline(tmp, tmp2, ';'))
-		{
-			skills->addlast(tmp2);
-		}
+		while (mygetline(tmp, tmp2, ';')) workers.last->data->add_skill(tmp2);
 
 		if (employed) mygetline(line, tmp, ','); // co_workers
 		else mygetline(line, tmp);
 		co_workers_ids.addlast(tmp);
 		
-		if (employed) {
+		if (employed)
+		{
 			mygetline(line, tmp); // company
-			company = (*companies)[std::stoi(tmp)];
+			company = companies[std::stoi(tmp)];
 		}
-		workers->addlast(new Worker(first_name, last_name, email));
-		workers->last->data->set_zip_code(zip_code);
-		workers->last->data->skills = skills;
-		if (employed) workers->last->data->set_company(company);
+		if (employed) workers.last->data->set_company(company);
 
 		std::getline(wrk_file, line);
 	}
 }
 
-void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, std::string folder)
+void load(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, std::string folder)
 {
 	std::ifstream cmp_file, job_file, emp_file, skr_file;
 	std::string line, tmp, tmp2;
+	Company *c;
+	Job *j;
 
-	companies->empty();
-	jobs->empty();
-	workers->empty();
+	companies.empty();
+	jobs.empty();
+	workers.empty();
 
 	cmp_file.open("./" + folder + CMP_FILE_NAME);
 	job_file.open("./" + folder + JOB_FILE_NAME);
@@ -145,7 +145,8 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 			zip_code = tmp;
 			mygetline(line, tmp); // email
 			email = tmp;
-			companies->addlast(new Company(name, zip_code, email));
+			c = new Company(name, zip_code, email);
+			companies.addlast(c);
 
 			std::getline(cmp_file, line);
 		}
@@ -163,7 +164,6 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		// Loading jobs
 		std::string title;
 		Company *company;
-		Job* j; 
 		std::getline(job_file, line);
 		while (!line.empty())
 		{
@@ -172,16 +172,13 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 			title = tmp;
 			
 			j = new Job(title, NULL);
-			jobs->addlast(j);
+			jobs.addlast(j);
 
 			mygetline(line, tmp, ','); // skills
-			while (mygetline(tmp, tmp2, ';'))
-			{
-				j->add_skill(tmp2);
-			}
+			while (mygetline(tmp, tmp2, ';')) j->add_skill(tmp2);
 			
 			mygetline(line, tmp); // company
-			company = (*companies)[std::stoi(tmp)];
+			company = companies[std::stoi(tmp)];
 			j->company = company;
 			
 			std::getline(job_file, line);
@@ -217,23 +214,19 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	}
 
 	// Linking co_workers
-	List<Worker*>* co_workers;
-	auto wrk_it = workers->first;
-	auto id_it = co_workers_ids.first;
-	while (wrk_it != NULL)
+	std::string tmp_str;
+	auto wrk_it = workers.begin();
+	auto id_it = co_workers_ids.begin();
+	while (wrk_it != workers.end())
 	{
-		co_workers = new List<Worker*>();
-		if (!id_it->data.empty())
+		if (!(*id_it).empty())
 		{
-			while (mygetline(id_it->data, tmp, ';'))
-			{
-				co_workers->addlast((*workers)[std::stoi(tmp)]);
-			}
-			wrk_it->data->co_workers = co_workers;
+			tmp_str = *id_it;
+			while (mygetline(tmp_str, tmp, ';')) (*wrk_it)->co_workers.addlast(workers[std::stoi(tmp)]);
 		}
 
-		wrk_it = wrk_it->next;
-		id_it = id_it->next;
+		wrk_it++;
+		id_it++;
 	}
 
 	cmp_file.close();
@@ -242,7 +235,7 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	skr_file.close();
 }
 
-void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, std::string folder)
+void save(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, std::string folder)
 {
 	std::ofstream cmp_file, job_file, emp_file, skr_file;
 	int id;
@@ -253,33 +246,33 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	skr_file.open("./" + folder + SKR_FILE_NAME);
 
 	// Saving companies
-	auto cmp_it = companies->first;
+	auto cmp_it = companies.begin();
 	id = 0;
 	cmp_file << CMP_FIRST_LINE << "\n";
-	while (cmp_it != NULL)
+	while (cmp_it != companies.end())
 	{
 		// id,name,zip code,email
 		cmp_file << id << ","
-		<< cmp_it->data->name << ","
-		<< cmp_it->data->zip_code << ","
-		<< cmp_it->data->email << "\n";
-		cmp_it = cmp_it->next;
+		<< (*cmp_it)->name << ","
+		<< (*cmp_it)->zip_code << ","
+		<< (*cmp_it)->email << "\n";
+		cmp_it++;
 		id++;
 	}
 	
 	// Saving jobs
-	auto job_it = jobs->first;
+	auto job_it = jobs.begin();
 	id = 0;
 	job_file << JOB_FIRST_LINE << "\n";
-	while (job_it != NULL)
+	while (job_it != jobs.end())
 	{
 		// id,title
 		job_file << id << "," <<
-		job_it->data->title << ",";
+		(*job_it)->title << ",";
 
 		// Skills
-		auto skl_it = job_it->data->skills->first;
-		while (skl_it != job_it->data->skills->last)
+		auto skl_it = (*job_it)->skills.first;
+		while (skl_it != (*job_it)->skills.last)
 		{
 			job_file << skl_it->data << ";";
 			skl_it = skl_it->next;
@@ -288,77 +281,80 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		job_file << ",";
 		
 		// Company id
-		job_file << companies->get_pos(job_it->data->company) << "\n";
+		job_file << companies.get_pos((*job_it)->company) << "\n";
 
-		job_it = job_it->next;
+		job_it++;
 		id++;
 	}
 	
 	// Saving workers
-	auto wrk_it = workers->first;
+	auto wrk_it = workers.begin();
 	id = 0;
 	emp_file << EMP_FIRST_LINE << "\n";
 	skr_file << SKR_FIRST_LINE << "\n";
-	while (wrk_it != NULL)
+	while (wrk_it != workers.end())
 	{
 		// id,first name,last name,email,zip code
-		if (wrk_it->data->employed())
+		if ((*wrk_it)->employed())
 		{
 			emp_file << id << ","
-			<< wrk_it->data->first_name << ","
-			<< wrk_it->data->last_name << ","
-			<< wrk_it->data->email << ","
-			<< wrk_it->data->zip_code << ",";
+			<< (*wrk_it)->first_name << ","
+			<< (*wrk_it)->last_name << ","
+			<< (*wrk_it)->email << ","
+			<< (*wrk_it)->zip_code << ",";
 		}
 		else
 		{
 			skr_file << id << ","
-			<< wrk_it->data->first_name << ","
-			<< wrk_it->data->last_name << ","
-			<< wrk_it->data->email << ","
-			<< wrk_it->data->zip_code << ",";
+			<< (*wrk_it)->first_name << ","
+			<< (*wrk_it)->last_name << ","
+			<< (*wrk_it)->email << ","
+			<< (*wrk_it)->zip_code << ",";
 		}
 		
 		// Skills
-		auto skl_it2 = wrk_it->data->skills->first;
-		while (skl_it2 != wrk_it->data->skills->last)
+		auto skl_it2 = (*wrk_it)->skills.first;
+		while (skl_it2 != (*wrk_it)->skills.last)
 		{
-			if (wrk_it->data->employed()) emp_file << skl_it2->data << ";";
+			if ((*wrk_it)->employed()) emp_file << skl_it2->data << ";";
 			else skr_file << skl_it2->data << ";";
-
 			skl_it2 = skl_it2->next;
 		}
 		if (skl_it2 != NULL)
 		{
-			if (wrk_it->data->employed()) emp_file << skl_it2->data;
+			if ((*wrk_it)->employed()) emp_file << skl_it2->data;
 			else skr_file << skl_it2->data;
 		}
-		if (wrk_it->data->employed()) emp_file << ",";
+		if ((*wrk_it)->employed()) emp_file << ",";
 		else skr_file << ",";
 		
 		// co_workers
-		auto coll_it = wrk_it->data->co_workers->first;
-		while (coll_it != wrk_it->data->co_workers->last)
+		auto coll_it = (*wrk_it)->co_workers.first;
+		while (coll_it != (*wrk_it)->co_workers.last)
 		{
-			if (wrk_it->data->employed()) emp_file << workers->get_pos(coll_it->data) << ";";
-			else skr_file << workers->get_pos(coll_it->data) << ";";
+			if ((*wrk_it)->employed()) emp_file << workers.get_pos(coll_it->data) << ";";
+			else skr_file << workers.get_pos(coll_it->data) << ";";
 
 			coll_it = coll_it->next;
 		}
 		if (coll_it != NULL)
 		{
-			if (wrk_it->data->employed()) emp_file << workers->get_pos(coll_it->data);
-			else skr_file << workers->get_pos(coll_it->data);
+			if ((*wrk_it)->employed()) emp_file << workers.get_pos(coll_it->data);
+			else skr_file << workers.get_pos(coll_it->data);
 		}
-		if (wrk_it->data->employed()) emp_file << ",";
+		if ((*wrk_it)->employed()) emp_file << ",";
 		else skr_file << "\n";
 		
 		// company
-		if (wrk_it->data->employed()) emp_file << companies->get_pos(wrk_it->data->company) << "\n";
+		if ((*wrk_it)->employed()) emp_file << companies.get_pos((*wrk_it)->company) << "\n";
 
-		wrk_it = wrk_it->next;
+		wrk_it++;
 		id++;
 	}
+	
+	companies.empty();
+	jobs.empty();
+	workers.empty();
 
 	cmp_file.close();
 	job_file.close();
