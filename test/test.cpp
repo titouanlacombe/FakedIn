@@ -87,8 +87,10 @@ int main()
 		TEST(l[1] == 2);
 		TEST(l[2] == 3);
 		l.remove(2);
-		TEST(l[0] == 1);
-		TEST(l[1] == 3);
+		auto it = l.begin();
+		TEST(*it == 1);
+		it++;
+		TEST(*it == 3);
 		TEST(l.length == 2);
 		l.remove(1);
 		TEST(l[0] == 3);
@@ -131,8 +133,8 @@ int main()
 		w.add_skill("C");
 		TEST(w.skills->first->data == "C");
 		auto w2 = Worker("T", "L", "T.L@gmail.com");
-		w.add_colleague(&w2);
-		TEST(w.colleagues->first->data == &w2);
+		w.add_co_worker(&w2);
+		TEST(w.co_workers->first->data == &w2);
 	}
 
 	{
@@ -159,8 +161,8 @@ int main()
 		auto w = Worker("Max", "Veran", "max.v@gmail.com");
 		auto w2 = Worker("Thomas", "Billet", "t.b@gmail.com");
 		auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
-		w.add_colleague(&w2);
-		w2.add_colleague(&w);
+		w.add_co_worker(&w2);
+		w2.add_co_worker(&w);
 		//test des searchs
 	}
 

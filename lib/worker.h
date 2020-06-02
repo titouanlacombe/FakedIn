@@ -19,7 +19,7 @@ public:
 	// rajoute une compétence a w
 	void add_skill(std::string skill);
 	// rajoute un collegue a w
-	void add_colleague(Worker* colleague);
+	void add_co_worker(Worker* co_worker);
 	// change le code postal de w
 	void set_zip_code(std::string zip_code);
 	// change l'entreprise de w

@@ -17,7 +17,7 @@ void dump_str(std::string s)
     char c = s[n];
     std::cout << (int)c << ",";
   }
-  std::cout << std::endl;
+  std::cout << "\n";
 }
 
 int mygetline(std::string& s, std::string& dest, char limit)
@@ -262,7 +262,7 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		cmp_file << id << ","
 		<< cmp_it->data->name << ","
 		<< cmp_it->data->zip_code << ","
-		<< cmp_it->data->email << std::endl;
+		<< cmp_it->data->email << "\n";
 		cmp_it = cmp_it->next;
 		id++;
 	}
@@ -288,7 +288,7 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		job_file << ",";
 		
 		// Company id
-		job_file << companies->get_pos(job_it->data->company) << std::endl;
+		job_file << companies->get_pos(job_it->data->company) << "\n";
 
 		job_it = job_it->next;
 		id++;
@@ -351,10 +351,10 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 			else skr_file << workers->get_pos(coll_it->data);
 		}
 		if (wrk_it->data->employed()) emp_file << ",";
-		else skr_file << std::endl;
+		else skr_file << "\n";
 		
 		// company
-		if (wrk_it->data->employed()) emp_file << companies->get_pos(wrk_it->data->company) << std::endl;
+		if (wrk_it->data->employed()) emp_file << companies->get_pos(wrk_it->data->company) << "\n";
 
 		wrk_it = wrk_it->next;
 		id++;

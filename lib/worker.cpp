@@ -33,9 +33,9 @@ void Worker::add_skill(std::string skill)
 	skills->addlast(skill);
 }
 
-void Worker::add_colleague(Worker* colleague)
+void Worker::add_co_worker(Worker* co_worker)
 {
-	co_workers->addlast(colleague);
+	co_workers->addlast(co_worker);
 }
 
 void Worker::set_zip_code(std::string _zip_code)

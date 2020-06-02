@@ -10,23 +10,29 @@ public:
 	Node *next;
 	T data;
 
-	Node(T e);
-	~Node();
+	Node(T e)
+	{
+		prev = NULL;
+		next = NULL;
+		data = e;
+	}
+	~Node() {return;}
 };
 
 template <typename T>
-Node<T>::Node(T e)
-{
-	prev = NULL;
-	next = NULL;
-	data = e;
-}
+class Iterator { 
+public:
+	Node<T> *node;
 
-template <typename T>
-Node<T>::~Node()
-{
-	return;
-}
+	Iterator(Node<T>* n = NULL) {node = n;}
+	Iterator operator++(int)
+	{
+		node = node->next;
+		return *this;
+	}
+	T operator*() {return node->data;}
+	bool operator!=(Iterator const &it) const {return node != it.node;}
+};
 
 template <typename T>
 class List
@@ -53,6 +59,8 @@ public:
 	void delete_data();
 	void print();
 	void printl();
+	Iterator<T> begin() {return Iterator<T>(first);}
+	Iterator<T> end() {return Iterator<T>();}
 };
 
 template <typename T>
@@ -112,14 +120,14 @@ void List<T>::addlast(T e)
 template <typename T>
 int List<T>::get_pos(T e)
 {
-	auto tmp = first;
+	auto tmp = begin();
 	int i = 0;
-	while (tmp != NULL && tmp->data != e)
+	while (tmp != end() && *tmp != e)
 	{
-		tmp = tmp->next;
+		tmp++;
 		i++;
 	}
-	if (tmp != NULL) return i;
+	if (tmp != end()) return i;
 	else return -1;
 }
 
