@@ -57,8 +57,8 @@ public:
 	//retourne le nombre d'éléments en commun entre deux listes
 	int in_common(List<T>& l);
 	void delete_data();
-	void print();
-	void printl();
+	void print(bool ptr = false);
+	void printl(bool ptr = false);
 	Iterator<T> begin() {return Iterator<T>(first);}
 	Iterator<T> end() {return Iterator<T>();}
 };
@@ -226,25 +226,31 @@ void List<T>::delete_data()
 }
 
 template <typename T>
-void List<T>::print()
+void List<T>::print(bool ptr)
 {
 	auto it = begin();
 	while (it != end())
 	{
-		std::cout << *it << std::endl;
+		if (ptr) std::cout << *it << std::endl;
+		else std::cout << it << std::endl;
 		it++;
 	}
 }
 
 template <typename T>
-void List<T>::printl()
+void List<T>::printl(bool ptr)
 {
 	auto it = first;
 	while (it != last) {
-		std::cout << it->data << ", ";
+		if (ptr) std::cout << *it->data << ", ";
+		else std::cout << it->data << ", ";
 		it = it->next;
 	}
-	if (it != NULL) std::cout << it->data;
+	if (it != NULL)
+	{
+		if (ptr) std::cout << *it->data;
+		else std::cout << it->data;
+	}
 	std::cout << std::endl;
 }
 

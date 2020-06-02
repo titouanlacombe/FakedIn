@@ -376,7 +376,7 @@ void search_worker(Company& c)
 	results = srch_wrk_profile_job(*workers, *j, zip);
 
 	cout << "Résultats:\n";
-	results->print();
+	results->print(true);
 	cout << "\nEntrez une touche pour revenir au menu Entreprise.";
 	getline(cin, title);
 	delete results;
@@ -568,7 +568,7 @@ void search_job(Worker& w)
 
 	results = srch_job_profile_wrk(*jobs, w, zip);
 	cout << "Résultats:\n";
-	results->print();
+	results->print(true);
 	cout << "\nEntrez une touche pour revenir au menu Travailleur.";
 	getline(cin, it);
 	delete results;
@@ -598,12 +598,12 @@ void search_coll(Worker& w)
 		if (c == NULL) return;
 		results = srch_coll_from_cmp(w, *c);
 		cout << "Résultats:\n";
-		results->print();
+		results->print(true);
 		break;
 	case 2:
 		results = srch_coll_skills(*jobs, w);
 		cout << "Résultats:\n";
-		results->print();
+		results->print(true);
 		break;
 	}
 	cout << "\nEntrez une touche pour revenir au menu Travailleur.";
