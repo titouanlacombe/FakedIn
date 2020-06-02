@@ -115,6 +115,10 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	std::ifstream cmp_file, job_file, emp_file, skr_file;
 	std::string line, tmp, tmp2;
 
+	companies->empty();
+	jobs->empty();
+	workers->empty();
+
 	cmp_file.open("./" + folder + CMP_FILE_NAME);
 	job_file.open("./" + folder + JOB_FILE_NAME);
 	emp_file.open("./" + folder + EMP_FILE_NAME);

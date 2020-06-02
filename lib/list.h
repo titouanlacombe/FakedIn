@@ -38,6 +38,7 @@ public:
 
 	List();
 	~List();
+	void empty();
 	// void addfirst(T e);
 	void addlast(T e);
 	int get_pos(T e);
@@ -72,6 +73,21 @@ List<T>::~List()
 		delete tmp->prev;
 	}
 	if (tmp != NULL) delete tmp;
+}
+
+template <typename T>
+void List<T>::empty()
+{
+	auto tmp = first;
+	while (tmp != last)
+	{
+		tmp = tmp->next;
+		delete tmp->prev;
+	}
+	if (tmp != NULL) delete tmp;
+	first = NULL;
+	last = NULL;
+	length = 0;
 }
 
 template <typename T>
