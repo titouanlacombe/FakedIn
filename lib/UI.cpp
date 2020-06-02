@@ -161,7 +161,7 @@ void company_menu(Company* c)
 	
 	do
 	{
-		cout << "~~ Menu Entreprise (" << c->name << ") ~~\n\n";
+		cout << "\n~~ Menu Entreprise (" << c->name << ") ~~\n\n";
 		cout << "Vous voulez:\n";
 		cout << "\t1. Faire une recherche parmi les chercheurs d'emploi\n";
 		cout << "\t2. Créér une nouvelle offre d'emploi\n";
@@ -412,7 +412,7 @@ void create_worker()
 	loop = true;
 	do
 	{
-		cout << "Entrez le nom d'un collègue (nom prénom) (vide pour arreter): ";
+		cout << "-Entrez le nom d'un collègue (nom prénom) (vide pour arreter): ";
 		getline(cin, coll_str);
 		if (!coll_str.empty())
 		{
@@ -427,7 +427,7 @@ void create_worker()
 	// Entreprise
 	do
 	{
-		cout << "Entrez le nom de votre Entreprise (vide pour aucune): ";
+		cout << "-Entrez le nom de votre Entreprise (vide pour aucune): ";
 		getline(cin, tmp);
 		if (!tmp.empty())
 		{
@@ -471,7 +471,7 @@ void worker_menu(Worker* w)
 
 	do
 	{
-		cout << "~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n";
+		cout << "\n~~ Menu Employé (" << w->first_name << " " << w->last_name << ") ~~\n\n";
 		cout << "Vous voulez:\n";
 		cout << "\t1. Chercher un nouvel emploi\n";
 		cout << "\t2. Rechercher un profil parmis vos ancien collègue\n";

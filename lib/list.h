@@ -241,7 +241,8 @@ void List<T>::printl()
 		std::cout << tmp->data << ", ";
 		tmp = tmp->next;
 	}
-	if (tmp != NULL) std::cout << tmp->data << std::endl;
+	if (tmp != NULL) std::cout << tmp->data;
+	std::cout << std::endl;
 }
 
 void load_list();
