@@ -46,7 +46,7 @@ public:
 	bool has(T e);
 	void remove(Node<T>* tmp);
 	void remove(T e);
-	List<T>& operator-=(List<T>& l);
+	void remove(List<T>* l);
 	T& operator[](int n);
 	//retourne le nombre d'éléments en commun entre deux listes
 	int in_common(List<T>* l);
@@ -175,15 +175,14 @@ void List<T>::remove(T e)
 }
 
 template <typename T>
-List<T>& List<T>::operator-=(List<T>& l)
+void List<T>::remove(List<T>* l)
 {
-	auto tmp = l.first;
+	auto tmp = l->first;
 	while (tmp != NULL)
 	{
 		remove(tmp->data);
 		tmp = tmp->next;
 	}
-	return *this;
 }
 
 template <typename T>

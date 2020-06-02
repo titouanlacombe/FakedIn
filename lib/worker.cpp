@@ -113,6 +113,7 @@ List<Worker*>* company_employees(List<Worker*>* workers, Company* c)
 	while (tmp != NULL)
 	{
 		if (tmp->data->company == c) l->addlast(tmp->data);
+		tmp = tmp->next;
 	}
 	return l;
 }

@@ -51,7 +51,7 @@ int request_choice(int nb)
 			choice = stoi(tmp);
 			if (choice > 0 && choice <= nb) return choice;
 		}
-		cout << "Erreur: choix invalide.";
+		cout << "Erreur: choix invalide." << endl;
 	} while (true);
 }
 
@@ -64,7 +64,7 @@ bool request_yn_choice()
 		getline(cin, tmp);
 		if (tmp == "o") return true;
 		else if (tmp == "n") return false;
-		cout << "Erreur: choix invalide.";
+		cout << "Erreur: choix invalide." << endl;
 	} while (true);
 }
 
@@ -95,7 +95,7 @@ Company* request_cmp_login(string request_line)
 		getline(cin, name);
 		if (name == "q") return NULL;
 		c = srch_cmp_list(companies, name);
-		if (c == NULL) cout << "Erreur: l'Entreprise '" << name << "' n'existe pas\n";
+		if (c == NULL) cout << "Erreur: l'Entreprise '" << name << "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
 	return c;
@@ -157,7 +157,7 @@ Job* request_job_login(Company* c, string request_phrase)
 		getline(cin, title);
 		if (title == "q") return NULL;
 		j = srch_job_list(jobs, c, title);
-		if (j == NULL) cout << "Erreur: l'offre d'emploi '" << title << "' n'existe pas\n";
+		if (j == NULL) cout << "Erreur: l'offre d'emploi '" << title << "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
 	return j;
@@ -203,7 +203,7 @@ void request_wrk_coll(Worker* w)
 		{
 			mygetline(full_name, first_name, ' ');
 			coll = srch_wrk_list(workers, first_name, full_name);
-			if (coll == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas\n";
+			if (coll == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
 			else if (coll == w) cout << "Erreur: vous ne pouvez pas être votre propre collègue." << endl;
 			else w->add_colleague(coll);
 		}
@@ -223,7 +223,7 @@ void request_wrk_cmp(Worker* w)
 		if (!name.empty())
 		{
 			c = srch_cmp_list(companies, name);
-			if (c == NULL) cout << "Erreur: l'Entreprise '" + name + "' n'existe pas\n";
+			if (c == NULL) cout << "Erreur: l'Entreprise '" + name + "' n'existe pas" << endl;
 			else
 			{
 				w->set_company(c);
@@ -319,7 +319,6 @@ void login_company()
 	c = request_cmp_login("Entrez le nom de votre Entreprise ('q' pour annuler): ");
 	if (c == NULL) return;
 	
-	cout << endl;
 	company_menu(c);
 }
 
@@ -354,7 +353,7 @@ void company_menu(Company* c)
 			break;
 		case 4:
 			delete_company(c);
-			break;
+			return;
 		}
 	} while (true);
 }
@@ -429,8 +428,7 @@ void delete_company(Company* c)
 	if(choice)
 	{
 		lj = company_jobs(jobs, c);
-		*jobs -= *lj;
-		lj->delete_data();
+		jobs->remove(lj);
 		delete lj;
 
 		lw = company_employees(workers, c);
@@ -438,16 +436,17 @@ void delete_company(Company* c)
 		while (tmp != NULL)
 		{
 			tmp->data->set_company(NULL);
+			tmp = tmp->next;
 		}
 		delete lw;
 
 		companies->remove(c);
 
-		cout << "Entreprise supprimée\n" << endl;
+		cout << "Entreprise supprimée" << endl;
 		log_write("Company deleted: " + c->name);
 		delete c;
 	}
-	else cout << "Suppression annulée\n" << endl;
+	else cout << "Suppression annulée" << endl;
 }
 
 void pre_worker()
@@ -513,11 +512,10 @@ void login_worker()
 		if (full_name == "q") return;
 		mygetline(full_name, first_name, ' ');
 		w = srch_wrk_list(workers, first_name, full_name);
-		if (w == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas\n";
+		if (w == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
 	
-	cout << endl;
 	worker_menu(w);
 }
 
@@ -552,7 +550,7 @@ void worker_menu(Worker* w)
 			break;
 		case 4:
 			delete_worker(w);
-			break;
+			return;
 		}
 	} while (true);
 }
@@ -569,6 +567,7 @@ void search_job(Worker* w)
 	cout << endl;
 
 	results = srch_job_profile_wrk(jobs, w, zip);
+	cout << "Résultats:\n";
 	results->print();
 	cout << "\nEntrez une touche pour revenir au menu Travailleur.";
 	getline(cin, tmp);
@@ -598,10 +597,12 @@ void search_coll(Worker* w)
 		c = request_cmp_login("Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues ('q' pour annuler): ");
 		if (c == NULL) return;
 		results = srch_coll_from_cmp(w, c);
+		cout << "Résultats:\n";
 		results->print();
 		break;
 	case 2:
 		results = srch_coll_skills(jobs, w);
+		cout << "Résultats:\n";
 		results->print();
 		break;
 	}
@@ -619,7 +620,8 @@ void modify_worker(Worker* w)
 	"Votre profil actuel: \n"
 	<< w->first_name << " " << w->last_name << "\n"
 	<< "email: " << w->email << "\nCode postal: " << w->zip_code << endl;
-	if(w->employed()) cout << "Travaille à: " << w->company->name << endl;
+	if(w->employed()) cout << "Travaille à " << w->company->name << endl;
+	else cout << "En recherche de travail" << endl;
 	cout << "Skills: ";
 	w->skills->printl();
 	cout << "Collègues: ";
@@ -678,11 +680,11 @@ void delete_worker(Worker* w)
 	{
 		workers->remove(w);
 		w->remove_from_coll();
-		cout << "Travailleur supprimée\n" << endl;
+		cout << "Travailleur supprimée" << endl;
 		log_write("Worker deleted: " + w->first_name + " " + w->last_name);
 		delete w;
 	}
-	else cout << "Suppression annulée\n" << endl;
+	else cout << "Suppression annulée" << endl;
 }
 
 void load_UI()
