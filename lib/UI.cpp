@@ -365,6 +365,7 @@ void pre_worker()
 
 void create_worker()
 {
+	bool loop;
 	string first_name, full_name, email, zip;
 	string skills_raw, coll_str, company_name, tmp;
 	Worker* w, *coll;
@@ -408,6 +409,7 @@ void create_worker()
 	}
 	
 	// Collegues
+	loop = true;
 	do
 	{
 		cout << "Entrez le nom d'un collègue (nom prénom) (vide pour arreter): ";
@@ -419,7 +421,8 @@ void create_worker()
 			if (coll == NULL) cout << "Erreur: le Travailleur '" + tmp + " " + coll_str + "' n'existe pas\n";
 			else w->add_colleague(coll);
 		}
-	} while (!coll_str.empty());
+		else loop = false;
+	} while (loop);
 
 	// Entreprise
 	do

@@ -282,7 +282,8 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 			job_file << skl_it->data << ";";
 			skl_it = skl_it->next;
 		}
-		job_file << skl_it->data << ",";
+		if (skl_it != NULL) job_file << skl_it->data;
+		job_file << ",";
 		
 		// Company id
 		job_file << companies->get_pos(job_it->data->company) << std::endl;
@@ -325,8 +326,13 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 
 			skl_it2 = skl_it2->next;
 		}
-		if (wrk_it->data->employed()) emp_file << skl_it2->data << ",";
-		else skr_file << skl_it2->data << ",";
+		if (skl_it2 != NULL)
+		{
+			if (wrk_it->data->employed()) emp_file << skl_it2->data;
+			else skr_file << skl_it2->data;
+		}
+		if (wrk_it->data->employed()) emp_file << ",";
+		else skr_file << ",";
 		
 		// colleagues
 		auto coll_it = wrk_it->data->colleagues->first;
