@@ -12,6 +12,8 @@ public:
 	Company();
 	Company(std::string _name, std::string _zip_code, std::string _email);
 	~Company();
+	friend bool operator==(Company& l, Company& r);
+	friend bool operator!=(Company& l, Company& r);
 	friend std::ostream& operator<<(std::ostream& os, const Company& c);
 };
 

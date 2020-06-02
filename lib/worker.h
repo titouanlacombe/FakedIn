@@ -27,6 +27,8 @@ public:
 	// donne l'etat de w
 	bool employed() const;
 	void remove_from_coll();
+	friend bool operator==(Worker& l, Worker& r);
+	friend bool operator!=(Worker& l, Worker& r);
 	friend std::ostream& operator<<(std::ostream& os, const Worker& w);
 };
 

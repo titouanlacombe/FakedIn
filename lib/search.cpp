@@ -2,9 +2,9 @@
 
 // Rechercher parmi les chercheurs d'emploi pour des profils qui 
 // correspondent à un poste à pourvoir (recherche par zip_code ou pas)
-List<Worker*>* srch_wrk_profile_job(List<Worker*> *workers, Job* j, bool zip_code)
+List<Worker>* srch_wrk_profile_job(List<Worker*> *workers, Job* j, bool zip_code)
 {
-	List<Worker*>* l = new List<Worker*>;
+	List<Worker>* l = new List<Worker>;
 	auto cur = workers->first;
 
 	while (cur != NULL)
@@ -13,11 +13,11 @@ List<Worker*>* srch_wrk_profile_job(List<Worker*> *workers, Job* j, bool zip_cod
 		{
 			if (zip_code)
 			{
-				if (j->company->zip_code == cur->data->zip_code && j->skills->in_common(cur->data->skills) > 0) l->addlast(cur->data);
+				if (j->company->zip_code == cur->data->zip_code && j->skills->in_common(cur->data->skills) > 0) l->addlast(*cur->data);
 			}
 			else
 			{
-				if (j->skills->in_common(cur->data->skills) > 0) l->addlast(cur->data);
+				if (j->skills->in_common(cur->data->skills) > 0) l->addlast(*cur->data);
 			}
 			cur = cur->next;
 		}
@@ -27,20 +27,20 @@ List<Worker*>* srch_wrk_profile_job(List<Worker*> *workers, Job* j, bool zip_cod
 
 // Rechercher parmi les jobs ceux qui correspondent
 // au profil de w (recherche par zip_code ou pas)
-List<Job*>* srch_job_profile_wrk(List<Job*> *jobs, Worker* w, bool zip_code)
+List<Job>* srch_job_profile_wrk(List<Job*> *jobs, Worker* w, bool zip_code)
 {
-	List<Job*>* l = new List<Job*>;
+	List<Job>* l = new List<Job>;
 	auto cur = jobs->first;
 
 	while (cur != NULL)
 	{
 		if (zip_code)
 		{
-			if (w->zip_code == cur->data->company->zip_code && cur->data->skills->in_common(w->skills) > 0) l->addlast(cur->data);
+			if (w->zip_code == cur->data->company->zip_code && cur->data->skills->in_common(w->skills) > 0) l->addlast(*cur->data);
 		}
 		else
 		{
-			if (cur->data->skills->in_common(w->skills) > 0) l->addlast(cur->data);
+			if (cur->data->skills->in_common(w->skills) > 0) l->addlast(*cur->data);
 		}
 		cur = cur->next;
 	}
@@ -48,14 +48,14 @@ List<Job*>* srch_job_profile_wrk(List<Job*> *jobs, Worker* w, bool zip_code)
 }
 
 // Retourne colleagues employés par company
-List<Worker*>* srch_coll_from_cmp(Worker *w, Company *c)
+List<Worker>* srch_coll_from_cmp(Worker *w, Company *c)
 {
-	List<Worker*>* l = new List<Worker*>;
+	List<Worker>* l = new List<Worker>;
 	auto cur = w->colleagues->first;
 
 	while (cur != NULL)
 	{
-		if (cur->data->company == c) l->addlast(cur->data);
+		if (cur->data->company == c) l->addlast(*cur->data);
 		cur = cur->next;
 	}
 	return l;
@@ -63,17 +63,17 @@ List<Worker*>* srch_coll_from_cmp(Worker *w, Company *c)
 
 // retourne les anciens collègues employés aux entreprises 
 // qui recherchent les compétences de w
-List<Worker*>* srch_coll_skills(List<Job*> *jobs, Worker *w)
+List<Worker>* srch_coll_skills(List<Job*> *jobs, Worker *w)
 {
-	List<Job*>* lj = srch_job_profile_wrk(jobs, w, false);
-	List<Company*>* lc = new List<Company*>;
-	List<Worker*>* lw = new List<Worker*>;
+	List<Job>* lj = srch_job_profile_wrk(jobs, w, false);
+	List<Company>* lc = new List<Company>;
+	List<Worker>* lw = new List<Worker>;
 
 	// convertir en companies
 	auto tmp = lj->first;
 	while (tmp != NULL)
 	{
-		if (!lc->has(tmp->data->company)) lc->addlast(tmp->data->company);
+		if (!lc->has(*tmp->data.company)) lc->addlast(*tmp->data.company);
 		tmp = tmp->next;
 	}
 	
@@ -81,7 +81,7 @@ List<Worker*>* srch_coll_skills(List<Job*> *jobs, Worker *w)
 	auto tmp2 = w->colleagues->first;
 	while (tmp2 != NULL)
 	{
-		if (lc->has(tmp2->data->company)) lw->addlast(tmp2->data);
+		if (lc->has(*tmp2->data->company)) lw->addlast(*tmp2->data);
 		tmp2 = tmp2->next;
 	}
 	

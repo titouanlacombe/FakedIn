@@ -78,6 +78,7 @@ string request_cmp_name()
 		getline(cin, name);
 		if (cmp_exist(companies, name)) cout << "Erreur: l'entreprise '" << name << "' existe déjà." << endl;
 		else if (name.empty()) cout << "Erreur: le nom est vide." << endl;
+		else if (name == "q") cout << "Erreur: le nom ne peut pas etre 'q'." << endl;
 		else loop = false;
 	} while (loop);
 	return name;
@@ -140,6 +141,7 @@ string request_job_title(Company* c)
 		getline(cin, title);
 		if (job_exist(jobs, c, title)) cout << "Erreur: l'offre '" << title << "' existe déjà dans votre entreprise." << endl;
 		else if (title.empty()) cout << "Erreur: le titre de l'offre est vide." << endl;
+		else if (title == "q") cout << "Erreur: le titre de l'offre ne peut pas etre 'q'." << endl;
 		else loop = false;
 	} while (loop);
 	return title;
@@ -201,6 +203,7 @@ void request_wrk_coll(Worker* w)
 			mygetline(full_name, first_name, ' ');
 			coll = srch_wrk_list(workers, first_name, full_name);
 			if (coll == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas\n";
+			else if (coll == w) cout << "Erreur: vous ne pouvez pas être votre propre collègue." << endl;
 			else w->add_colleague(coll);
 		}
 		else loop = false;
@@ -361,7 +364,7 @@ void company_menu(Company* c)
 
 void search_worker(Company* c)
 {
-	List<Worker*>* resultats;
+	List<Worker>* results;
 	string title;
 	bool zip;
 	Job *j;
@@ -372,19 +375,19 @@ void search_worker(Company* c)
 	if (j == NULL) return;
 
 	cout << endl;
-	cout << "Voulez vous ne voir que les travailleur du même code postal (o/n): ";
+	cout << "Voulez vous ne voir que les travailleur du même code postal ?\n";
 	zip = request_yn_choice();
 
 	cout << endl;
 
-	resultats = srch_wrk_profile_job(workers, j, zip);
+	results = srch_wrk_profile_job(workers, j, zip);
 
 	cout << "Résultats:\n";
-	resultats->print();
+	results->print();
 	cout << "\nEntrez une touche pour revenir au menu Entreprise.";
 	getline(cin, title);
 
-	delete resultats;
+	delete results;
 }
 
 void create_job(Company* c)
@@ -587,13 +590,13 @@ void worker_menu(Worker* w)
 
 void search_job(Worker* w)
 {
-	List<Job*>* results;
+	List<Job>* results;
 	bool zip;
 	string tmp;
 
 	cout << "~~ Recherche d'offre d'emploi ~~\n\n";
 
-	cout << "Voulez vous ne voir que les travailleur du même code postal (o/n): ";
+	cout << "Voulez vous ne voir que les travailleur du même code postal ?\n";
 	zip = request_yn_choice();
 	
 	cout << endl;
@@ -608,7 +611,7 @@ void search_job(Worker* w)
 
 void search_coll(Worker* w)
 {
-	List<Worker*>* results;
+	List<Worker>* results;
 	Company* c;
 	string name;
 	int choice;

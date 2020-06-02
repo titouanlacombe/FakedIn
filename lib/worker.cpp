@@ -63,6 +63,16 @@ void Worker::remove_from_coll()
 	}
 }
 
+bool operator==(Worker& l, Worker& r)
+{
+	return l.first_name == r.first_name && l.last_name == r.last_name;
+}
+
+bool operator!=(Worker& l, Worker& r)
+{
+	return !(l==r);
+}
+
 std::ostream& operator<<(std::ostream& os, const Worker& w)
 {
 	os << w.first_name << " " << w.last_name << " email: " << w.email;

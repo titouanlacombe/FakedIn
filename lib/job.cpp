@@ -20,6 +20,16 @@ Job::~Job()
 
 }
 
+bool operator==(Job& l, Job& r)
+{
+	return l.title == r.title && l.company == r.company;
+}
+
+bool operator!=(Job& l, Job& r)
+{
+	return !(l==r);
+}
+
 std::ostream& operator<<(std::ostream& os, const Job& j)
 {
 	os << "Offre d'emploi: " << j.title << " a " << j.company->name << "(email: "

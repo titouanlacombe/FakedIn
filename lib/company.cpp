@@ -19,6 +19,16 @@ Company::~Company()
   
 }
 
+bool operator==(Company& l, Company& r)
+{
+	return l.name == r.name;
+}
+
+bool operator!=(Company& l, Company& r)
+{
+	return !(l==r);
+}
+
 std::ostream& operator<<(std::ostream& os, const Company& c)
 {
 	os << "Entreprise: " << c.name << " Code postal: " << c.zip_code << " email: " << c.email;

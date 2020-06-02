@@ -12,6 +12,8 @@ public:
 	Job();
 	Job(std::string _title, List<std::string>* _skills, Company* _company);
 	~Job();
+	friend bool operator==(Job& l, Job& r);
+	friend bool operator!=(Job& l, Job& r);
 	friend std::ostream& operator<<(std::ostream& os, const Job& j);
 };
 
