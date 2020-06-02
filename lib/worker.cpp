@@ -54,11 +54,11 @@ bool Worker::employed() const
 
 void Worker::remove_from_coll()
 {
-	auto tmp = co_workers.begin();
-	while(tmp != co_workers.end())
+	auto it = co_workers.begin();
+	while(it != co_workers.end())
 	{
-		(*tmp)->co_workers.remove(this);
-		tmp++;
+		(*it)->co_workers.remove(this);
+		it++;
 	}
 }
 
@@ -77,13 +77,13 @@ std::ostream& operator<<(std::ostream& os, const Worker& w)
 	os << w.first_name << " " << w.last_name << " email: " << w.email;
 	if (w.employed()) os << " employé a: " << w.company->name;
 	// os << ", Compétences: ";
-	// auto tmp = w.skills->first;
-	// while (tmp != w.skills->last)
+	// auto it = w.skills->first;
+	// while (it != w.skills->last)
 	// {
-	// 	os << tmp->data << ", ";
-	// 	tmp = tmp->next;
+	// 	os << it->data << ", ";
+	// 	it = it->next;
 	// }
-	// os << tmp->data;
+	// os << it->data;
 	return os;
 }
 
@@ -108,11 +108,11 @@ bool wrk_exist(List<Worker*>& workers, std::string first_name, std::string last_
 List<Worker*>* company_employees(List<Worker*>& workers, Company& c)
 {
 	List<Worker*>* l = new List<Worker*>();
-	auto tmp = workers.begin();
-	while (tmp != workers.end())
+	auto it = workers.begin();
+	while (it != workers.end())
 	{
-		if (*(*tmp)->company == c) l->addlast(*tmp);
-		tmp++;
+		if (*(*it)->company == c) l->addlast(*it);
+		it++;
 	}
 	return l;
 }

@@ -50,7 +50,7 @@ public:
 	int get_pos(T e);
 	Node<T>* get_node(T e);
 	bool has(T e);
-	void remove(Node<T>* tmp);
+	void remove(Node<T>* it);
 	void remove(T e);
 	void remove(List<T>& l);
 	T& operator[](int n);
@@ -74,25 +74,25 @@ List<T>::List()
 template <typename T>
 List<T>::~List()
 {
-	auto tmp = first;
-	while (tmp != last)
+	auto it = first;
+	while (it != last)
 	{
-		tmp = tmp->next;
-		delete tmp->prev;
+		it = it->next;
+		delete it->prev;
 	}
-	if (tmp != NULL) delete tmp;
+	if (it != NULL) delete it;
 }
 
 template <typename T>
 void List<T>::empty()
 {
-	auto tmp = first;
-	while (tmp != last)
+	auto it = first;
+	while (it != last)
 	{
-		tmp = tmp->next;
-		delete tmp->prev;
+		it = it->next;
+		delete it->prev;
 	}
-	if (tmp != NULL) delete tmp;
+	if (it != NULL) delete it;
 	first = NULL;
 	last = NULL;
 	length = 0;
@@ -120,53 +120,53 @@ void List<T>::addlast(T e)
 template <typename T>
 int List<T>::get_pos(T e)
 {
-	auto tmp = begin();
+	auto it = begin();
 	int i = 0;
-	while (tmp != end() && *tmp != e)
+	while (it != end() && *it != e)
 	{
-		tmp++;
+		it++;
 		i++;
 	}
-	if (tmp != end()) return i;
+	if (it != end()) return i;
 	else return -1;
 }
 
 template <typename T>
 Node<T>* List<T>::get_node(T e)
 {
-	auto tmp = begin();
-	while (tmp != end() && *tmp != e) tmp++;
-	return tmp.node;
+	auto it = begin();
+	while (it != end() && *it != e) it++;
+	return it.node;
 }
 
 template <typename T>
 bool List<T>::has(T e) {return (get_node(e) != NULL);}
 
 template <typename T>
-void List<T>::remove(Node<T>* tmp)
+void List<T>::remove(Node<T>* it)
 {
-	if (tmp == first && tmp == last)
+	if (it == first && it == last)
 	{
 		first = NULL;
 		last = NULL;
 	}
-	else if (tmp == first)
+	else if (it == first)
 	{
-		first = tmp->next;
+		first = it->next;
 		first->prev = NULL;
 	}
-	else if (tmp == last)
+	else if (it == last)
 	{
-		last = tmp->prev;
+		last = it->prev;
 		last->next = NULL;
 	}
 	else
 	{
-		tmp->prev->next = tmp->next;
-		tmp->next->prev = tmp->prev;
+		it->prev->next = it->next;
+		it->next->prev = it->prev;
 	}
 	length--;
-	delete tmp;
+	delete it;
 }
 
 template <typename T>
@@ -179,11 +179,11 @@ void List<T>::remove(T e)
 template <typename T>
 void List<T>::remove(List<T>& l)
 {
-	auto tmp = l.begin();
-	while (tmp != l.end())
+	auto it = l.begin();
+	while (it != l.end())
 	{
-		remove(*tmp);
-		tmp++;
+		remove(*it);
+		it++;
 	}
 }
 
@@ -191,13 +191,13 @@ template <typename T>
 T& List<T>::operator[](int n)
 {
 	int i = 0;
-	auto tmp = first;
-	while (tmp != NULL && i < n)
+	auto it = first;
+	while (it != NULL && i < n)
 	{
 		i++;
-		tmp = tmp->next;
+		it = it->next;
 	}
-	return tmp->data;
+	return it->data;
 }
 
 template <typename T>
@@ -217,34 +217,34 @@ int List<T>::in_common(List<T>& l)
 template <typename T>
 void List<T>::delete_data()
 {
-	auto tmp = begin();
-	while (tmp != end())
+	auto it = begin();
+	while (it != end())
 	{
-		delete *tmp;
-		tmp++;
+		delete *it;
+		it++;
 	}
 }
 
 template <typename T>
 void List<T>::print()
 {
-	auto tmp = begin();
-	while (tmp != end())
+	auto it = begin();
+	while (it != end())
 	{
-		std::cout << *tmp << std::endl;
-		tmp++;
+		std::cout << *it << std::endl;
+		it++;
 	}
 }
 
 template <typename T>
 void List<T>::printl()
 {
-	auto tmp = first;
-	while (tmp != last) {
-		std::cout << tmp->data << ", ";
-		tmp = tmp->next;
+	auto it = first;
+	while (it != last) {
+		std::cout << it->data << ", ";
+		it = it->next;
 	}
-	if (tmp != NULL) std::cout << tmp->data;
+	if (it != NULL) std::cout << it->data;
 	std::cout << std::endl;
 }
 

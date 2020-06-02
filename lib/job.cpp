@@ -38,25 +38,25 @@ std::ostream& operator<<(std::ostream& os, const Job& j)
 {
 	os << "Offre d'emploi: " << j.title << " a " << j.company->name << "(email: "
 	<< j.company->email << " Code postal: " << j.company->zip_code << ")";
-	// auto tmp = j.skills->first;
+	// auto it = j.skills->first;
 	// os << " Compétences requises: ";
-	// while (tmp != j.skills->last)
+	// while (it != j.skills->last)
 	// {
-	// 	os << tmp->data << ", ";
-	// 	tmp = tmp->next;
+	// 	os << it->data << ", ";
+	// 	it = it->next;
 	// }
-	// os << tmp->data;
+	// os << it->data;
 	return os;
 }
 
 List<Job*>* company_jobs(List<Job*>& jobs, Company& c)
 {
 	List<Job*>* l = new List<Job*>();
-	auto tmp = jobs.begin();
-	while (tmp != jobs.end())
+	auto it = jobs.begin();
+	while (it != jobs.end())
 	{
-		if (*(*tmp)->company == c) l->addlast(*tmp);
-		tmp++;
+		if (*(*it)->company == c) l->addlast(*it);
+		it++;
 	}
 	return l;
 }

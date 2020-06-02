@@ -15,14 +15,14 @@ void init_lists(List<Company*>& _companies, List<Job*>& _jobs, List<Worker*>& _w
 
 bool valid_email(string email)
 {
-	string copy(email), tmp;
+	string copy(email), it;
 
-	mygetline(copy, tmp, '@');
-	if (tmp.empty()) return false;
-	mygetline(copy, tmp, '.');
-	if (tmp.empty()) return false;
-	mygetline(copy, tmp);
-	if (tmp.empty()) return false;
+	mygetline(copy, it, '@');
+	if (it.empty()) return false;
+	mygetline(copy, it, '.');
+	if (it.empty()) return false;
+	mygetline(copy, it);
+	if (it.empty()) return false;
 	return true;
 }
 
@@ -41,14 +41,14 @@ bool valid_zip(string zip)
 int request_choice(int nb)
 {
 	int choice;
-	string tmp;
+	string it;
 	do
 	{
 		cout << "Entrez votre choix ('q' pour annuler): ";
-		getline(cin, tmp);
-		if (tmp == "q") return -1;
-		if (is_number(tmp)) {
-			choice = stoi(tmp);
+		getline(cin, it);
+		if (it == "q") return -1;
+		if (is_number(it)) {
+			choice = stoi(it);
 			if (choice > 0 && choice <= nb) return choice;
 		}
 		cout << "Erreur: choix invalide." << endl;
@@ -57,13 +57,13 @@ int request_choice(int nb)
 
 bool request_yn_choice()
 {
-	string tmp;
+	string it;
 	do
 	{
 		cout << "Entrez votre choix o/n: ";
-		getline(cin, tmp);
-		if (tmp == "o") return true;
-		else if (tmp == "n") return false;
+		getline(cin, it);
+		if (it == "o") return true;
+		else if (it == "n") return false;
 		cout << "Erreur: choix invalide." << endl;
 	} while (true);
 }
@@ -166,13 +166,13 @@ Job* request_job_login(Company& c, string request_phrase)
 template <typename T>
 void request_skills(T& w, string request_phrase)
 {
-	string skills_raw, tmp;
+	string skills_raw, it;
 	cout << request_phrase;
 	getline(cin, skills_raw);
-	while (mygetline(skills_raw, tmp, ',')) {
-		if (tmp.empty()) cout << "Une compétence a un nom vide, elle ne sera pas prise en compte" << endl;
-		else if (w.skills.has(tmp)) cout << "La compétence '" + tmp + "' est déjà dans la liste, elle ne sera pas prise en compte" << endl;
-		else w.add_skill(tmp);
+	while (mygetline(skills_raw, it, ',')) {
+		if (it.empty()) cout << "Une compétence a un nom vide, elle ne sera pas prise en compte" << endl;
+		else if (w.skills.has(it)) cout << "La compétence '" + it + "' est déjà dans la liste, elle ne sera pas prise en compte" << endl;
+		else w.add_skill(it);
 	}
 }
 
@@ -559,7 +559,7 @@ void search_job(Worker& w)
 {
 	List<Job*>* results;
 	bool zip;
-	string tmp;
+	string it;
 
 	cout << "~~ Recherche d'offre d'emploi ~~\n\n";
 	cout << "Voulez vous ne voir que les travailleur du même code postal ?\n";
@@ -570,7 +570,7 @@ void search_job(Worker& w)
 	cout << "Résultats:\n";
 	results->print();
 	cout << "\nEntrez une touche pour revenir au menu Travailleur.";
-	getline(cin, tmp);
+	getline(cin, it);
 	delete results;
 }
 

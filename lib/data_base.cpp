@@ -69,38 +69,38 @@ void create_skr_file(std::string folder)
 
 void load_workers(List<Worker*>& workers, List<Company*>& companies, List<std::string>& co_workers_ids, std::ifstream &wrk_file, bool employed)
 {
-	std::string first_name, last_name, email, zip_code, line, tmp, tmp2;
+	std::string first_name, last_name, email, zip_code, line, it, it2;
 	Company *company;
 	Worker *w;
 
 	std::getline(wrk_file, line);
 	while (!line.empty())
 	{
-		mygetline(line, tmp, ','); // id
-		mygetline(line, tmp, ','); // first name
-		first_name = tmp;
-		mygetline(line, tmp, ','); // last name
-		last_name = tmp;
-		mygetline(line, tmp, ','); // email
-		email = tmp;
-		mygetline(line, tmp, ','); // zip code
-		zip_code = tmp;
+		mygetline(line, it, ','); // id
+		mygetline(line, it, ','); // first name
+		first_name = it;
+		mygetline(line, it, ','); // last name
+		last_name = it;
+		mygetline(line, it, ','); // email
+		email = it;
+		mygetline(line, it, ','); // zip code
+		zip_code = it;
 		
 		w = new Worker(first_name, last_name, email);
 		workers.addlast(w);
 		workers.last->data->set_zip_code(zip_code);
 
-		mygetline(line, tmp, ','); // skills
-		while (mygetline(tmp, tmp2, ';')) workers.last->data->add_skill(tmp2);
+		mygetline(line, it, ','); // skills
+		while (mygetline(it, it2, ';')) workers.last->data->add_skill(it2);
 
-		if (employed) mygetline(line, tmp, ','); // co_workers
-		else mygetline(line, tmp);
-		co_workers_ids.addlast(tmp);
+		if (employed) mygetline(line, it, ','); // co_workers
+		else mygetline(line, it);
+		co_workers_ids.addlast(it);
 		
 		if (employed)
 		{
-			mygetline(line, tmp); // company
-			company = companies[std::stoi(tmp)];
+			mygetline(line, it); // company
+			company = companies[std::stoi(it)];
 		}
 		if (employed) workers.last->data->set_company(company);
 
@@ -111,7 +111,7 @@ void load_workers(List<Worker*>& workers, List<Company*>& companies, List<std::s
 void load(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, std::string folder)
 {
 	std::ifstream cmp_file, job_file, emp_file, skr_file;
-	std::string line, tmp, tmp2;
+	std::string line, it, it2;
 	Company *c;
 	Job *j;
 
@@ -138,13 +138,13 @@ void load(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, s
 		std::getline(cmp_file, line);
 		while (!line.empty())
 		{
-			mygetline(line, tmp, ','); // id
-			mygetline(line, tmp, ','); // name
-			name = tmp;
-			mygetline(line, tmp, ','); // zip_code
-			zip_code = tmp;
-			mygetline(line, tmp); // email
-			email = tmp;
+			mygetline(line, it, ','); // id
+			mygetline(line, it, ','); // name
+			name = it;
+			mygetline(line, it, ','); // zip_code
+			zip_code = it;
+			mygetline(line, it); // email
+			email = it;
 			c = new Company(name, zip_code, email);
 			companies.addlast(c);
 
@@ -167,18 +167,18 @@ void load(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, s
 		std::getline(job_file, line);
 		while (!line.empty())
 		{
-			mygetline(line, tmp, ','); // id
-			mygetline(line, tmp, ','); // title
-			title = tmp;
+			mygetline(line, it, ','); // id
+			mygetline(line, it, ','); // title
+			title = it;
 			
 			j = new Job(title, NULL);
 			jobs.addlast(j);
 
-			mygetline(line, tmp, ','); // skills
-			while (mygetline(tmp, tmp2, ';')) j->add_skill(tmp2);
+			mygetline(line, it, ','); // skills
+			while (mygetline(it, it2, ';')) j->add_skill(it2);
 			
-			mygetline(line, tmp); // company
-			company = companies[std::stoi(tmp)];
+			mygetline(line, it); // company
+			company = companies[std::stoi(it)];
 			j->company = company;
 			
 			std::getline(job_file, line);
@@ -222,7 +222,7 @@ void load(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, s
 		if (!(*id_it).empty())
 		{
 			tmp_str = *id_it;
-			while (mygetline(tmp_str, tmp, ';')) (*wrk_it)->co_workers.addlast(workers[std::stoi(tmp)]);
+			while (mygetline(tmp_str, it, ';')) (*wrk_it)->co_workers.addlast(workers[std::stoi(it)]);
 		}
 
 		wrk_it++;
