@@ -10,7 +10,7 @@ public:
 	std::string email;
 	std::string zip_code;
 	List<std::string>* skills;
-	List<Worker*>* colleagues;
+	List<Worker*>* co_workers;
 	Company* company;
 
 	Worker();

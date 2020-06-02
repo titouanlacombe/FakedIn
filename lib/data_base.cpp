@@ -7,8 +7,8 @@
 
 #define CMP_FIRST_LINE (std::string)"id,name,zip code,email"
 #define JOB_FIRST_LINE (std::string)"id,title,skills,company"
-#define EMP_FIRST_LINE (std::string)"id,first name,last name,email,zip code,skills,colleagues,company"
-#define SKR_FIRST_LINE (std::string)"id,first name,last name,email,zip code,skills,colleagues"
+#define EMP_FIRST_LINE (std::string)"id,first name,last name,email,zip code,skills,co_workers,company"
+#define SKR_FIRST_LINE (std::string)"id,first name,last name,email,zip code,skills,co_workers"
 
 void dump_str(std::string s)
 {
@@ -67,7 +67,7 @@ void create_skr_file(std::string folder)
 	skr_file.close();
 }
 
-void load_workers(List<Worker*>* workers, List<Company*>* companies, List<std::string>& colleagues_ids, std::ifstream &wrk_file, bool employed)
+void load_workers(List<Worker*>* workers, List<Company*>* companies, List<std::string>& co_workers_ids, std::ifstream &wrk_file, bool employed)
 {
 	std::string first_name, last_name, email, zip_code, line, tmp, tmp2;
 	List<std::string>* skills;
@@ -93,9 +93,9 @@ void load_workers(List<Worker*>* workers, List<Company*>* companies, List<std::s
 			skills->addlast(tmp2);
 		}
 
-		if (employed) mygetline(line, tmp, ','); // colleagues
+		if (employed) mygetline(line, tmp, ','); // co_workers
 		else mygetline(line, tmp);
-		colleagues_ids.addlast(tmp);
+		co_workers_ids.addlast(tmp);
 		
 		if (employed) {
 			mygetline(line, tmp); // company
@@ -189,7 +189,7 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	}
 	
 	// Loading workers
-	List<std::string> colleagues_ids = List<std::string>();
+	List<std::string> co_workers_ids = List<std::string>();
 	// first line emp
 	std::getline(emp_file, line);
 	if (line != EMP_FIRST_LINE)
@@ -200,7 +200,7 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	else
 	{
 		// Loading emp
-		load_workers(workers, companies, colleagues_ids, emp_file, true);
+		load_workers(workers, companies, co_workers_ids, emp_file, true);
 	}
 
 	// first line skr
@@ -213,23 +213,23 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	else
 	{
 		// Loading skr
-		load_workers(workers, companies, colleagues_ids, skr_file, false);
+		load_workers(workers, companies, co_workers_ids, skr_file, false);
 	}
 
-	// Linking colleagues
-	List<Worker*>* colleagues;
+	// Linking co_workers
+	List<Worker*>* co_workers;
 	auto wrk_it = workers->first;
-	auto id_it = colleagues_ids.first;
+	auto id_it = co_workers_ids.first;
 	while (wrk_it != NULL)
 	{
-		colleagues = new List<Worker*>();
+		co_workers = new List<Worker*>();
 		if (!id_it->data.empty())
 		{
 			while (mygetline(id_it->data, tmp, ';'))
 			{
-				colleagues->addlast((*workers)[std::stoi(tmp)]);
+				co_workers->addlast((*workers)[std::stoi(tmp)]);
 			}
-			wrk_it->data->colleagues = colleagues;
+			wrk_it->data->co_workers = co_workers;
 		}
 
 		wrk_it = wrk_it->next;
@@ -336,9 +336,9 @@ void save(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		if (wrk_it->data->employed()) emp_file << ",";
 		else skr_file << ",";
 		
-		// colleagues
-		auto coll_it = wrk_it->data->colleagues->first;
-		while (coll_it != wrk_it->data->colleagues->last)
+		// co_workers
+		auto coll_it = wrk_it->data->co_workers->first;
+		while (coll_it != wrk_it->data->co_workers->last)
 		{
 			if (wrk_it->data->employed()) emp_file << workers->get_pos(coll_it->data) << ";";
 			else skr_file << workers->get_pos(coll_it->data) << ";";

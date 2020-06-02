@@ -7,7 +7,7 @@ Worker::Worker()
 	email = "";
 	zip_code = "";
 	skills = NULL;
-	colleagues = NULL;
+	co_workers = NULL;
 	company = NULL;
 }
 
@@ -18,14 +18,14 @@ Worker::Worker(std::string _first_name, std::string _last_name, std::string _ema
 	email = _email;
 	zip_code = "";
 	skills = new List<std::string>();
-	colleagues = new List<Worker*>();
+	co_workers = new List<Worker*>();
 	company = NULL;
 }
 
 Worker::~Worker()
 {
 	delete skills;
-	delete colleagues;
+	delete co_workers;
 }
 
 void Worker::add_skill(std::string skill)
@@ -35,7 +35,7 @@ void Worker::add_skill(std::string skill)
 
 void Worker::add_colleague(Worker* colleague)
 {
-	colleagues->addlast(colleague);
+	co_workers->addlast(colleague);
 }
 
 void Worker::set_zip_code(std::string _zip_code)
@@ -55,10 +55,10 @@ bool Worker::employed() const
 
 void Worker::remove_from_coll()
 {
-	auto tmp = colleagues->first;
+	auto tmp = co_workers->first;
 	while(tmp != NULL)
 	{
-		colleagues->first->data->colleagues->remove(this);
+		co_workers->first->data->co_workers->remove(this);
 		tmp = tmp->next;
 	}
 }

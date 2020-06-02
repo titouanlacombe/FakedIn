@@ -47,11 +47,11 @@ List<Job>* srch_job_profile_wrk(List<Job*> *jobs, Worker* w, bool zip_code)
 	return l;
 }
 
-// Retourne colleagues employés par company
+// Retourne co_workers employés par company
 List<Worker>* srch_coll_from_cmp(Worker *w, Company *c)
 {
 	List<Worker>* l = new List<Worker>;
-	auto cur = w->colleagues->first;
+	auto cur = w->co_workers->first;
 
 	while (cur != NULL)
 	{
@@ -78,7 +78,7 @@ List<Worker>* srch_coll_skills(List<Job*> *jobs, Worker *w)
 	}
 	
 	// construire la liste de workers collègues
-	auto tmp2 = w->colleagues->first;
+	auto tmp2 = w->co_workers->first;
 	while (tmp2 != NULL)
 	{
 		if (lc->has(*tmp2->data->company)) lw->addlast(*tmp2->data);

@@ -625,8 +625,8 @@ void modify_worker(Worker* w)
 	cout << "Skills: ";
 	w->skills->printl();
 	cout << "Collègues: ";
-	auto it = w->colleagues->first;
-	while (it != w->colleagues->last)
+	auto it = w->co_workers->first;
+	while (it != w->co_workers->last)
 	{
 		cout << it->data->first_name << " " << it->data->last_name << ", ";
 		it = it->next;
@@ -654,7 +654,7 @@ void modify_worker(Worker* w)
 		break;
 	case 2:
 		request_wrk_coll(w);
-		log_write("New colleagues added to " + w->first_name + " " + w->last_name);
+		log_write("New co_workers added to " + w->first_name + " " + w->last_name);
 		break;
 	case 3:
 		zip = request_zip();
