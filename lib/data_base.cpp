@@ -10,6 +10,16 @@
 #define EMP_FIRST_LINE (std::string)"id,first name,last name,email,zip code,skills,colleagues,company"
 #define SKR_FIRST_LINE (std::string)"id,first name,last name,email,zip code,skills,colleagues"
 
+void dump_str(std::string s)
+{
+  for (unsigned int n = 0; n < s.length(); n++)
+  {
+    char c = s[n];
+    std::cout << (int)c << ",";
+  }
+  std::cout << std::endl;
+}
+
 int mygetline(std::string& s, std::string& dest, char limit)
 {
 	int i = 0;
@@ -57,16 +67,6 @@ void create_skr_file(std::string folder)
 	skr_file.close();
 }
 
-void dump_str(std::string s)
-{
-  for (unsigned int n = 0; n < s.length(); n++)
-  {
-    char c = s[n];
-    std::cout << (int)c << ",";
-  }
-  std::cout << std::endl;
-}
-
 void load_workers(List<Worker*>* workers, List<Company*>* companies, List<std::string>& colleagues_ids, std::ifstream &wrk_file, bool employed)
 {
 	std::string first_name, last_name, email, zip_code, line, tmp, tmp2;
@@ -74,7 +74,7 @@ void load_workers(List<Worker*>* workers, List<Company*>* companies, List<std::s
 	Company *company;
 
 	std::getline(wrk_file, line);
-	while (line != "")
+	while (!line.empty())
 	{
 		mygetline(line, tmp, ','); // id
 		mygetline(line, tmp, ','); // first name
@@ -136,7 +136,7 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		// Loading companies
 		std::string name, zip_code, email;
 		std::getline(cmp_file, line);
-		while (line != "")
+		while (!line.empty())
 		{
 			mygetline(line, tmp, ','); // id
 			mygetline(line, tmp, ','); // name
@@ -165,7 +165,7 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 		List<std::string>* skills;
 		Company *company;
 		std::getline(job_file, line);
-		while (line != "")
+		while (!line.empty())
 		{
 			mygetline(line, tmp, ','); // id
 			mygetline(line, tmp, ','); // title
@@ -221,7 +221,7 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	while (wrk_it != NULL)
 	{
 		colleagues = new List<Worker*>();
-		if (id_it->data != "")
+		if (!id_it->data.empty())
 		{
 			while (mygetline(id_it->data, tmp, ';'))
 			{

@@ -3,6 +3,8 @@
 #include "worker.h"
 #include "job.h"
 
+void dump_str(std::string s);
+
 int mygetline(std::string& s, std::string& dest, char limit = '\n');
 
 //lis les 4 bases de données et construit les listes correspondantes

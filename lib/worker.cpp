@@ -91,6 +91,11 @@ Worker* srch_wrk_list(List<Worker*>* workers, std::string first_name, std::strin
 	return w;
 }
 
+bool wrk_exist(List<Worker*>* workers, std::string first_name, std::string last_name)
+{
+	return srch_wrk_list(workers, first_name, last_name) != NULL;
+}
+
 List<Worker*>* company_employees(List<Worker*>* workers, Company* c)
 {
 	List<Worker*>* l = new List<Worker*>;

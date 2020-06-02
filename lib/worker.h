@@ -33,6 +33,9 @@ public:
 // Recherche d'un worker par son nom et prénom
 Worker* srch_wrk_list(List<Worker*>* workers, std::string first_name, std::string last_name);
 
+// Recherche si un worker existe déjà
+bool wrk_exist(List<Worker*>* workers, std::string first_name, std::string last_name);
+
 List<Worker*>* company_employees(List<Worker*>* workers, Company* c);
 
 void load_wrk();

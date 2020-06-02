@@ -18,6 +18,9 @@ public:
 // Rechercher un job à partir d'un titre et d'une companie
 Job* srch_job_list(List<Job*>* jobs, Company* c, std::string title);
 
+// Recherche si une companie existe déjà
+bool job_exist(List<Job*>* jobs, Company* c, std::string title);
+
 List<Job*>* company_jobs(List<Job*>* jobs, Company* c);
 
 void load_job();

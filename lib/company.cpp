@@ -38,6 +38,11 @@ Company* srch_cmp_list(List<Company*>* companies, std::string name)
 	return c;
 }
 
+bool cmp_exist(List<Company*>* companies, std::string name)
+{
+	return srch_cmp_list(companies, name) != NULL;
+}
+
 void load_cmp()
 {
 	return;

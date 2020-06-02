@@ -13,6 +13,26 @@ void init_lists(List<Company*>* _companies, List<Job*>* _jobs, List<Worker*>* _w
 	workers = _workers;
 }
 
+bool valid_email(string email)
+{
+	string copy(email), tmp;
+
+	mygetline(copy, tmp, '@');
+	if (tmp.empty()) return false;
+	mygetline(copy, tmp, '.');
+	if (tmp.empty()) return false;
+	mygetline(copy, tmp);
+	if (tmp.empty()) return false;
+	return true;
+}
+
+bool valid_zip(string zip)
+{
+	auto it = zip.begin();
+	while (it != zip.end() && isdigit(*it)) ++it;
+	return !zip.empty() && it == zip.end();
+}
+
 void home()
 {
 	string choice;
@@ -77,25 +97,38 @@ void pre_company()
 
 void create_company()
 {
-	string name, zip, mail;
+	string name, zip, email;
 	Company* c;
 
 	cout << "~~ Création du compte Entreprise ~~\n\n";
 	
 	cout << "Merci d'indiquer:\n";
-	cout << "-Le nom de votre entreprise: ";
-	getline(cin, name);
-	cout << "-Le code postal de votre entreprise: ";
-	getline(cin, zip);
-	cout << "-L'adresse mail de votre entreprise: ";
-	getline(cin, mail);
+	do
+	{
+		cout << "-Le nom de votre entreprise: ";
+		getline(cin, name);
+		if (cmp_exist(companies, name)) cout << "Erreur: l'entreprise '" << name << "' existe déjà." << endl;
+		else if (name.empty()) cout << "Erreur: le nom est vide." << endl;
+	} while (cmp_exist(companies, name) || name.empty());
+	do
+	{
+		cout << "-Votre adresse email (x@y.z): ";
+		getline(cin, email);
+		if (!valid_email(email)) cout << "Erreur: l'email '" << email << "' est invalide." << endl;
+	} while (!valid_email(email));
+	do
+	{
+		cout << "-Votre code postal: ";
+		getline(cin, zip);
+		if (!valid_zip(zip)) cout << "Erreur: le code postal '" << zip << "' n'est pas un nombre." << endl;
+	} while (!valid_zip(zip));
 	cout << endl;
 
-	c = new Company(name, zip, mail);
+	c = new Company(name, zip, email);
 	companies->addlast(c);
 
 	cout << "Compte Entreprise créé\n" << endl;
-	log_write("New Company created: " + name + ", " + zip + ", " + mail);
+	log_write("New Company created: " + name + ", " + zip + ", " + email);
 
 	company_menu(c);
 }
@@ -209,8 +242,13 @@ void create_job(Company* c)
 	cout << "~~ Création d'offre d'emploi ~~\n\n";
 	
 	cout << "Merci d'indiquer:\n";
-	cout << "-Le titre du poste: ";
-	getline(cin, title);
+	do
+	{
+		cout << "-Le titre du poste: ";
+		getline(cin, title);
+		if (job_exist(jobs, c, title)) cout << "Erreur: l'offre '" << title << "' existe déjà dans votre entreprise." << endl;
+		else if (title.empty()) cout << "Erreur: le titre de l'offre est vide." << endl;
+	} while (job_exist(jobs, c, title) || title.empty());
 	cout << "-Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...): ";
 	getline(cin, skills_raw);
 
@@ -327,7 +365,7 @@ void pre_worker()
 
 void create_worker()
 {
-	string first_name, last_name, email, zip;
+	string first_name, full_name, email, zip;
 	string skills_raw, coll_str, company_name, tmp;
 	Worker* w, *coll;
 	Company* c = NULL;
@@ -335,16 +373,28 @@ void create_worker()
 	cout << "~~ Création de profil Travailleur ~~\n\n";
 	
 	cout << "Merci d'indiquer:\n";
-	cout << "-Votre nom: ";
-	getline(cin, last_name);
-	cout << "-Votre prénom: ";
-	getline(cin, first_name);
-	cout << "-Votre adresse email: ";
-	getline(cin, email);
-	cout << "-Votre code postal: ";
-	getline(cin, zip);
+	do
+	{
+		cout << "-Votre nom (nom prénom): ";
+		getline(cin, full_name);
+		mygetline(full_name, first_name, ' ');
+		if (wrk_exist(workers, first_name, full_name)) cout << "Erreur: le Travailleur '" << (first_name + " " + full_name) << "' existe déjà." << endl;
+		else if (full_name.empty() || first_name.empty()) cout << "Erreur: nom ou prénom vide" << endl;
+	} while (wrk_exist(workers, first_name, full_name) || full_name.empty() || first_name.empty());
+	do
+	{
+		cout << "-Votre adresse email (x@y.z): ";
+		getline(cin, email);
+		if (!valid_email(email)) cout << "Erreur: l'email '" << email << "' est invalide." << endl;
+	} while (!valid_email(email));
+	do
+	{
+		cout << "-Votre code postal: ";
+		getline(cin, zip);
+		if (!valid_zip(zip)) cout << "Erreur: le code postal '" << zip << "' n'est pas un nombre." << endl;
+	} while (!valid_zip(zip));
 
-	w = new Worker(first_name, last_name, email);
+	w = new Worker(first_name, full_name, email);
 	w->set_zip_code(zip);
 	workers->addlast(w);
 
@@ -362,30 +412,30 @@ void create_worker()
 	{
 		cout << "Entrez le nom d'un collègue (nom prénom) (vide pour arreter): ";
 		getline(cin, coll_str);
-		if (coll_str != "")
+		if (!coll_str.empty())
 		{
 			mygetline(coll_str, tmp, ' ');
 			coll = srch_wrk_list(workers, tmp, coll_str);
 			if (coll == NULL) cout << "Erreur: le Travailleur '" + tmp + " " + coll_str + "' n'existe pas\n";
 			else w->add_colleague(coll);
 		}
-	} while (coll_str != "");
+	} while (!coll_str.empty());
 
 	// Entreprise
 	do
 	{
 		cout << "Entrez le nom de votre Entreprise (vide pour aucune): ";
 		getline(cin, tmp);
-		if (tmp != "")
+		if (!tmp.empty())
 		{
 			c = srch_cmp_list(companies, tmp);
 			if (c == NULL) cout << "Erreur: l'Entreprise '" + tmp + "' n'existe pas\n";
 			else w->set_company(c);
 		}
-	} while (tmp != "" && c == NULL);
+	} while (!tmp.empty() && c == NULL);
 
 	cout << "\nProfil créé\n" << endl;
-	log_write("New worker created: " + first_name + " " + last_name);
+	log_write("New worker created: " + first_name + " " + full_name);
 
 	worker_menu(w);
 }
@@ -586,7 +636,7 @@ void modify_worker(Worker* w)
 		{
 			cout << "Entrez le nom d'un collègue (nom prénom) (vide pour arreter): ";
 			getline(cin, coll_raw);
-			if (coll_raw != "")
+			if (!coll_raw.empty())
 			{
 				mygetline(coll_raw, tmp, ' ');
 				coll = srch_wrk_list(workers, tmp, coll_raw);
@@ -596,7 +646,7 @@ void modify_worker(Worker* w)
 					coll_str += tmp + " ";
 				}
 			}
-		} while (coll_raw != "");
+		} while (!coll_raw.empty());
 		log_write("New colleagues added to " + w->first_name + " " + w->last_name + ": " + coll_str);
 		break;
 	case '3':
@@ -612,14 +662,14 @@ void modify_worker(Worker* w)
 		{
 			cout << "Entrez le nom de votre nouvelle Entreprise (vide pour aucune): ";
 			getline(cin, tmp);
-			if (tmp != "")
+			if (!tmp.empty())
 			{
 				c = srch_cmp_list(companies, tmp);
 				if (c == NULL) cout << "Erreur: l'Entreprise '" + tmp + "' n'existe pas\n";
 				else w->set_company(c);
 			}
-		} while (tmp != "" && c == NULL);
-		if (tmp == "") w->set_company(NULL);
+		} while (!tmp.empty() && c == NULL);
+		if (tmp.empty()) w->set_company(NULL);
 		break;
 	}
 }

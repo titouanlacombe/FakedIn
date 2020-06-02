@@ -18,4 +18,7 @@ public:
 // Recherche d'une companie par son nom
 Company* srch_cmp_list(List<Company*>* companies, std::string name);
 
+// Recherche si une companie existe déjà
+bool cmp_exist(List<Company*>* companies, std::string name);
+
 void load_cmp();
