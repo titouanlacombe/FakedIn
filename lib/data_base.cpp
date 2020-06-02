@@ -162,25 +162,27 @@ void load(List<Company*>* companies, List<Job*>* jobs, List<Worker*>* workers, s
 	{
 		// Loading jobs
 		std::string title;
-		List<std::string>* skills;
 		Company *company;
+		Job* j; 
 		std::getline(job_file, line);
 		while (!line.empty())
 		{
 			mygetline(line, tmp, ','); // id
 			mygetline(line, tmp, ','); // title
 			title = tmp;
+			
+			j = new Job(title, NULL);
+			jobs->addlast(j);
 
 			mygetline(line, tmp, ','); // skills
-			skills = new List<std::string>();
 			while (mygetline(tmp, tmp2, ';'))
 			{
-				skills->addlast(tmp2);
+				j->add_skill(tmp2);
 			}
 			
 			mygetline(line, tmp); // company
 			company = (*companies)[std::stoi(tmp)];
-			jobs->addlast(new Job(title, skills, company));
+			j->company = company;
 			
 			std::getline(job_file, line);
 		}

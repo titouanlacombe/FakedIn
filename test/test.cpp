@@ -108,10 +108,9 @@ int main()
 	{
 		//----------------------JOB---------------------
 		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
-		auto l = List<std::string>();
-		auto j = Job("SpaceX", &l, &c);
+		auto j = Job("SpaceX", &c);
 		TEST(j.title == "SpaceX");
-		TEST(j.skills == &l);
+		TEST(j.skills->length == 0);
 		TEST(j.company == &c);
 	}
 

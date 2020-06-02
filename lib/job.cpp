@@ -4,20 +4,24 @@ Job::Job()
 {
   title = "";
   company = NULL;
-  skills = NULL;
-
+  skills = new List<std::string>;
 }
 
-Job::Job(std::string _title, List<std::string>* _skills, Company* _company)
+Job::Job(std::string _title, Company* _company)
 {
   title = _title;
-  skills = _skills;
   company = _company;
+  skills = new List<std::string>;
 }
 
 Job::~Job()
 {
+	delete skills;
+}
 
+void Job::add_skill(std::string skill)
+{
+	skills->addlast(skill);
 }
 
 bool operator==(Job& l, Job& r)

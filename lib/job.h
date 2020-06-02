@@ -10,8 +10,9 @@ public:
 	Company* company;
 
 	Job();
-	Job(std::string _title, List<std::string>* _skills, Company* _company);
+	Job(std::string _title, Company* _company);
 	~Job();
+	void add_skill(std::string skill);
 	friend bool operator==(Job& l, Job& r);
 	friend bool operator!=(Job& l, Job& r);
 	friend std::ostream& operator<<(std::ostream& os, const Job& j);

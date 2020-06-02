@@ -165,14 +165,17 @@ Job* request_job_login(Company* c, string request_phrase)
 	return j;
 }
 
-List<string>* request_skills(string request_phrase)
+template <typename T>
+void request_skills(T* w, string request_phrase)
 {
-	auto skills = new List<string>;
 	string skills_raw, tmp;
 	cout << request_phrase;
 	getline(cin, skills_raw);
-	while (mygetline(skills_raw, tmp, ',')) skills->addlast(tmp);
-	return skills;
+	while (mygetline(skills_raw, tmp, ',')) {
+		if (tmp.empty()) cout << "Une compétence a un nom vide, elle ne sera pas prise en compte" << endl;
+		else if (w->skills->has(tmp)) cout << "La compétence '" + tmp + "' est déjà dans la liste, elle ne sera pas prise en compte" << endl;
+		else w->add_skill(tmp);
+	}
 }
 
 void request_wrk_name(string& first_name, string& full_name)
@@ -392,7 +395,6 @@ void search_worker(Company* c)
 
 void create_job(Company* c)
 {
-	List<string>* skills;
 	string title;
 	Job* j;
 
@@ -400,10 +402,11 @@ void create_job(Company* c)
 	
 	cout << "Merci d'indiquer:\n";
 	title = request_job_title(c);
-	skills = request_skills("-Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...): ");
 
-	j = new Job(title, skills, c);
+	j = new Job(title, c);
 	jobs->addlast(j);
+
+	request_skills(j, "-Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...): ");
 
 	cout << "Offre d'emploi créée" << endl;
 	log_write("New Job created: " + title);
@@ -493,7 +496,6 @@ void pre_worker()
 
 void create_worker()
 {
-	List<string>* skills;
 	string first_name, full_name, email, zip;
 	Worker* w;
 
@@ -509,14 +511,7 @@ void create_worker()
 	workers->addlast(w);
 
 	// Compétences
-	skills = request_skills("-Indiquez vos compétences (Compétence 1,Compétence 2...): ");
-	auto it = skills->first;
-	while (it != NULL)
-	{
-		w->add_skill(it->data);
-		it = it->next;
-	}
-	delete skills;
+	request_skills(w, "-Indiquez vos compétences (Compétence 1,Compétence 2...): ");
 	
 	request_wrk_coll(w);
 	request_wrk_cmp(w);
@@ -648,10 +643,8 @@ void search_coll(Worker* w)
 
 void modify_worker(Worker* w)
 {
-	List<string>* skills;
 	string zip;
 	int choice;
-	Node<string>* it2;
 
 	cout << "~~ Modification du compte Travailleur ~~\n\n"
 
@@ -688,14 +681,7 @@ void modify_worker(Worker* w)
 	{
 	case 1:
 		// Compétences
-		skills = request_skills("-Indiquez vos nouvelles compétences (Compétence 1,Compétence 2...): ");
-		it2 = skills->first;
-		while (it2 != NULL)
-		{
-			w->add_skill(it2->data);
-			it2 = it2->next;
-		}
-		delete skills;
+		request_skills(w, "-Indiquez vos nouvelles compétences (Compétence 1,Compétence 2...): ");
 		
 		log_write("Added skills to " + w->first_name + " " + w->last_name);
 		break;
