@@ -89,7 +89,7 @@ Lorsqu'un checheur d'emploi est embauché, son profil transitionne vers «employ
   - [O] Adresse mail
   - [O] Code postal
   - [O] Compétences
-  - [~] Ancien(ne)s collègues de travail parmi les personne employés
+  - [O] Ancien(ne)s collègues de travail parmi les personne employés
 - [O] Modifier un profil
   - [O] Ajouter des compétences
   - [O] Ajouter un(e) ancien(ne) collègue de travail
@@ -124,7 +124,7 @@ Lorsqu'un un employé quitte ou perd son emploi et est en recherche d'emploi, so
   - [O] Adresse mail
   - [O] Code postal
   - [O] Compétences
-  - [~] Ancien(ne)s collègues de travail parmi les personne employés
+  - [O] Ancien(ne)s collègues de travail parmi les personne employés
   - [O] Entreprise
 - [O] Modifier un profil
   - [O] Ajouter des compétences
@@ -132,7 +132,7 @@ Lorsqu'un un employé quitte ou perd son emploi et est en recherche d'emploi, so
   - [O] Modifier le code postal
   - [O] Modifier l'entreprise
 - [O] Transitionner le profil «employé» vers «chercheur d'emploi»
-  - [X] Les employé(e)s de l'entreprise quittée s'ajoutent automatiquement à liste des ancien(ne)s collègues de travail
+  - [O] Les employé(e)s de l'entreprise quittée s'ajoutent automatiquement à liste des ancien(ne)s collègues de travail
 - [O] Supprimer le profil
 - [O] Rechercher parmi les les postes à pourvoir qui correspondent au profil de l'employé
   - [O] Recherche par compétences

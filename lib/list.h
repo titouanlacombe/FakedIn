@@ -47,6 +47,7 @@ public:
 	void empty();
 	// void addfirst(T e);
 	void addlast(T e);
+	void addlast(List<T>& l);
 	int get_pos(T e);
 	int get_pos(Node<T>& n);
 	Node<T>* get_node(T e);
@@ -118,6 +119,17 @@ void List<T>::addlast(T e)
 	{
 		first = n;
 		last = n;
+	}
+}
+
+template <typename T>
+void List<T>::addlast(List<T>& l)
+{
+	auto it = l.begin();
+	while (it != l.end())
+	{
+		addlast(*it);
+		it++;
 	}
 }
 

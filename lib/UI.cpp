@@ -205,6 +205,7 @@ void request_wrk_coll(Worker& w)
 			coll = srch_wrk_list(*workers, first_name, full_name);
 			if (coll == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
 			else if (*coll == w) cout << "Erreur: vous ne pouvez pas être votre propre collègue." << endl;
+			else if (!coll->employed()) cout << "Erreur: vous ne pouvez pas ajouter un chercheur d'emploi comme collègue." << endl;
 			else if (w.co_workers.has(coll)) cout << "Erreur: vous avez déjà '" + coll->first_name + coll->last_name + "' comme collègue." << endl;
 			else
 			{
@@ -667,7 +668,15 @@ void modify_worker(Worker& w)
 		log_write("zip code of " + w.first_name + " " + w.last_name + " modified: " + zip);
 		break;
 	case 4:
-		request_wrk_cmp(w);
+		if (w.employed())
+		{
+			auto co_workers = company_employees(*workers, *w.company);
+			co_workers->remove(&w);
+			request_wrk_cmp(w);
+			w.co_workers.addlast(*co_workers);
+			delete co_workers;
+		}
+		else request_wrk_cmp(w);
 		break;
 	}
 }
