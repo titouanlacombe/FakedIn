@@ -107,7 +107,7 @@ int main()
 		l.addlast(5);
 		l.addlast(10);
 		l.addlast(4);
-		l.sort(l);
+		l.sort();
 		TEST(l[0] == 1);
 		TEST(l[1] == 2);
 		TEST(l[2] == 3);

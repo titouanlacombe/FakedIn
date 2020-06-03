@@ -62,7 +62,7 @@ public:
 	void printl();
 	Iterator<T> begin() {return Iterator<T>(first);}
 	Iterator<T> end() {return Iterator<T>();}
-	Node<T>* max(int start = 0, int end = -1);
+	Node<T>* min(int start = 0, int end = -1);
 	void sort(List<int>& li);
 	void sort();
 };
@@ -249,8 +249,8 @@ void List<T>::print(bool ptr)
 	auto it = begin();
 	while (it != end())
 	{
-		if (ptr) std::cout << *(*it) << std::endl;
-		else std::cout << *it << std::endl;
+		if (ptr) std::cout << " - " << *(*it) << std::endl;
+		else std::cout << " - " << *it << std::endl;
 		it++;
 	}
 }
@@ -271,21 +271,21 @@ void List<T>::printl()
 }
 
 template <typename T>
-Node<T>* List<T>::max(int start, int end)
+Node<T>* List<T>::min(int start, int end)
 {
 	if (end == -1) end = length;
 	int i;
-	Node<T>* max;
+	Node<T>* m;
 	auto it = begin();
 	for (i = 0; i < start; i++) it++;
-	max = it.node;
+	m = it.node;
 	while (i < end)
 	{
-		if (*it > max->data) max = it.node; 
+		if (*it < m->data) m = it.node; 
 		i++;
 		it++;
 	}
-	return max;
+	return m;
 }
 
 template <typename T>
@@ -306,7 +306,7 @@ void List<T>::sort(List<int>& li)
 	Node<int> *max_i;
 	while (it_i != li.end())
 	{
-		max_i = li.max(start);
+		max_i = li.min(start);
 		i = li.get_pos(*max_i);
 		j = 0;
 		max_T = first;
@@ -316,10 +316,11 @@ void List<T>::sort(List<int>& li)
 			j++;
 		}
 		
-		swap_node(*it_T.node, *max_T);
-		swap_node(*it_i.node, *max_i);
+		swap_node(*(it_T.node), *max_T);
+		swap_node(*(it_i.node), *max_i);
 		it_T++;
 		it_i++;
+		start++;
 	}
 }
 
@@ -331,9 +332,10 @@ void List<T>::sort()
 	Node<T> *m;
 	while (it != end())
 	{
-		m = max(start);
-		swap_node(it.node, *m);
+		m = min(start);
+		swap_node(*(it.node), *m);
 		it++;
+		start++;
 	}
 }
 
