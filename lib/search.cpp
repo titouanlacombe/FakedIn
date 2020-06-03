@@ -5,16 +5,24 @@
 List<Worker*>* srch_wrk_profile_job(List<Worker*>& workers, Job& j, bool zip_code)
 {
 	List<Worker*>* l = new List<Worker*>();
+	List<int> li = List<int>();
 	auto it = workers.begin();
+	int n;
 	while (it != workers.end())
 	{
 		if (!(*it)->employed())
 		{
-			if (zip_code && j.company->zip_code == (*it)->zip_code && j.skills.in_common((*it)->skills) > 0) l->addlast(*it);
-			else if (j.skills.in_common((*it)->skills) > 0) l->addlast(*it);
+			n = j.skills.in_common((*it)->skills);
+			if (n > 0)
+			{
+				li.addlast(n);
+				if (zip_code) {if(j.company->zip_code == (*it)->zip_code) l->addlast(*it);}
+				else l->addlast(*it);
+			}
 			it++;
 		}
 	}
+	l->sort(li);
 	return l;
 }
 
@@ -24,12 +32,20 @@ List<Job*>* srch_job_profile_wrk(List<Job*>& jobs, Worker& w, bool zip_code)
 {
 	List<Job*>* l = new List<Job*>();
 	auto it = jobs.begin();
+	List<int> li = List<int>();
+	int n;
 	while (it != jobs.end())
 	{
-		if (zip_code && w.zip_code == (*it)->company->zip_code && (*it)->skills.in_common(w.skills) > 0) l->addlast(*it);
-		else if ((*it)->skills.in_common(w.skills) > 0) l->addlast(*it);
+		n = (*it)->skills.in_common(w.skills);
+		if (n > 0)
+		{
+			li.addlast(n);
+			if (zip_code) {if (w.zip_code == (*it)->company->zip_code) l->addlast(*it);}
+			else l->addlast(*it);
+		}
 		it++;
 	}
+	l->sort(li);
 	return l;
 }
 

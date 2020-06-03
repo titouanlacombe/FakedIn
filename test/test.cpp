@@ -97,6 +97,27 @@ int main()
 		l.remove(3);
 		TEST(l.first == NULL);
 		TEST(l.last == NULL);
+		l.addlast(1);
+		l.addlast(6);
+		l.addlast(7);
+		l.addlast(2);
+		l.addlast(3);
+		l.addlast(8);
+		l.addlast(9);
+		l.addlast(5);
+		l.addlast(10);
+		l.addlast(4);
+		l.sort(l);
+		TEST(l[0] == 1);
+		TEST(l[1] == 2);
+		TEST(l[2] == 3);
+		TEST(l[3] == 4);
+		TEST(l[4] == 5);
+		TEST(l[5] == 6);
+		TEST(l[6] == 7);
+		TEST(l[7] == 8);
+		TEST(l[8] == 9);
+		TEST(l[9] == 10);
 	}
 
 	{
