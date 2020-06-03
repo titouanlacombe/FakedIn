@@ -205,7 +205,12 @@ void request_wrk_coll(Worker& w)
 			coll = srch_wrk_list(*workers, first_name, full_name);
 			if (coll == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
 			else if (*coll == w) cout << "Erreur: vous ne pouvez pas être votre propre collègue." << endl;
-			else w.add_co_worker(*coll);
+			else if (w.co_workers.has(coll)) cout << "Erreur: vous avez déjà '" + coll->first_name + coll->last_name + "' comme collègue." << endl;
+			else
+			{
+				w.add_co_worker(*coll);
+				coll->add_co_worker(w);
+			}
 		}
 		else loop = false;
 	} while (loop);
