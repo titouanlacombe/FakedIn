@@ -15,14 +15,24 @@ List<Worker*>* srch_wrk_profile_job(List<Worker*>& workers, Job& j, bool zip_cod
 			n = j.skills.in_common((*it)->skills);
 			if (n > 0)
 			{
-				li.addlast(n);
-				if (zip_code) {if(j.company->zip_code == (*it)->zip_code) l->addlast(*it);}
-				else l->addlast(*it);
+				if (zip_code)
+				{
+					if (j.company->zip_code == (*it)->zip_code)
+					{
+						l->addlast(*it);
+						li.addlast(n);
+					}
+				}
+				else
+				{
+					l->addlast(*it);
+					li.addlast(n);
+				}
 			}
 			it++;
 		}
 	}
-	l->sort(li);
+	l->sort(li, false);
 	return l;
 }
 
@@ -39,13 +49,23 @@ List<Job*>* srch_job_profile_wrk(List<Job*>& jobs, Worker& w, bool zip_code)
 		n = (*it)->skills.in_common(w.skills);
 		if (n > 0)
 		{
-			li.addlast(n);
-			if (zip_code) {if (w.zip_code == (*it)->company->zip_code) l->addlast(*it);}
-			else l->addlast(*it);
+			if (zip_code)
+			{
+				if (w.zip_code == (*it)->company->zip_code)
+				{
+					l->addlast(*it);
+					li.addlast(n);
+				}
+			}
+			else
+			{
+				l->addlast(*it);
+				li.addlast(n);
+			}
 		}
 		it++;
 	}
-	l->sort(li);
+	l->sort(li, false);
 	return l;
 }
 

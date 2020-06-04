@@ -64,8 +64,9 @@ public:
 	Iterator<T> begin() {return Iterator<T>(first);}
 	Iterator<T> end() {return Iterator<T>();}
 	Node<T>* min(int start = 0, int end = -1);
-	void sort(List<int>& li);
-	void sort();
+	Node<T>* max(int start = 0, int end = -1);
+	void sort(List<int>& li, bool ascending = true);
+	void sort(bool ascending = true);
 };
 
 template <typename T>
@@ -301,6 +302,24 @@ Node<T>* List<T>::min(int start, int end)
 }
 
 template <typename T>
+Node<T>* List<T>::max(int start, int end)
+{
+	if (end == -1) end = length;
+	int i;
+	Node<T>* m;
+	auto it = begin();
+	for (i = 0; i < start; i++) it++;
+	m = it.node;
+	while (i < end)
+	{
+		if (*it > m->data) m = it.node; 
+		i++;
+		it++;
+	}
+	return m;
+}
+
+template <typename T>
 void swap_node(Node<T>& a, Node<T>& b)
 {
 	T tmp = a.data;
@@ -309,27 +328,28 @@ void swap_node(Node<T>& a, Node<T>& b)
 }
 
 template <typename T>
-void List<T>::sort(List<int>& li)
+void List<T>::sort(List<int>& li, bool ascending)
 {
-	int start = 0, i, j;
+	int start = 0, pos, k;
 	auto it_T = begin();
 	auto it_i = li.begin();
-	Node<T> *max_T;
-	Node<int> *max_i;
+	Node<T> *m_T;
+	Node<int> *m_i;
 	while (it_i != li.end())
 	{
-		max_i = li.min(start);
-		i = li.get_pos(*max_i);
-		j = 0;
-		max_T = first;
-		while (max_T != NULL && j < i)
+		if (ascending) m_i = li.min(start);
+		else m_i = li.max(start);
+		pos = li.get_pos(*m_i);
+		m_T = first;
+		k = 0;
+		while (m_T != NULL && k < pos)
 		{
-			max_T = max_T->next;
-			j++;
+			m_T = m_T->next;
+			k++;
 		}
 		
-		swap_node(*(it_T.node), *max_T);
-		swap_node(*(it_i.node), *max_i);
+		swap_node(*(it_T.node), *m_T);
+		swap_node(*(it_i.node), *m_i);
 		it_T++;
 		it_i++;
 		start++;
@@ -337,14 +357,15 @@ void List<T>::sort(List<int>& li)
 }
 
 template <typename T>
-void List<T>::sort()
+void List<T>::sort(bool ascending)
 {
 	int start = 0;
 	auto it = begin();
 	Node<T> *m;
 	while (it != end())
 	{
-		m = min(start);
+		if (ascending) m = min(start);
+		else m = max(start);
 		swap_node(*(it.node), *m);
 		it++;
 		start++;

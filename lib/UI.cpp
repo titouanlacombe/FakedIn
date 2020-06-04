@@ -44,7 +44,7 @@ int request_choice(int nb)
 	string it;
 	do
 	{
-		cout << "Entrez votre choix ('q' pour annuler): ";
+		cout << "Entrez votre choix ('q' pour sortir): ";
 		getline(cin, it);
 		if (it == "q") return -1;
 		if (is_number(it)) {
@@ -206,7 +206,7 @@ void request_wrk_coll(Worker& w)
 			if (coll == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
 			else if (*coll == w) cout << "Erreur: vous ne pouvez pas être votre propre collègue." << endl;
 			else if (!coll->employed()) cout << "Erreur: vous ne pouvez pas ajouter un chercheur d'emploi comme collègue." << endl;
-			else if (w.co_workers.has(coll)) cout << "Erreur: vous avez déjà '" + coll->first_name + coll->last_name + "' comme collègue." << endl;
+			else if (w.co_workers.has(coll)) cout << "Erreur: vous avez déjà '" + coll->first_name + " " + coll->last_name + "' comme collègue." << endl;
 			else
 			{
 				w.add_co_worker(*coll);
@@ -375,15 +375,16 @@ void search_worker(Company& c)
 	j = request_job_login(c, "Entrez le titre du poste vacant (q pour annuler): ");
 	if (j == NULL) return;
 	cout << endl;
-	cout << "Voulez vous ne voir que les travailleur du même code postal ?\n";
+	cout << "Voulez vous ne voir que les travailleur du même code postal que vous ?\n";
 	zip = request_yn_choice();
 	cout << endl;
 
 	results = srch_wrk_profile_job(*workers, *j, zip);
 
-	cout << "Résultats:\n";
-	results->print(true);
-	cout << "\nEntrez une touche pour revenir au menu Entreprise.";
+	cout << "Résultats:" << endl;
+	if (results->length > 0) results->print(true);
+	else cout << "Aucun trouvé" << endl;
+	cout << "\nAppuyer sur entrée pour revenir au menu Entreprise.";
 	getline(cin, title);
 	delete results;
 }
@@ -568,14 +569,15 @@ void search_job(Worker& w)
 	string it;
 
 	cout << "~~ Recherche d'offre d'emploi ~~\n\n";
-	cout << "Voulez vous ne voir que les travailleur du même code postal ?\n";
+	cout << "Voulez vous ne voir que les offres du même code postal que vous ?\n";
 	zip = request_yn_choice();
 	cout << endl;
 
 	results = srch_job_profile_wrk(*jobs, w, zip);
-	cout << "Résultats:\n";
-	results->print(true);
-	cout << "\nEntrez une touche pour revenir au menu Travailleur.";
+	cout << "Résultats:" << endl;
+	if (results->length > 0) results->print(true);
+	else cout << "Aucun trouvé" << endl;
+	cout << "\nAppuyer sur entrée pour revenir au menu Travailleur.";
 	getline(cin, it);
 	delete results;
 }
@@ -602,17 +604,20 @@ void search_coll(Worker& w)
 	case 1:
 		c = request_cmp_login("Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues ('q' pour annuler): ");
 		if (c == NULL) return;
+		cout << endl;
 		results = srch_coll_from_cmp(w, *c);
-		cout << "Résultats:\n";
-		results->print(true);
+		cout << "Résultats:" << endl;
+		if (results->length > 0) results->print(true);
+		else cout << "Aucun trouvé" << endl;
 		break;
 	case 2:
 		results = srch_coll_skills(*jobs, w);
-		cout << "Résultats:\n";
-		results->print(true);
+		cout << "Résultats:" << endl;
+		if (results->length > 0) results->print(true);
+		else cout << "Aucun trouvé" << endl;
 		break;
 	}
-	cout << "\nEntrez une touche pour revenir au menu Travailleur.";
+	cout << "\nAppuyer sur entrée pour revenir au menu Travailleur.";
 	getline(cin, name);
 	delete results;
 }
@@ -626,9 +631,9 @@ void modify_worker(Worker& w)
 	"Votre profil actuel: \n"
 	<< w.first_name << " " << w.last_name << "\n"
 	<< "email: " << w.email << "\nCode postal: " << w.zip_code << endl;
-	if(w.employed()) cout << "Travaille à " << w.company->name << endl;
+	if(w.employed()) cout << "Entreprise: " << w.company->name << endl;
 	else cout << "En recherche de travail" << endl;
-	cout << "Skills: ";
+	cout << "Compétences: ";
 	w.skills.printl();
 	cout << "Collègues: ";
 	auto it = w.co_workers.begin();
@@ -640,11 +645,11 @@ void modify_worker(Worker& w)
 	if (it != w.co_workers.end()) cout << (*it)->first_name << " " << (*it)->last_name;
 	else cout << "Aucun";
 	cout << "\n\n";
-	cout << "Que voulez vous modifier ?\n";
+	cout << "Vous voulez:\n";
 	cout << "\t1. Ajouter une compétence\n";
 	cout << "\t2. Ajouter un collègue de travail\n";
-	cout << "\t3. Nouveau code postal\n";
-	cout << "\t4. Nouvelle entreprise\n";
+	cout << "\t3. Changez votre code postal\n";
+	cout << "\t4. Changez votre entreprise\n";
 	cout << endl;
 
 	choice = request_choice(4);
