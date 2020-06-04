@@ -673,6 +673,8 @@ void modify_worker(Worker& w)
 			auto co_workers = company_employees(*workers, *w.company);
 			co_workers->remove(&w);
 			request_wrk_cmp(w);
+			// Anti-double
+			w.co_workers.remove(*co_workers);
 			w.co_workers.addlast(*co_workers);
 			delete co_workers;
 		}
