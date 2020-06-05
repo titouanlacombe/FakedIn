@@ -5,25 +5,26 @@
 class Job
 {
 public:
-	std::string title;
-	List<std::string> skills;
-	Company* company;
+	std::string title; // Title of the job
+	List<std::string> skills; // Skills required for the job
+	Company* company; // Company who offers the job
 
 	Job();
 	Job(std::string _title, Company* _company);
 	~Job();
-	void add_skill(std::string skill);
-	friend bool operator==(Job& l, Job& r);
-	friend bool operator!=(Job& l, Job& r);
-	friend std::ostream& operator<<(std::ostream& os, const Job& j);
+	void add_skill(std::string skill); // Add skill to skills
+	friend bool operator==(Job& l, Job& r); // Returns true if l&r have the same title and company
+	friend bool operator!=(Job& l, Job& r); // Returns (!l==r)
+	friend std::ostream& operator<<(std::ostream& os, const Job& j); // Used to print the job in the console
 };
 
-// Rechercher un job à partir d'un titre et d'une companie
+// Search a job in jobs from a title and a company
 Job* srch_job_list(List<Job*>& jobs, Company& c, std::string title);
 
-// Recherche si une companie existe déjà
+// Search if a job with the title 'title' and the company 'c' already exist in jobs
 bool job_exist(List<Job*>& jobs, Company& c, std::string title);
 
+// Returns the jobs of the company c
 List<Job*>* company_jobs(List<Job*>& jobs, Company& c);
 
 void load_job();

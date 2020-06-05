@@ -5,13 +5,13 @@
 #include <string>
 #include <ctime>
 
-// Open the file containing the logs
+// Open the log file
 void log_begin(std::string folder = "");
 
-// Write a string in the log
+// Write str in the log file
 void log_write(std::string str);
 
-// Close the file containing the logs
+// Close the log file
 void log_end(void);
 
 void load_log();

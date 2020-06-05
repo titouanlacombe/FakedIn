@@ -6,7 +6,7 @@ List<Worker*>* srch_wrk_profile_job(List<Worker*>& workers, Job& j, bool zip_cod
 {
 	List<Worker*>* l = new List<Worker*>();
 	List<int> li = List<int>();
-	auto it = workers.begin();
+	auto it = workers.first();
 	int n;
 	while (it != workers.end())
 	{
@@ -41,7 +41,7 @@ List<Worker*>* srch_wrk_profile_job(List<Worker*>& workers, Job& j, bool zip_cod
 List<Job*>* srch_job_profile_wrk(List<Job*>& jobs, Worker& w, bool zip_code)
 {
 	List<Job*>* l = new List<Job*>();
-	auto it = jobs.begin();
+	auto it = jobs.first();
 	List<int> li = List<int>();
 	int n;
 	while (it != jobs.end())
@@ -73,7 +73,7 @@ List<Job*>* srch_job_profile_wrk(List<Job*>& jobs, Worker& w, bool zip_code)
 List<Worker*>* srch_coll_from_cmp(Worker& w, Company& c)
 {
 	List<Worker*>* l = new List<Worker*>();
-	auto it = w.co_workers.begin();
+	auto it = w.co_workers.first();
 	while (it != w.co_workers.end())
 	{
 		if (*(*it)->company == c) l->addlast(*it);
@@ -92,7 +92,7 @@ List<Worker*>* srch_coll_skills(List<Job*>& jobs, Worker& w)
 	Company *c;
 
 	// convertir en companies
-	auto it = lj->begin();
+	auto it = lj->first();
 	while (it != lj->end())
 	{
 		c = (*it)->company;
@@ -102,7 +102,7 @@ List<Worker*>* srch_coll_skills(List<Job*>& jobs, Worker& w)
 	delete lj;
 	
 	// construire la liste de workers collègues
-	auto it2 = w.co_workers.begin();
+	auto it2 = w.co_workers.first();
 	while (it2 != w.co_workers.end())
 	{
 		if (lc.has((*it2)->company)) lw->addlast(*it2);
@@ -111,7 +111,4 @@ List<Worker*>* srch_coll_skills(List<Job*>& jobs, Worker& w)
 	return lw;
 }
 
-void load_srch()
-{
-	return;
-}
+void load_srch() {return;}

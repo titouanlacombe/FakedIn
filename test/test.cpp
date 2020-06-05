@@ -79,15 +79,15 @@ int main()
 		l.addlast(1);
 		l.addlast(2);
 		l.addlast(3);
-		TEST(l.first->data == 1);
-		TEST(l.first->next->data == 2);
-		TEST(l.first->next->next->data == 3);
+		TEST(l.first_n->data == 1);
+		TEST(l.first_n->next->data == 2);
+		TEST(l.first_n->next->next->data == 3);
 		TEST(l.length == 3);
 		TEST(l[0] == 1);
 		TEST(l[1] == 2);
 		TEST(l[2] == 3);
 		l.remove(2);
-		auto it = l.begin();
+		auto it = l.first();
 		TEST(*it == 1);
 		it++;
 		TEST(*it == 3);
@@ -95,8 +95,8 @@ int main()
 		l.remove(1);
 		TEST(l[0] == 3);
 		l.remove(3);
-		TEST(l.first == NULL);
-		TEST(l.last == NULL);
+		TEST(l.first_n == NULL);
+		TEST(l.last_n == NULL);
 		l.addlast(1);
 		l.addlast(6);
 		l.addlast(7);
@@ -152,10 +152,10 @@ int main()
 		w.set_zip_code("234567");
 		TEST(w.zip_code == "234567");
 		w.add_skill("C");
-		TEST(w.skills.first->data == "C");
+		TEST(w.skills.first_n->data == "C");
 		auto w2 = Worker("T", "L", "T.L@gmail.com");
 		w.add_co_worker(w2);
-		TEST(w.co_workers.first->data == &w2);
+		TEST(w.co_workers.first_n->data == &w2);
 	}
 
 	{

@@ -439,7 +439,7 @@ void delete_company(Company& c)
 		delete lj;
 
 		lw = company_employees(*workers, c);
-		auto it = lw->begin();
+		auto it = lw->first();
 		while (it != lw->end())
 		{
 			(*it)->set_company(NULL);
@@ -636,7 +636,7 @@ void modify_worker(Worker& w)
 	cout << "Compétences: ";
 	w.skills.printl();
 	cout << "Collègues: ";
-	auto it = w.co_workers.begin();
+	auto it = w.co_workers.first();
 	while (it != w.co_workers.end())
 	{
 		cout << (*it)->first_name << " " << (*it)->last_name << ", ";
@@ -708,7 +708,4 @@ void delete_worker(Worker& w)
 	else cout << "Suppression annulée" << endl;
 }
 
-void load_UI()
-{
-	return;
-}
+void load_UI() {return;}

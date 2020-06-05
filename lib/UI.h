@@ -2,11 +2,13 @@
 
 #include "search.h"
 
+// Initialise the 3 lists
 void init_lists(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers);
 
+// Home menu
 void home();
 
-// Company
+// Company menus
 void pre_company();
 void create_company();
 void login_company();
@@ -16,7 +18,7 @@ void create_job(Company& c);
 void delete_job(Company& c);
 void delete_company(Company& c);
 
-// Workers
+// Workers menus
 void pre_worker();
 void create_worker();
 void login_worker();

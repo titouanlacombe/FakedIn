@@ -19,22 +19,10 @@ std::string get_time_str(bool longstr = true)
 	return str;
 }
 
-void log_begin(std::string folder)
-{
-  log_file.open("./" + folder + "/log " + get_time_str() + ".txt");
-}
+void log_begin(std::string folder) {log_file.open("./" + folder + "/log " + get_time_str() + ".txt");}
 
-void log_write(std::string str)
-{
-  log_file << "[" << get_time_str(false) << "]: " << str << std::endl;
-}
+void log_write(std::string str) {log_file << "[" << get_time_str(false) << "]: " << str << std::endl;}
 
-void log_end(void)
-{
-  log_file.close();
-}
+void log_end(void) {log_file.close();}
 
-void load_log()
-{
-	return;
-}
+void load_log() {return;}

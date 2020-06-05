@@ -6,9 +6,9 @@ template <typename T>
 class Node
 {
 public:
-	Node *prev;
-	Node *next;
-	T data;
+	Node *prev; // Previous node (NULL if none)
+	Node *next; // Next node (NULL if none)
+	T data; // Data stored
 
 	Node(T e)
 	{
@@ -22,85 +22,86 @@ public:
 template <typename T>
 class Iterator { 
 public:
-	Node<T> *node;
+	Node<T> *node; // Current node
 
 	Iterator(Node<T>* n = NULL) {node = n;}
-	Iterator operator++(int)
+	Iterator operator++(int) // Iterate over the list
 	{
 		node = node->next;
 		return *this;
 	}
-	T operator*() {return node->data;}
-	bool operator!=(Iterator const &it) const {return node != it.node;}
+	T operator*() {return node->data;} // Return the data stored in the current node
+	bool operator!=(Iterator const &it) const {return node != it.node;} // Return false if two iterator are in the same position
 };
 
 template <typename T>
 class List
 {
 public:
-	Node<T> *first;
-	Node<T> *last;
-	int length;
+	Node<T> *first_n; // First node of the list
+	Node<T> *last_n; // Last node of the list
+	int length; // Length of the list
 
 	List();
 	~List();
-	void empty();
-	// void addfirst(T e);
-	void addlast(T e);
-	void addlast(List<T>& l);
-	int get_pos(T e);
-	int get_pos(Node<T>& n);
-	Node<T>* get_node(T e);
-	bool has(T e);
-	void remove(Node<T>* it);
-	void remove(T e);
-	void remove(List<T>& l);
-	T& operator[](int n);
-	//retourne le nombre d'éléments en commun entre deux listes
-	int in_common(List<T>& l);
-	void delete_data();
-	void print(bool ptr = false);
-	void printl();
-	Iterator<T> begin() {return Iterator<T>(first);}
+	void empty(); // Empty the list (reset it) (do not delete the data)
+	// void addfirst(T e); // Add an element at the begining of the list
+	void addlast(T e); // Add an element at the end of the list
+	void addlast(List<T>& l); // Add an list at the end of the list
+	int get_pos(T e); // Returns the position number of data e in the list
+	int get_pos(Node<T>& n); // Returns the position number of node n in the list
+	Node<T>* get_node(T e); // Returns the node of data e in the list
+	bool has(T e); // Returns true if the list has the element e in it
+	void remove(Node<T>* n); // Removes the node n from the list
+	void remove(T e); // Removes the element e from the list
+	void remove(List<T>& l); // Removes elements in l from the list
+	T& operator[](int n); // Returns the data stored in position n
+	int in_common(List<T>& l); // Return the number of similarities between this and l
+	void delete_data(); // Deletes the data stored in the list
+	void print(bool ptr = false); // Print one element each line
+	void printl(); // Print all elements in one line
+	// Iterators
+	Iterator<T> first() {return Iterator<T>(first_n);}
+	Iterator<T> last() {return Iterator<T>(last_n);}
 	Iterator<T> end() {return Iterator<T>();}
-	Node<T>* min(int start = 0, int end = -1);
-	Node<T>* max(int start = 0, int end = -1);
-	void sort(List<int>& li, bool ascending = true);
-	void sort(bool ascending = true);
+	Node<T>* min(int start = 0, int end = -1); // Returns the minimum in the list
+	Node<T>* max(int start = 0, int end = -1); // Returns the maximum in the list
+	void sort(List<int>& li, bool ascending = true); // Sorts the list the same way as li
+	void sort(bool ascending = true); // Sorts the list (need operator> and < overloaded to work)
 };
 
 template <typename T>
 List<T>::List()
 {
-	first = NULL;
-	last = NULL;
+	first_n = NULL;
+	last_n = NULL;
 	length = 0;
 }
 
 template <typename T>
 List<T>::~List()
 {
-	auto it = first;
-	while (it != last)
+	auto it = first();
+	while (it != last())
 	{
-		it = it->next;
-		delete it->prev;
+		it++;
+		delete it.node->prev;
 	}
-	if (it != NULL) delete it;
+	if (it != end()) delete it.node;
 }
 
 template <typename T>
 void List<T>::empty()
 {
-	auto it = first;
-	while (it != last)
+	auto it = first();
+	while (it != last())
 	{
-		it = it->next;
-		delete it->prev;
+		it++;
+		delete it.node->prev;
 	}
-	if (it != NULL) delete it;
-	first = NULL;
-	last = NULL;
+	if (it != end()) delete it.node;
+	first_n = NULL;
+	last_n = NULL;
 	length = 0;
 }
 
@@ -110,23 +111,23 @@ void List<T>::addlast(T e)
 	auto n = new Node<T>(e);
 	length++;
 	// if list is not empty
-	if (last != NULL)
+	if (last_n != NULL)
 	{
-		last->next = n;
-		n->prev = last;
-		last = n;
+		last_n->next = n;
+		n->prev = last_n;
+		last_n = n;
 	}
 	else
 	{
-		first = n;
-		last = n;
+		first_n = n;
+		last_n = n;
 	}
 }
 
 template <typename T>
 void List<T>::addlast(List<T>& l)
 {
-	auto it = l.begin();
+	auto it = l.first();
 	while (it != l.end())
 	{
 		addlast(*it);
@@ -137,7 +138,7 @@ void List<T>::addlast(List<T>& l)
 template <typename T>
 int List<T>::get_pos(T e)
 {
-	auto it = begin();
+	auto it = first();
 	int i = 0;
 	while (it != end() && *it != e)
 	{
@@ -151,7 +152,7 @@ int List<T>::get_pos(T e)
 template <typename T>
 int List<T>::get_pos(Node<T>& n)
 {
-	auto it = begin();
+	auto it = first();
 	int i = 0;
 	while (it != end() && it.node != &n)
 	{
@@ -165,7 +166,7 @@ int List<T>::get_pos(Node<T>& n)
 template <typename T>
 Node<T>* List<T>::get_node(T e)
 {
-	auto it = begin();
+	auto it = first();
 	while (it != end() && *it != e) it++;
 	return it.node;
 }
@@ -174,30 +175,30 @@ template <typename T>
 bool List<T>::has(T e) {return (get_node(e) != NULL);}
 
 template <typename T>
-void List<T>::remove(Node<T>* it)
+void List<T>::remove(Node<T>* n)
 {
-	if (it == first && it == last)
+	if (n == first_n && n == last_n)
 	{
-		first = NULL;
-		last = NULL;
+		first_n = NULL;
+		last_n = NULL;
 	}
-	else if (it == first)
+	else if (n == first_n)
 	{
-		first = it->next;
-		first->prev = NULL;
+		first_n = n->next;
+		first_n->prev = NULL;
 	}
-	else if (it == last)
+	else if (n == last_n)
 	{
-		last = it->prev;
-		last->next = NULL;
+		last_n = n->prev;
+		last_n->next = NULL;
 	}
 	else
 	{
-		it->prev->next = it->next;
-		it->next->prev = it->prev;
+		n->prev->next = n->next;
+		n->next->prev = n->prev;
 	}
 	length--;
-	delete it;
+	delete n;
 }
 
 template <typename T>
@@ -210,7 +211,7 @@ void List<T>::remove(T e)
 template <typename T>
 void List<T>::remove(List<T>& l)
 {
-	auto it = l.begin();
+	auto it = l.first();
 	while (it != l.end())
 	{
 		remove(*it);
@@ -222,19 +223,19 @@ template <typename T>
 T& List<T>::operator[](int n)
 {
 	int i = 0;
-	auto it = first;
-	while (it != NULL && i < n)
+	auto it = first();
+	while (it != end() && i < n)
 	{
 		i++;
-		it = it->next;
+		it++;
 	}
-	return it->data;
+	return it.node->data;
 }
 
 template <typename T>
 int List<T>::in_common(List<T>& l)
 {
-	auto it = l.begin();
+	auto it = l.first();
 	int n = 0;
 
 	while (it != l.end())
@@ -248,7 +249,7 @@ int List<T>::in_common(List<T>& l)
 template <typename T>
 void List<T>::delete_data()
 {
-	auto it = begin();
+	auto it = first();
 	while (it != end())
 	{
 		delete *it;
@@ -259,7 +260,7 @@ void List<T>::delete_data()
 template <typename T>
 void List<T>::print(bool ptr)
 {
-	auto it = begin();
+	auto it = first();
 	while (it != end())
 	{
 		if (ptr) std::cout << " - " << *(*it) << std::endl;
@@ -271,15 +272,13 @@ void List<T>::print(bool ptr)
 template <typename T>
 void List<T>::printl()
 {
-	auto it = first;
-	while (it != last) {
-		std::cout << it->data << ", ";
-		it = it->next;
-	}
-	if (it != NULL)
+	auto it = first();
+	while (it != last())
 	{
-		std::cout << it->data;
+		std::cout << *it << ", ";
+		it++;
 	}
+	if (it != end()) std::cout << *it;
 	std::cout << std::endl;
 }
 
@@ -289,7 +288,7 @@ Node<T>* List<T>::min(int start, int end)
 	if (end == -1) end = length;
 	int i;
 	Node<T>* m;
-	auto it = begin();
+	auto it = first();
 	for (i = 0; i < start; i++) it++;
 	m = it.node;
 	while (i < end)
@@ -307,7 +306,7 @@ Node<T>* List<T>::max(int start, int end)
 	if (end == -1) end = length;
 	int i;
 	Node<T>* m;
-	auto it = begin();
+	auto it = first();
 	for (i = 0; i < start; i++) it++;
 	m = it.node;
 	while (i < end)
@@ -331,24 +330,23 @@ template <typename T>
 void List<T>::sort(List<int>& li, bool ascending)
 {
 	int start = 0, pos, k;
-	auto it_T = begin();
-	auto it_i = li.begin();
-	Node<T> *m_T;
+	auto it_T = first();
+	auto it_i = li.first();
 	Node<int> *m_i;
 	while (it_i != li.end())
 	{
 		if (ascending) m_i = li.min(start);
 		else m_i = li.max(start);
 		pos = li.get_pos(*m_i);
-		m_T = first;
+		auto m_T = first();
 		k = 0;
-		while (m_T != NULL && k < pos)
+		while (m_T != end() && k < pos)
 		{
-			m_T = m_T->next;
+			m_T++;
 			k++;
 		}
 		
-		swap_node(*(it_T.node), *m_T);
+		swap_node(*(it_T.node), *(m_T.node));
 		swap_node(*(it_i.node), *m_i);
 		it_T++;
 		it_i++;
@@ -360,7 +358,7 @@ template <typename T>
 void List<T>::sort(bool ascending)
 {
 	int start = 0;
-	auto it = begin();
+	auto it = first();
 	Node<T> *m;
 	while (it != end())
 	{
