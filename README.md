@@ -1,12 +1,13 @@
 # DevCommeLesPros-2020-Projet
 
-![badge](https://github.com/thierryseegers/DevCommeLesPros-2020-Projet/workflows/Test%20master/badge.svg)
+![badge](https://github.com/titouanlacombe/DCLP-Projet/workflows/Test%20master/badge.svg)
 
 Modèle de départ pour le projet de programmation à effectuer en groupe de deux ou trois étudiants.
 Vous n'êtes pas dans l'obligation de garder exactment les mêmes équipes que pour les exercices précédents.
 
 ## Table des matières
 
+- [Tutoriel](#tutoriel)
 - [Objectif](#objectif)
 - [Spécifications fonctionelles](#sp%C3%A9cifications-fonctionelles)
   - [Fonctionalités pour une entreprise](#fonctionalit%C3%A9s-pour-une-entreprise)
@@ -40,6 +41,10 @@ Vous n'êtes pas dans l'obligation de garder exactment les mêmes équipes que p
   - [L'application](#lapplication)
   - [La méthode de développement](#la-m%C3%A9thode-de-d%C3%A9veloppement)
 - [Les extras](#les-extras)
+
+## Tutoriel
+
+Tuto:
 
 ## Objectif
 

@@ -707,5 +707,3 @@ void delete_worker(Worker& w)
 	}
 	else cout << "Suppression annulée" << endl;
 }
-
-void load_UI() {return;}

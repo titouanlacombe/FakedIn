@@ -14,5 +14,3 @@ void load(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, s
 
 // Stores the 3 lists of objects in the data base
 void save(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, std::string folder = "data_base");
-
-void load_db();

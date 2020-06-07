@@ -359,5 +359,3 @@ void save(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, s
 	emp_file.close();
 	skr_file.close();
 }
-
-void load_db() {return;}

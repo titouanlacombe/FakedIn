@@ -26,5 +26,3 @@ bool job_exist(List<Job*>& jobs, Company& c, std::string title);
 
 // Returns the jobs of the company c
 List<Job*>* company_jobs(List<Job*>& jobs, Company& c);
-
-void load_job();

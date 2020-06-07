@@ -12,26 +12,11 @@
 "| Polytech Marseille - Informatique 3A      |   \n" \
 "*********************************************   \n" 
 
-int load_modules()
-{
-	load_wrk();
-	load_list();
-	load_cmp();
-	load_job();
-	load_wrk();
-	load_db();
-	load_srch();
-	load_UI();
-	return 0;
-}
-
 int main(void)
 {
 	List<Company*> companies;
 	List<Job*> jobs;
 	List<Worker*> workers;
-
-	load_modules();
 
 	log_begin("app/logs");
 	log_write("Start");

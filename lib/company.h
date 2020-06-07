@@ -22,5 +22,3 @@ Company* srch_cmp_list(List<Company*>& companies, std::string name);
 
 // Search if a company with the name 'name' already exist in companies
 bool cmp_exist(List<Company*>& companies, std::string name);
-
-void load_cmp();

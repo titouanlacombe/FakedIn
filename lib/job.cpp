@@ -62,5 +62,3 @@ Job* srch_job_list(List<Job*>& jobs, Company& c, std::string title)
 }
 
 bool job_exist(List<Job*>& jobs, Company& c, std::string title) {return srch_job_list(jobs, c, title) != NULL;}
-
-void load_job() {return;}

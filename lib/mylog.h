@@ -13,5 +13,3 @@ void log_write(std::string str);
 
 // Close the log file
 void log_end(void);
-
-void load_log();

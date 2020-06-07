@@ -369,5 +369,3 @@ void List<T>::sort(bool ascending)
 		start++;
 	}
 }
-
-void load_list();

@@ -35,5 +35,3 @@ bool wrk_exist(List<Worker*>& workers, std::string first_name, std::string last_
 
 // Returns the employees of the company c
 List<Worker*>* company_employees(List<Worker*>& workers, Company& c);
-
-void load_wrk();

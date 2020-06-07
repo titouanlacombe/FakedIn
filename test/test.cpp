@@ -173,9 +173,6 @@ int main()
 		TEST_FILE("test/out/Jobs.csv", "test/correction/Jobs.csv");
 		TEST_FILE("test/out/Employees.csv", "test/correction/Employees.csv");
 		TEST_FILE("test/out/Seekers.csv", "test/correction/Seekers.csv");
-		load(lc, lj, lw, "test/out");
-		TEST(lw.length == 7);
-		save(lc, lj, lw, "test/out");
 	}
 
 	{

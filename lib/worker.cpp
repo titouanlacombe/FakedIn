@@ -89,5 +89,3 @@ List<Worker*>* company_employees(List<Worker*>& workers, Company& c)
 	}
 	return l;
 }
-
-void load_wrk() {return;}

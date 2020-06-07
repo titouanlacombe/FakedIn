@@ -110,5 +110,3 @@ List<Worker*>* srch_coll_skills(List<Job*>& jobs, Worker& w)
 	}
 	return lw;
 }
-
-void load_srch() {return;}

@@ -93,4 +93,4 @@ build/app.o: app/app.cpp build/libUI.a | build
 	$(cc) $(cflags) -c app/app.cpp -I ./lib -o build/app.o
 
 build/app: build/app.o | build
-	$(cc) $(lflags) build/app.o -L ./build -lmylog -llist -lcompany -ljob -lworker -ldata_base -lsearch -lUI -o build/app
+	$(cc) $(lflags) build/app.o -L ./build -lUI -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/app

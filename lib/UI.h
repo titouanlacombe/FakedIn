@@ -27,5 +27,3 @@ void search_coll(Worker& w);
 void search_job(Worker& w);
 void modify_worker(Worker& w);
 void delete_worker(Worker& w);
-
-void load_UI();
