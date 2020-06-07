@@ -82,11 +82,11 @@ build/libUI.a: build/UI.o | build
 	ar crs build/libUI.a build/UI.o
 
 #------TEST------------
-build/test.o: test/test.cpp build/libUI.a | build
+build/test.o: test/test.cpp build/libsearch.a | build
 	$(cc) $(cflags) -c test/test.cpp -I ./lib -o build/test.o
 
 build/test: build/test.o | build
-	$(cc) $(lflags) build/test.o -L ./build -lmylog -llist -lcompany -ljob -lworker -ldata_base -lsearch -lUI -o build/test
+	$(cc) $(lflags) build/test.o -L ./build -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/test
 
 #------APPLICATION-------
 build/app.o: app/app.cpp build/libUI.a | build
