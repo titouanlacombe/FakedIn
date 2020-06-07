@@ -6,8 +6,8 @@ Worker::Worker()
 	last_name = "";
 	email = "";
 	zip_code = "";
-	skills = NULL;
-	colleagues = NULL;
+	skills = List<std::string>();
+	co_workers = List<Worker*>();
 	company = NULL;
 }
 
@@ -17,44 +17,75 @@ Worker::Worker(std::string _first_name, std::string _last_name, std::string _ema
 	last_name = _last_name;
 	email = _email;
 	zip_code = "";
-	skills = new List<std::string>();
-	colleagues = new List<Worker*>();
+	skills = List<std::string>();
+	co_workers = List<Worker*>();
 	company = NULL;
 }
 
-Worker::~Worker()
+Worker::~Worker() {return;}
+
+void Worker::add_skill(std::string skill) {skills.addlast(skill);}
+
+void Worker::add_co_worker(Worker& co_worker) {co_workers.addlast(&co_worker);}
+
+void Worker::set_zip_code(std::string _zip_code) {zip_code = _zip_code;}
+
+void Worker::set_company(Company* _company) {company = _company;}
+
+bool Worker::employed() const {return company != NULL;}
+
+void Worker::remove_from_coll()
 {
-	auto tmp = colleagues->first;
-	while(tmp != NULL)
+	auto it = co_workers.first();
+	while(it != co_workers.end())
 	{
-		colleagues->first->data->colleagues->remove(this);
-		tmp = tmp->next;
+		(*it)->co_workers.remove(this);
+		it++;
 	}
-	delete skills;
-	delete colleagues;
 }
 
-void Worker::add_skill(std::string skill)
+bool operator==(Worker& l, Worker& r) {return l.first_name == r.first_name && l.last_name == r.last_name;}
+
+bool operator!=(Worker& l, Worker& r) {return !(l==r);}
+
+std::ostream& operator<<(std::ostream& os, const Worker& w)
 {
-	skills->addlast(skill);
+	os << w.first_name << " " << w.last_name << " (email: " << w.email;
+	if (w.employed()) os << ", Travaille chez " << w.company->name;
+	os << ")";
+	// os << ", Compétences: ";
+	// auto it = w.skills->first;
+	// while (it != w.skills->last)
+	// {
+	// 	os << it->data << ", ";
+	// 	it = it->next;
+	// }
+	// os << it->data;
+	return os;
 }
 
-void Worker::add_colleague(Worker* colleague)
+Worker* srch_wrk_list(List<Worker*>& workers, std::string first_name, std::string last_name)
 {
-	colleagues->addlast(colleague);
+	Worker* w = NULL;
+	auto it = workers.first();
+	while (it != workers.end() && w == NULL)
+	{
+		if ((*it)->first_name == first_name && (*it)->last_name == last_name) w = (*it);
+		it++;
+	}
+	return w;
 }
 
-void Worker::set_zip_code(std::string _zip_code)
-{
-	zip_code = _zip_code;
-}
+bool wrk_exist(List<Worker*>& workers, std::string first_name, std::string last_name) {return srch_wrk_list(workers, first_name, last_name) != NULL;}
 
-void Worker::set_company(Company* _company)
+List<Worker*>* company_employees(List<Worker*>& workers, Company& c)
 {
-	company = _company;
-}
-
-bool Worker::employed()
-{
-	return company != NULL;
+	List<Worker*>* l = new List<Worker*>();
+	auto it = workers.first();
+	while (it != workers.end())
+	{
+		if (*(*it)->company == c) l->addlast(*it);
+		it++;
+	}
+	return l;
 }

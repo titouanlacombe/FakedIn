@@ -1,4 +1,4 @@
-#include "UI.h"
+#include "search.h"
 
 #include <signal.h>
 #include <stddef.h>
@@ -66,11 +66,11 @@ int main()
 
 	{
 		//----------------------MYLOG---------------------
-		log_begin("test");
+		log_begin("test/logs");
 		log_write("salut!");
 		log_write("ca va ?");
 		log_end();
-		TEST_FILE("test/log.txt","test/log_correction.txt");
+		// TEST_FILE("test/log.txt","test/log_correction.txt");
 	}
 
 	{
@@ -79,22 +79,45 @@ int main()
 		l.addlast(1);
 		l.addlast(2);
 		l.addlast(3);
-		TEST(l.first->data == 1);
-		TEST(l.first->next->data == 2);
-		TEST(l.first->next->next->data == 3);
+		TEST(l.first_n->data == 1);
+		TEST(l.first_n->next->data == 2);
+		TEST(l.first_n->next->next->data == 3);
 		TEST(l.length == 3);
 		TEST(l[0] == 1);
 		TEST(l[1] == 2);
 		TEST(l[2] == 3);
 		l.remove(2);
-		TEST(l[0] == 1);
-		TEST(l[1] == 3);
+		auto it = l.first();
+		TEST(*it == 1);
+		it++;
+		TEST(*it == 3);
 		TEST(l.length == 2);
 		l.remove(1);
 		TEST(l[0] == 3);
 		l.remove(3);
-		TEST(l.first == NULL);
-		TEST(l.last == NULL);
+		TEST(l.first_n == NULL);
+		TEST(l.last_n == NULL);
+		l.addlast(1);
+		l.addlast(6);
+		l.addlast(7);
+		l.addlast(2);
+		l.addlast(3);
+		l.addlast(8);
+		l.addlast(9);
+		l.addlast(5);
+		l.addlast(10);
+		l.addlast(4);
+		l.sort();
+		TEST(l[0] == 1);
+		TEST(l[1] == 2);
+		TEST(l[2] == 3);
+		TEST(l[3] == 4);
+		TEST(l[4] == 5);
+		TEST(l[5] == 6);
+		TEST(l[6] == 7);
+		TEST(l[7] == 8);
+		TEST(l[8] == 9);
+		TEST(l[9] == 10);
 	}
 
 	{
@@ -108,10 +131,9 @@ int main()
 	{
 		//----------------------JOB---------------------
 		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
-		auto l = List<std::string>();
-		auto j = Job("SpaceX", &l, &c);
+		auto j = Job("SpaceX", &c);
 		TEST(j.title == "SpaceX");
-		TEST(j.skills == &l);
+		TEST(j.skills.length == 0);
 		TEST(j.company == &c);
 	}
 
@@ -130,24 +152,27 @@ int main()
 		w.set_zip_code("234567");
 		TEST(w.zip_code == "234567");
 		w.add_skill("C");
-		TEST(w.skills->first->data == "C");
+		TEST(w.skills.first_n->data == "C");
 		auto w2 = Worker("T", "L", "T.L@gmail.com");
-		w.add_colleague(&w2);
-		TEST(w.colleagues->first->data == &w2);
+		w.add_co_worker(w2);
+		TEST(w.co_workers.first_n->data == &w2);
 	}
 
 	{
 		//----------------------DATA BASE---------------------
+		Worker w;
 		auto lc = List<Company*>();
 		auto lj = List<Job*>();
 		auto lw = List<Worker*>();
-		load(&lc,&lj,&lw,"test/in");
-		// std::cout << lc.first->data->name << std::endl;
-		save(&lc,&lj,&lw,"test/out");
-		TEST_FILE("test/out/Companies.csv","test/correction/Companies.csv");
-		TEST_FILE("test/out/Jobs.csv","test/correction/Jobs.csv");
-		TEST_FILE("test/out/Employees.csv","test/correction/Employees.csv");
-		TEST_FILE("test/out/Seekers.csv","test/correction/Seekers.csv");
+		load(lc, lj, lw, "test/in");
+		w = Worker("first_name", "full_name", "email@e.com");
+		w.set_zip_code("zip");
+		lw.addlast(&w);
+		save(lc, lj, lw, "test/out");
+		TEST_FILE("test/out/Companies.csv", "test/correction/Companies.csv");
+		TEST_FILE("test/out/Jobs.csv", "test/correction/Jobs.csv");
+		TEST_FILE("test/out/Employees.csv", "test/correction/Employees.csv");
+		TEST_FILE("test/out/Seekers.csv", "test/correction/Seekers.csv");
 	}
 
 	{
@@ -155,12 +180,10 @@ int main()
 		auto w = Worker("Max", "Veran", "max.v@gmail.com");
 		auto w2 = Worker("Thomas", "Billet", "t.b@gmail.com");
 		auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
-		w.add_colleague(&w2);
-		w2.add_colleague(&w);
+		w.add_co_worker(w2);
+		w2.add_co_worker(w);
 		//test des searchs
 	}
-
-	home();
 
 	std::cout << tests_reussis << "/" << tests_executes << std::endl;
 

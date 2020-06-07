@@ -1,47 +1,52 @@
-![](https://github.com/thierryseegers/DevCommeLesPros-2020-Projet/workflows/Test%20master/badge.svg)
-
 # DevCommeLesPros-2020-Projet
+
+![badge](https://github.com/titouanlacombe/DCLP-Projet/workflows/Test%20master/badge.svg)
 
 Modèle de départ pour le projet de programmation à effectuer en groupe de deux ou trois étudiants.
 Vous n'êtes pas dans l'obligation de garder exactment les mêmes équipes que pour les exercices précédents.
 
-# Table des matières
+## Table des matières
 
+- [Tutoriel](#tutoriel)
 - [Objectif](#objectif)
 - [Spécifications fonctionelles](#sp%C3%A9cifications-fonctionelles)
-    - [Fonctionalités pour une entreprise](#fonctionalit%C3%A9s-pour-une-entreprise)
-    - [Fonctionalités pour un chercheur d'emploi](#fonctionalit%C3%A9s-pour-un-chercheur-demploi)
-    - [Fonctionalité pour un employé](#fonctionalit%C3%A9-pour-un-employ%C3%A9)
+  - [Fonctionalités pour une entreprise](#fonctionalit%C3%A9s-pour-une-entreprise)
+  - [Fonctionalités pour un chercheur d'emploi](#fonctionalit%C3%A9s-pour-un-chercheur-demploi)
+  - [Fonctionalité pour un employé](#fonctionalit%C3%A9-pour-un-employ%C3%A9)
 - [Spécifications de conception](#sp%C3%A9cifications-de-conception)
-    - [Interface](#interface)
-    - [Base de données](#base-de-donn%C3%A9es)
-        - [Table d'entreprise](#table-dentreprise)
-        - [Table de postes](#table-de-postes)
-        - [Table de chercheur d'emploi](#table-de-chercheur-demploi)
-        - [Table des employés](#table-des-employ%C3%A9s)
-    - [Langage de programmation et paramètres de compilateur](#langage-de-programmation-et-param%C3%A8tres-de-compilateur)
-    - [Journal](#journal)
+  - [Interface](#interface)
+  - [Base de données](#base-de-donn%C3%A9es)
+    - [Table d'entreprise](#table-dentreprise)
+    - [Table de postes](#table-de-postes)
+    - [Table de chercheur d'emploi](#table-de-chercheur-demploi)
+    - [Table des employés](#table-des-employ%C3%A9s)
+  - [Langage de programmation et paramètres de compilateur](#langage-de-programmation-et-param%C3%A8tres-de-compilateur)
+  - [Journal](#journal)
 - [Instructions de travail](#instructions-de-travail)
-    - [Modules/Bibliothèques](#modulesbiblioth%C3%A8ques)
-    - [Tests](#tests)
-        - [Tests unitaires et tests d'intégration](#tests-unitaires-et-tests-dint%C3%A9gration)
-        - [Intégration continue](#int%C3%A9gration-continue)
-    - [Documentation](#documentation)
-        - [Documentation pour les ingénieurs](#documentation-pour-les-ing%C3%A9nieurs)
-        - [Documentation pour les utilisateurs](#documentation-pour-les-utilisateurs)
-    - [Stades de développement](#stades-de-d%C3%A9veloppement)
-        - [Pré-alpha](#pr%C3%A9-alpha)
-        - [Alpha](#alpha)
-        - [Beta](#beta)
-        - [Livraison](#livraison)
-        - [Support et fonctionalités additionelles](#support-et-fonctionalit%C3%A9s-additionelles)
+  - [Modules/Bibliothèques](#modulesbiblioth%C3%A8ques)
+  - [Tests](#tests)
+    - [Tests unitaires et tests d'intégration](#tests-unitaires-et-tests-dint%C3%A9gration)
+    - [Intégration continue](#int%C3%A9gration-continue)
+  - [Documentation](#documentation)
+    - [Documentation pour les ingénieurs](#documentation-pour-les-ing%C3%A9nieurs)
+    - [Documentation pour les utilisateurs](#documentation-pour-les-utilisateurs)
+  - [Stades de développement](#stades-de-d%C3%A9veloppement)
+    - [Pré-alpha](#pr%C3%A9-alpha)
+    - [Alpha](#alpha)
+    - [Beta](#beta)
+    - [Livraison](#livraison)
+    - [Support et fonctionalités additionelles](#support-et-fonctionalit%C3%A9s-additionelles)
 - [Évaluation](#%C3%A9valuation)
-    - [La base de code](#la-base-de-code)
-    - [L'application](#lapplication)
-    - [La méthode de développement](#la-m%C3%A9thode-de-d%C3%A9veloppement)
+  - [La base de code](#la-base-de-code)
+  - [L'application](#lapplication)
+  - [La méthode de développement](#la-m%C3%A9thode-de-d%C3%A9veloppement)
 - [Les extras](#les-extras)
 
-# Objectif
+## Tutoriel
+
+Tuto:
+
+## Objectif
 
 Le site [LinkedIn](https://linkedin.com) est un réseau social servant de rapprochement et de moyen de contact entre des entreprises, des demandeurs d'emploi et d'anciens collègues travail.
 Vous avez à créer un programme qui simule cette plateforme.
@@ -49,7 +54,7 @@ Vous avez à créer un programme qui simule cette plateforme.
 Cette application n'est pas un site web.
 C'est un programme lancé à l'invite de commandes qui utilisent des fichers locaux comme base de données.
 
-# Spécifications fonctionelles
+## Spécifications fonctionelles
 
 Sur cette platforme, on distingue trois profils d'utilisateur avec des besoins propres.
 Les entreprises, les chercheurs d'emploi et les employés.
@@ -59,23 +64,23 @@ Les entreprises, les chercheurs d'emploi et les employés.
 Une entreprise annonce des postes à pourvoir, spécifiant les compétences requises.
 Elle peut aussi rechercher parmi les chercheurs d'emploi ceux qui correspondent à ses besoins.
 
-- [ ] Créer un profil
-    - [ ] Nom
-    - [ ] Code postal
-    - [ ] Adresse mail
-- [ ] Supprimer un profil
-    - [ ] Supprime automatiquement les postes à pourvoir existant
-- [ ] Créer le profil d'un poste à pourvoir
-    - [ ] Titre
-    - [ ] Compétences requises
-- [ ] Supprimer le profil d'un poste pourvu
-- [ ] Rechercher parmi les chercheurs d'emploi pour des profils qui correspondent à un poste à pourvoir
-    - [ ] Recherche par compétences
-    - [ ] Recherche par compétences et code postal
-    - [ ] Résultats
-        - [ ] Nom
-        - [ ] Prénom
-        - [ ] Adresse mail
+- [O] Créer un profil
+  - [O] Nom
+  - [O] Code postal
+  - [O] Adresse mail
+- [O] Supprimer un profil
+  - [O] Supprime automatiquement les postes à pourvoir existant
+- [O] Créer le profil d'un poste à pourvoir
+  - [O] Titre
+  - [O] Compétences requises
+- [O] Supprimer le profil d'un poste pourvu
+- [O] Rechercher parmi les chercheurs d'emploi pour des profils qui correspondent à un poste à pourvoir
+  - [O] Recherche par compétences
+  - [O] Recherche par compétences et code postal
+  - [O] Résultats
+    - [O] Nom
+    - [O] Prénom
+    - [O] Adresse mail
 
 ## Fonctionalités pour un chercheur d'emploi
 
@@ -83,34 +88,34 @@ Pour un chercheur d'emploi, un bon moyen d'entrer en contact avec une entreprise
 
 Lorsqu'un checheur d'emploi est embauché, son profil transitionne vers «employé».
 
-- [ ] Créer un profil
-    - [ ] Nom
-    - [ ] Prénom
-    - [ ] Adresse mail
-    - [ ] Code postal
-    - [ ] Compétences
-    - [ ] Ancien(ne)s collègues de travail parmi les personne employés
-- [ ] Modifier un profil
-    - [ ] Ajouter des compétences
-    - [ ] Ajouter un(e) ancien(ne) collègue de travail
-    - [ ] Modifier le code postal
-- [ ] Transitionner le profil de «chercheur d'emploi» à un profil «employé»
-- [ ] Supprimer un profil
-- [ ] Rechercher parmi les les postes à pourvoir qui correspondent à son profil
-    - [ ] Recherche par compétences
-    - [ ] Recherche par compétences et code postal
-    - [ ] Résultats
-        - [ ] Titre du poste
-        - [ ] Nom de l'entreprise
-        - [ ] Adresse mail de l'entreprise
-        - [ ] Code postal de l'entreprise
-- [ ] Rechercher parmi les anciens collègues
-    - [ ] Recherche par entreprise (retoune les ancien(ne)s collègues employés à l'entreprise)
-    - [ ] Recherche par compétences (pour les compétences du chercheur d'emploi, retourne les ancien(ne)s collègues employés aux entreprises qui recherchent ces compétences)
-    - [ ] Résultats
-        - [ ] Nom du (de la) collègue
-        - [ ] Prénom du (de la) collègue
-        - [ ] Adresse mail du (de la) collègue
+- [O] Créer un profil
+  - [O] Nom
+  - [O] Prénom
+  - [O] Adresse mail
+  - [O] Code postal
+  - [O] Compétences
+  - [O] Ancien(ne)s collègues de travail parmi les personne employés
+- [O] Modifier un profil
+  - [O] Ajouter des compétences
+  - [O] Ajouter un(e) ancien(ne) collègue de travail
+  - [O] Modifier le code postal
+- [O] Transitionner le profil de «chercheur d'emploi» à un profil «employé»
+- [O] Supprimer un profil
+- [O] Rechercher parmi les postes à pourvoir ceux qui correspondent à son profil
+  - [O] Recherche par compétences
+  - [O] Recherche par compétences et code postal
+  - [O] Résultats
+    - [O] Titre du poste
+    - [O] Nom de l'entreprise
+    - [O] Adresse mail de l'entreprise
+    - [O] Code postal de l'entreprise
+- [O] Rechercher parmi les anciens collègues
+  - [O] Recherche par entreprise (retoune les ancien(ne)s collègues employés à l'entreprise)
+  - [O] Recherche par compétences (pour les compétences du chercheur d'emploi, retourne les ancien(ne)s collègues employés aux entreprises qui recherchent ces compétences)
+  - [O] Résultats
+    - [O] Nom du (de la) collègue
+    - [O] Prénom du (de la) collègue
+    - [O] Adresse mail du (de la) collègue
 
 ## Fonctionalités pour un employé
 
@@ -118,46 +123,46 @@ C'est bien d'être à l'emploi mais pour diverses raisons il peut arriver qu'on 
 
 Lorsqu'un un employé quitte ou perd son emploi et est en recherche d'emploi, son profil transitionne vers «checheur d'emploi».
 
-- [ ] Créer un profil
-    - [ ] Nom
-    - [ ] Prénom
-    - [ ] Adresse mail
-    - [ ] Code postal
-    - [ ] Compétences
-    - [ ] Ancien(ne)s collègues de travail parmi les personne employés
-    - [ ] Entreprise
-- [ ] Modifier un profil
-    - [ ] Ajouter des compétences
-    - [ ] Ajouter un(e) ancien(ne) collègue de travail
-    - [ ] Modifier le code postal
-    - [ ] Modifier l'entreprise
-- [ ] Transitionner le profil «employé» vers «chercheur d'emploi»
-    - [ ] Les employé(e)s de l'entreprise quittée s'ajoutent automatiquement à liste des ancien(ne)s collègues de travail
-- [ ] Supprimer le profil
-- [ ] Rechercher parmi les les postes à pourvoir qui correspondent au profil de l'employé
-    - [ ] Recherche par compétences
-    - [ ] Recherche par compétences et code postal
-    - [ ] Résultats
-        - [ ] Titre du poste
-        - [ ] Nom de l'entreprise
-        - [ ] Adresse mail de l'entreprise
-        - [ ] Code postal de l'entreprise
-- [ ] Rechercher parmi les anciens collègues
-    - [ ] Recherche par entreprise (retoune les ancien(ne)s collègues employés à l'entreprise)
-    - [ ] Recherche par compétences (pour les compétences du chercheur d'emploi, retourne les ancien(ne)s collègues employés aux entreprises qui recherchent ces compétences)
-    - [ ] Résultats
-        - [ ] Nom du (de la) collègue
-        - [ ] Prénom du (de la) collègue
-        - [ ] Adresse mail du (de la) collègue
+- [O] Créer un profil
+  - [O] Nom
+  - [O] Prénom
+  - [O] Adresse mail
+  - [O] Code postal
+  - [O] Compétences
+  - [O] Ancien(ne)s collègues de travail parmi les personne employés
+  - [O] Entreprise
+- [O] Modifier un profil
+  - [O] Ajouter des compétences
+  - [O] Ajouter un(e) ancien(ne) collègue de travail
+  - [O] Modifier le code postal
+  - [O] Modifier l'entreprise
+- [O] Transitionner le profil «employé» vers «chercheur d'emploi»
+  - [O] Les employé(e)s de l'entreprise quittée s'ajoutent automatiquement à liste des ancien(ne)s collègues de travail
+- [O] Supprimer le profil
+- [O] Rechercher parmi les les postes à pourvoir qui correspondent au profil de l'employé
+  - [O] Recherche par compétences
+  - [O] Recherche par compétences et code postal
+  - [O] Résultats
+    - [O] Titre du poste
+    - [O] Nom de l'entreprise
+    - [O] Adresse mail de l'entreprise
+    - [O] Code postal de l'entreprise
+- [O] Rechercher parmi les anciens collègues
+  - [O] Recherche par entreprise (retoune les ancien(ne)s collègues employés à l'entreprise)
+  - [O] Recherche par compétences (pour les compétences du chercheur d'emploi, retourne les ancien(ne)s collègues employés aux entreprises qui recherchent ces compétences)
+  - [O] Résultats
+    - [O] Nom du (de la) collègue
+    - [O] Prénom du (de la) collègue
+    - [O] Adresse mail du (de la) collègue
 
-# Spécifications de conception
+## Spécifications de conception
 
 ## Interface
 
 Ce programme sera lancé à l'invite de commandes.
 L'utilisateur naviguera les divers fonctionalités grâce à une arborescence de menu affichée à l'écran. Quelques exemples :
 
-```
+```txt
 *** Bienvenu sur LuminIn, le site des pros ***
 
 * Menu principal *
@@ -170,7 +175,7 @@ Vous êtes :
 Votre choix ('q' pour quitter) : 1
 ```
 
-```
+```txt
 *** Bienvenu sur LuminIn, le site des pros ***
 
 * Menu entreprise *
@@ -181,7 +186,7 @@ Vous voulez :
 3. Supprimer le profil d'un poste maintenant pourvu
 4. Faire une recherche parmi les chercheurs d'emploi
 
-Votre choix ('q' pour quitter, 'p' pour menu précédent) : 
+Votre choix ('q' pour quitter, 'p' pour menu précédent) :
 ```
 
 ## Base de données
@@ -189,7 +194,7 @@ Votre choix ('q' pour quitter, 'p' pour menu précédent) :
 La base de données sera constituée de plusieurs fichiers `.csv`.
 Un fichier par table.
 Les tables de la base de données suivent le même format que la table utilisée dans l'exercice 4 (`groupe.csv`) où les champs sont séparés par des virgules.
-Si un champ contient plusieurs valeurs, celles-ci sont séparées par des points-virgules. 
+Si un champ contient plusieurs valeurs, celles-ci sont séparées par des points-virgules.
 
 L'application doit pouvoir utiliser une base de données existante.
 Les informations dans la base de données persiste entre les utilisations de l'application.
@@ -202,7 +207,7 @@ Quelques exemples :
 
 ### Table d'entreprise
 
-```
+```txt
 id,nom,code postal,mail
 1,Disney,77700,walt@disney.com
 2,Google,75009,emplois@google.com
@@ -212,7 +217,7 @@ id,nom,code postal,mail
 
 L'attribut `entreprise` est une clé `id` de la table des entreprises.
 
-```
+```txt
 id,titre,competences,entreprise
 1,acteur,comedie;gag;1
 2,developpeur,C;SQL;Python,2
@@ -222,7 +227,7 @@ id,titre,competences,entreprise
 
 L'attribut `collegues` est une liste de clé `id` de la table des employés.
 
-```
+```txt
 id,nom,prenom,mail,code postal,competences,collegues
 1,Duck,Donald,donal.duck@canardville.gov,77700,comedie;gag,2
 2,Pignon,Francois,pignouf@gmail.com,75020,C;SQL;Python,
@@ -233,7 +238,7 @@ id,nom,prenom,mail,code postal,competences,collegues
 L'attribut `collegues` est une liste de clé `id` de la table des employés.
 L'attribut `entreprise` est une clé `id` de la table des entreprises.
 
-```
+```txt
 id,nom,prenom,mail,code postal,competences,collegues,entreprise
 1,Untel,Michel,m_untel@google.com,13010,C++;Python;,,2
 2,Mouse,Mickey,mickey@mickeyville.gov,77700,comedie,3,1
@@ -254,7 +259,7 @@ Utilisez les paramètres `-Wall -pedantic -Werror` au moment de compiler.
 
 > `-Werror` ? C'est nouveau.
 
-Oui, ce paramètre transforme les avertissments du compilateur en erreur. 
+Oui, ce paramètre transforme les avertissments du compilateur en erreur.
 C'est une façon de se forcer à écouter ce que nous dit le compilateur à propos de code potentiellement incorrect ou dangereux.
 
 ## Journal
@@ -262,9 +267,10 @@ C'est une façon de se forcer à écouter ce que nous dit le compilateur à prop
 Le programme devra produire un [journal](https://www.dropbox.com/scl/fi/12l29vxc1v4z74wum6ay3/D-velopper-comme-les-pros.paper?dl=0&rlkey=gbd3b2ajnlo93wz6xvsph5bcu#:uid=877002050135560344832464&h2=D%C3%A9boguer-par-journal) de toute les opérations exécutées.
 Les informations dans le journal persistent entre les utilisations de l'application. C'est-à-dire que le fichier servant de journal n'est pas remis à zéro quand vous lancez l'application.
 
-# Instructions de travail
+## Instructions de travail
 
 Suivez les instructions de départ et les instructions de travail de l'exercice 4 avec deux exceptions :
+
 1. Vous pouvez travailler en groupe de deux ou trois.
 1. La personne qui approuve et fusionne un «Pull Request» ne doit pas être la personne qui a ouvert le «Pull Request».
 C'est-à-dire que si Alice pousse sa branche vers GitHub et ouvre un «Pull Request» pour demander de la fusionner à la branche `master`, ce doit être Bob ou Charlie qui approuvera et fusionnera.
@@ -286,9 +292,9 @@ Rappellez-vous des exercices précédents où vous aviez à implémenter des fon
 Ces fonctions ou méthodes s'appellent des [bouchons](https://fr.wikipedia.org/wiki/Bouchon_(informatique)) (ou [stub](https://en.wikipedia.org/wiki/Method_stub) en anglais).
 Ces bouchons servent justement à deux choses :
 
-1. Faire en sorte qu'un module A qui dépend de la fonction d'un module B puisse être développé et compilé _comme si_ la fonction était implémentée. 
+1. Faire en sorte qu'un module A qui dépend de la fonction d'un module B puisse être développé et compilé _comme si_ la fonction était implémentée.
 Bien sûr, au début la fonction retourne une fausse valeur mais on peut continuer le développement du module A quand même en faisant semblant.
-2. On peut écrire des tests avant même que la fonction soit implémentée. 
+2. On peut écrire des tests avant même que la fonction soit implémentée.
 Connaissant la signature d'une fonction et ses responsabilités, on peut écrire des tests qui en vérifient le bon fonctionnement.
 Écrire des tests à l'avance est d'ailleurs une très bonne aide pour comprendre à quoi l'implémentation d'une fonction doit répondre : cas généraux, cas spéciaux, cas d'erreurs, etc.
 
@@ -331,7 +337,7 @@ Tout comme pour les exercices 3 et 4, ce projet est configuré [1] de telle sort
 De ce fait, assurez-vous que la cible `check` de votre `makefile` dépende de votre programme de test et le lance.
 
 Si la vérification du service d'intégration continu venait à échouer, il vous incombe d'apporter les modifications nécéssaires à votre branch (toujours en faisant `add`, `commit` et `push`) pour rectifier la situation.
-Essentiellement, je vous demande de travailler comme pour les exercices 3 et 4 en suivant leurs [instructions de travail](https://github.com/thierryseegers/DevCommeLesPros-2020-Ex4#instructions-de-travail). 
+Essentiellement, je vous demande de travailler comme pour les exercices 3 et 4 en suivant leurs [instructions de travail](https://github.com/thierryseegers/DevCommeLesPros-2020-Ex4#instructions-de-travail).
 Seulement, cette fois-ci, c'est vous qui écrirez les tests.
 
 [1] Curieux de savoir comment ?
@@ -361,7 +367,7 @@ Par exemple, si vous vous sentez des âmes de comédiens, faites un tuto vidéo.
 ## Phases de développement
 
 L'évolution de votre travail suivra les [stades de développement d'un projet](https://www.dropbox.com/scl/fi/12l29vxc1v4z74wum6ay3/D-velopper-comme-les-pros.paper?dl=0&rlkey=gbd3b2ajnlo93wz6xvsph5bcu#:uid=315118321024319072106121&h2=Stades-de-d%C3%A9veloppement).
-Vous devrez qualifier les transitions entre ces étapes dans votre dépôt en utilisant des [tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging)s sur votre branche `master`. 
+Vous devrez qualifier les transitions entre ces étapes dans votre dépôt en utilisant des [tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging)s sur votre branche `master`.
 Un tag est un commit qui ne contient qu'une courte description.
 Cette description devra suivre les règles décrites [ici](https://semver.org/lang/fr/).
 
@@ -420,7 +426,7 @@ La version `1.0.0` parfaite vous vaudra 18/20.
 Allez chercher des points supplémentaires avec les [extras](#les-extras).
 À chaque nouvel extra implémenté, incrémentez le numéro de version mineur de votre dépôt. Par exemple `1.1.0`.
 
-# Évaluation
+## Évaluation
 
 La date d'évaluation est le *vendredi 29 mai à 23:59*. Le code écrit passé cette date ne sera pas considéré.
 
@@ -451,7 +457,7 @@ Vous avez tout bon ?
 Comment gagner d'autres points ?
 Continuez de lire...
 
-# Les extras
+## Les extras
 
 Chacun de ces extras vaut 1 point sur 20.
 Il vous permettront donc d'atteindre 19 ou 20 sur 20.
@@ -470,7 +476,7 @@ C'est-à-dire «qui travaille *ou a déjà travaillé* à telle ou telle entrepr
 1. Compressez toute la base de données par un codage de Huffman.
 Les fichiers sur le disque sont compressés.
 Ils sont décompressés en mémoire, modifiés au fil des opérations et au moment de quitter le programme ils sont recompressés et écrit sur le disque.
-Les fichiers décompressés n'apparaîssent jamais sur le disque, ni pendant, ni après l'utilisation du programme. 
+Les fichiers décompressés n'apparaîssent jamais sur le disque, ni pendant, ni après l'utilisation du programme.
 1. Écrivez un programme de test qui lance votre programme d'application, exécute certaines commandes comme le ferait un utlisateur humain et vérifie que tout s'est bien déroulé et que la base de données contient les bonnes informations.
 1. Utilisez une [véritable base de données SQL](https://sqlite.org/cintro.html) plutôt que des fichers `.csv` (cet extra n'est pas compatible avec l'extra 3).
 
