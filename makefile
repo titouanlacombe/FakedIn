@@ -1,30 +1,29 @@
 cc=g++
-cflags=-Wall -pedantic -Werror --debug
-lflags=--debug
+cflags=-Wall -pedantic -Werror
 
 .DEFAULT_GOAL := check
 
-.PHONY: clean
+.PHONY: clean check
 
-# Efface tout les fichiers temporaires et les produits finaux.
-clean:
-	rm -rf build
+all: build/test build/app
 
-# Crée le répertoire qui acceuille les fichiers temporaires et les produits finaux.
+# Make the build dir
 build:
 	mkdir -p build
 
-# S'assure de l'existence tout les programmes finaux (application, test, etc.)
-# Par exemple : all: build/test build/appli
-all:
+# Remove the build dir
+clean:
+	rm -rf build
 
-# Lance le programme de test.
+# Launch the tests
 check: build/test
 	./build/test
 
-launch: build/app
+# Launch the application
+app: build/app
 	./build/app
 
+#------LIBS CREATION-------
 #------MYLOG-------
 build/mylog.o: lib/mylog.cpp | build
 	$(cc) $(cflags) -c lib/mylog.cpp -I ./lib -o build/mylog.o
@@ -81,16 +80,17 @@ build/UI.o: lib/UI.cpp build/libsearch.a | build
 build/libUI.a: build/UI.o | build
 	ar crs build/libUI.a build/UI.o
 
+#------BIN CREATION-------
 #------TEST------------
 build/test.o: test/test.cpp build/libsearch.a | build
 	$(cc) $(cflags) -c test/test.cpp -I ./lib -o build/test.o
 
 build/test: build/test.o | build
-	$(cc) $(lflags) build/test.o -L ./build -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/test
+	$(cc) build/test.o -L ./build -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/test
 
 #------APPLICATION-------
 build/app.o: app/app.cpp build/libUI.a | build
 	$(cc) $(cflags) -c app/app.cpp -I ./lib -o build/app.o
 
 build/app: build/app.o | build
-	$(cc) $(lflags) build/app.o -L ./build -lUI -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/app
+	$(cc) build/app.o -L ./build -lUI -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/app
