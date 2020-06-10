@@ -1,62 +1,65 @@
+#include "mylog.h"
+#include "list.h"
+#include "company.h"
+#include "job.h"
+#include "worker.h"
+#include "data_base.h"
 #include "search.h"
 
 #include <signal.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <iostream>
 
-// Nombre total de tests exécutés. 
-int tests_executes = 0;
-// Pour chaque test qui réussi, cette variable sera incrémentée de 1.
-// Le but est de la garder égale à test_executes.
-int tests_reussis = 0;
+using namespace std;
+
+int nb_tests = 0; // Number of tests
+int nb_tests_passed = 0; // Number of successful tests
 
 #define STRINGIZE_(x) #x
 #define STRINGIZE(x) STRINGIZE_(x)
 
-// Incrémente le nombre de test exécutés de 1.
-// Si le test réussi, incrémente le nombre de tests réussis de 1.
-#define TEST(x) tests_executes += 1;    \
-				if(x)                   \
-				{                       \
-					tests_reussis += 1; \
-					printf("[SUCCES] ");\
-				}                       \
-				else                    \
-				{                       \
-					printf("[ECHEC ] ");\
-				}                       \
-				printf(STRINGIZE(__FILE__) ", " STRINGIZE(__LINE__) ": " STRINGIZE(x) "\n");
+// Increments nb_tests and if successful increments nb_tests_passed
+#define TEST(x)           \
+	nb_tests++;             \
+	if(x)                   \
+	{                       \
+		nb_tests_passed++;    \
+		cout << "[SUCCESS] "; \
+	}                       \
+	else                    \
+	{                       \
+		cout << "[FAILURE] "; \
+	}                       \
+	cout << "Line " STRINGIZE(__LINE__) ", Tested: " STRINGIZE(x) << endl;
 
-// Compare le contenu de deux fichiers aux chemins a et b avec la commande diff. Incrémente test_reussis si les fichiers sont pareils.
-#define TEST_FILE(a, b) tests_executes += 1;                                                \
-						{                                                                   \
-							int const r = system("diff --text --strip-trailing-cr " a " " b " > /dev/null");    \
-							if(!WEXITSTATUS(r))                                             \
-							{                                                               \
-								tests_reussis += 1;                                         \
-								printf("[SUCCES] ");                                        \
-							}                                                               \
-							else                                                            \
-							{                                                               \
-								printf("[ECHEC ] ");                                        \
-							}                                                               \
-							printf(STRINGIZE(__FILE__) ", " STRINGIZE(__LINE__) ": diff --test --strip-trailing-cr " STRINGIZE(a) " " STRINGIZE(b) "\n");   \
-						}
+// Test if two files are the sames
+#define TEST_FILE(a, b)    \
+	nb_tests++;              \
+	{                        \
+		int const r = system("diff --text --strip-trailing-cr " a " " b " > /dev/null");\
+		if(!WEXITSTATUS(r))    \
+		{                      \
+			nb_tests_passed++;   \
+			cout << "[SUCCESS] ";\
+		}                      \
+		else                   \
+		{                      \
+			cout << "[FAILURE] ";\
+		}                      \
+		cout << "Line " STRINGIZE(__LINE__) ", Tested files: " STRINGIZE(a) " and " STRINGIZE(b) << endl;\
+	}
 
-// Fonction à executer lors d'une segmentation fault.
-// On imprime les résultats obtenus jusqu'à lors et on arrête immédiatement le programme.
+// Executed function when segfault
 void segfault_sigaction(int signal, siginfo_t *si, void *arg)
 {
-	std::cout << "[SEGFAULT]" << std::endl;
-	std::cout << tests_reussis << "/" << tests_executes << std::endl;
-	exit(tests_reussis - tests_executes);
+	cout << "[SEGFAULT]" << endl;
+	cout << "[RESULT] " << nb_tests_passed << "/" << nb_tests << " Tests passed" << endl;
+	exit(nb_tests_passed - nb_tests);
 }
 
 int main()
 {
-	// Mise en place de la fonction à exécuter lors d'une segmentation fault.
+	// Setup of the function to execute when segfault
 	struct sigaction sa;
 	memset(&sa, 0, sizeof(struct sigaction));
 	sigemptyset(&sa.sa_mask);
@@ -67,8 +70,8 @@ int main()
 	{
 		//----------------------MYLOG---------------------
 		log_begin("test/logs");
-		log_write("salut!");
-		log_write("ca va ?");
+		log_write("hello!");
+		log_write("how are you ?");
 		log_end();
 		// TEST_FILE("test/log.txt","test/log_correction.txt");
 	}
@@ -140,7 +143,7 @@ int main()
 	{
 		//----------------------WORKER---------------------
 		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
-		auto l = List<std::string>();
+		auto l = List<string>();
 		auto w = Worker("Max", "Veran", "max.v@gmail.com");
 		TEST(w.first_name == "Max");
 		TEST(w.last_name == "Veran");
@@ -182,10 +185,10 @@ int main()
 		auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
 		w.add_co_worker(w2);
 		w2.add_co_worker(w);
-		//test des searchs
+		// test search
 	}
 
-	std::cout << tests_reussis << "/" << tests_executes << std::endl;
+	cout << "[RESULT] " << nb_tests_passed << "/" << nb_tests << " Tests passed" << endl;
 
-	return tests_executes - tests_reussis;
+	return nb_tests - nb_tests_passed;
 }
