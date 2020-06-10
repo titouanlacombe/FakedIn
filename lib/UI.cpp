@@ -1,5 +1,11 @@
 #include "UI.h"
 
+#include "mylog.h"
+#include "data_base.h"
+#include "search.h"
+
+#include <iostream>
+
 using namespace std;
 
 List<Company*>* companies = NULL;
@@ -382,7 +388,7 @@ void search_worker(Company& c)
 	results = srch_wrk_profile_job(*workers, *j, zip);
 
 	cout << "Résultats:" << endl;
-	if (results->length > 0) results->print(true);
+	if (results->length > 0) results->print_ptr();
 	else cout << "Aucun trouvé" << endl;
 	cout << "\nAppuyer sur entrée pour revenir au menu Entreprise.";
 	getline(cin, title);
@@ -575,7 +581,7 @@ void search_job(Worker& w)
 
 	results = srch_job_profile_wrk(*jobs, w, zip);
 	cout << "Résultats:" << endl;
-	if (results->length > 0) results->print(true);
+	if (results->length > 0) results->print_ptr();
 	else cout << "Aucun trouvé" << endl;
 	cout << "\nAppuyer sur entrée pour revenir au menu Travailleur.";
 	getline(cin, it);
@@ -607,13 +613,13 @@ void search_coll(Worker& w)
 		cout << endl;
 		results = srch_coll_from_cmp(w, *c);
 		cout << "Résultats:" << endl;
-		if (results->length > 0) results->print(true);
+		if (results->length > 0) results->print_ptr();
 		else cout << "Aucun trouvé" << endl;
 		break;
 	case 2:
 		results = srch_coll_skills(*jobs, w);
 		cout << "Résultats:" << endl;
-		if (results->length > 0) results->print(true);
+		if (results->length > 0) results->print_ptr();
 		else cout << "Aucun trouvé" << endl;
 		break;
 	}
@@ -634,7 +640,7 @@ void modify_worker(Worker& w)
 	if(w.employed()) cout << "Entreprise: " << w.company->name << endl;
 	else cout << "En recherche de travail" << endl;
 	cout << "Compétences: ";
-	w.skills.printl();
+	w.skills.print(true);
 	cout << "Collègues: ";
 	auto it = w.co_workers.first();
 	while (it != w.co_workers.end())

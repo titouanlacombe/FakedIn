@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mylog.h"
+#include <iostream>
 
 template <typename T>
 class Node
@@ -58,12 +58,13 @@ public:
 	T& operator[](int n); // Returns the data stored in position n
 	int in_common(List<T>& l); // Return the number of similarities between this and l
 	void delete_data(); // Deletes the data stored in the list
-	void print(bool ptr = false); // Print one element each line
-	void printl(); // Print all elements in one line
+	void print(bool single_line = false); // Print the elements
+	void print_ptr(bool single_line = false); // Print the pointed elements
 	// Iterators
 	Iterator<T> first() {return Iterator<T>(first_n);}
 	Iterator<T> last() {return Iterator<T>(last_n);}
 	Iterator<T> end() {return Iterator<T>();}
+
 	Node<T>* min(int start = 0, int end = -1); // Returns the minimum in the list
 	Node<T>* max(int start = 0, int end = -1); // Returns the maximum in the list
 	void sort(List<int>& li, bool ascending = true); // Sorts the list the same way as li
@@ -258,28 +259,51 @@ void List<T>::delete_data()
 }
 
 template <typename T>
-void List<T>::print(bool ptr)
+void List<T>::print(bool single_line)
 {
 	auto it = first();
-	while (it != end())
+	if (single_line)
 	{
-		if (ptr) std::cout << " - " << *(*it) << std::endl;
-		else std::cout << " - " << *it << std::endl;
-		it++;
+		while (it != end())
+		{
+			std::cout << " - " << *it << std::endl;
+			it++;
+		}
+	}
+	else
+	{
+		while (it != last())
+		{
+			std::cout << *it << ", ";
+			it++;
+		}
+		if (it != end()) std::cout << *it;
+		std::cout << std::endl;
 	}
 }
 
 template <typename T>
-void List<T>::printl()
+void List<T>::print_ptr(bool single_line)
 {
 	auto it = first();
-	while (it != last())
+	if (single_line)
 	{
-		std::cout << *it << ", ";
-		it++;
+		while (it != end())
+		{
+			std::cout << " - " << *(*it) << std::endl;
+			it++;
+		}
 	}
-	if (it != end()) std::cout << *it;
-	std::cout << std::endl;
+	else
+	{
+		while (it != last())
+		{
+			std::cout << *(*it) << ", ";
+			it++;
+		}
+		if (it != end()) std::cout << *(*it);
+		std::cout << std::endl;
+	}
 }
 
 template <typename T>

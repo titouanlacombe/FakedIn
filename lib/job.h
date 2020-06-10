@@ -1,5 +1,6 @@
 #pragma once
 
+#include "list.h"
 #include "company.h"
 
 class Job

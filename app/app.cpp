@@ -1,4 +1,8 @@
+#include "mylog.h"
+#include "data_base.h"
 #include "UI.h"
+
+#include <iostream>
 
 #define ASCII_ART															       \
 "*********************************************   \n" \

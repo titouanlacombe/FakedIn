@@ -1,39 +1,18 @@
 #include "data_base.h"
 
+#include "mylog.h"
+
+#include <fstream>
+
 #define CMP_FILE_NAME "/Companies.csv"
 #define JOB_FILE_NAME "/Jobs.csv"
 #define EMP_FILE_NAME "/Employees.csv"
 #define SKR_FILE_NAME "/Seekers.csv"
 
-#define CMP_FIRST_LINE (std::string)"id,name,zip code,email"
-#define JOB_FIRST_LINE (std::string)"id,title,skills,company"
-#define EMP_FIRST_LINE (std::string)"id,first name,last name,email,zip code,skills,co_workers,company"
-#define SKR_FIRST_LINE (std::string)"id,first name,last name,email,zip code,skills,co_workers"
-
-void dump_str(std::string s)
-{
-  for (unsigned int n = 0; n < s.length(); n++)
-  {
-    char c = s[n];
-    std::cout << (int)c << ",";
-  }
-  std::cout << "\n";
-}
-
-int mygetline(std::string& s, std::string& dest, char limit)
-{
-	int i = 0;
-	auto it = s.begin();
-	dest = "";
-	while (it != s.end() && *it != limit)
-	{
-		dest += *it;
-		it++;
-		i++;
-	}
-	s.erase(0, i+1);
-	return i;
-}
+#define CMP_FIRST_LINE "id,name,zip code,email"
+#define JOB_FIRST_LINE "id,title,skills,company"
+#define EMP_FIRST_LINE "id,first name,last name,email,zip code,skills,co_workers,company"
+#define SKR_FIRST_LINE "id,first name,last name,email,zip code,skills,co_workers"
 
 void create_cmp_file(std::string folder)
 {
@@ -117,6 +96,7 @@ void load(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, s
 	jobs.empty();
 	workers.empty();
 
+	check_folder(folder);
 	cmp_file.open("./" + folder + CMP_FILE_NAME);
 	job_file.open("./" + folder + JOB_FILE_NAME);
 	emp_file.open("./" + folder + EMP_FILE_NAME);
@@ -238,6 +218,7 @@ void save(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, s
 	std::ofstream cmp_file, job_file, emp_file, skr_file;
 	int id;
 
+	check_folder(folder);
 	cmp_file.open("./" + folder + CMP_FILE_NAME);
 	job_file.open("./" + folder + JOB_FILE_NAME);
 	emp_file.open("./" + folder + EMP_FILE_NAME);

@@ -53,7 +53,7 @@ int nb_tests_passed = 0; // Number of successful tests
 void segfault_sigaction(int signal, siginfo_t *si, void *arg)
 {
 	cout << "[SEGFAULT]" << endl;
-	cout << "[RESULT] " << nb_tests_passed << "/" << nb_tests << " Tests passed" << endl;
+	cout << "[RESULTS] " << nb_tests_passed << "/" << nb_tests << " Tests passed" << endl;
 	exit(nb_tests_passed - nb_tests);
 }
 
@@ -67,13 +67,14 @@ int main()
 	sa.sa_flags = SA_SIGINFO;
 	sigaction(SIGSEGV, &sa, NULL);
 
+	//----------------------TESTS---------------------
 	{
 		//----------------------MYLOG---------------------
-		log_begin("test/logs");
-		log_write("hello!");
-		log_write("how are you ?");
+		log_begin("test/output", false);
+		log_write("hello!", false);
+		log_write("how are you ?", false);
 		log_end();
-		// TEST_FILE("test/log.txt","test/log_correction.txt");
+		TEST_FILE("test/output/log.txt", "test/correction/log.txt");
 	}
 
 	{
@@ -167,15 +168,15 @@ int main()
 		auto lc = List<Company*>();
 		auto lj = List<Job*>();
 		auto lw = List<Worker*>();
-		load(lc, lj, lw, "test/in");
+		load(lc, lj, lw, "test/input/data_base");
 		w = Worker("first_name", "full_name", "email@e.com");
 		w.set_zip_code("zip");
 		lw.addlast(&w);
-		save(lc, lj, lw, "test/out");
-		TEST_FILE("test/out/Companies.csv", "test/correction/Companies.csv");
-		TEST_FILE("test/out/Jobs.csv", "test/correction/Jobs.csv");
-		TEST_FILE("test/out/Employees.csv", "test/correction/Employees.csv");
-		TEST_FILE("test/out/Seekers.csv", "test/correction/Seekers.csv");
+		save(lc, lj, lw, "test/output/data_base");
+		TEST_FILE("test/output/data_base/Companies.csv", "test/correction/data_base/Companies.csv");
+		TEST_FILE("test/output/data_base/Jobs.csv", "test/correction/data_base/Jobs.csv");
+		TEST_FILE("test/output/data_base/Employees.csv", "test/correction/data_base/Employees.csv");
+		TEST_FILE("test/output/data_base/Seekers.csv", "test/correction/data_base/Seekers.csv");
 	}
 
 	{
@@ -188,7 +189,7 @@ int main()
 		// test search
 	}
 
-	cout << "[RESULT] " << nb_tests_passed << "/" << nb_tests << " Tests passed" << endl;
+	cout << "[RESULTS] " << nb_tests_passed << "/" << nb_tests << " Tests passed" << endl;
 
 	return nb_tests - nb_tests_passed;
 }

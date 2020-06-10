@@ -1,6 +1,9 @@
 #pragma once
 
-#include "data_base.h"
+#include "list.h"
+#include "company.h"
+#include "job.h"
+#include "worker.h"
 
 // Rechercher parmi les chercheurs d'emploi pour des profils qui 
 // correspondent à un poste à pourvoir (recherche par zip_code ou pas)
