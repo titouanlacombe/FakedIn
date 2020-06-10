@@ -3,7 +3,7 @@ cflags=-Wall -pedantic -Werror
 
 .DEFAULT_GOAL := check
 
-.PHONY: clean check
+.PHONY: clean check app
 
 all: build/test build/app
 
