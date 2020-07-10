@@ -2,10 +2,11 @@
 
 // Rechercher parmi les chercheurs d'emploi pour des profils qui 
 // correspondent à un poste à pourvoir (recherche par zip_code ou pas)
-List<Worker*>* srch_wrk_profile_job(List<Worker*>& workers, Job& j, bool zip_code)
+List<Worker*>* srch_wrk_profile_job(Job& j, bool zip_code)
 {
 	List<Worker*>* l = new List<Worker*>();
 	List<int> li = List<int>();
+	auto workers = get_workers();
 	auto it = workers.first();
 	int n;
 	while (it != workers.end())
@@ -38,9 +39,10 @@ List<Worker*>* srch_wrk_profile_job(List<Worker*>& workers, Job& j, bool zip_cod
 
 // Rechercher parmi les jobs ceux qui correspondent
 // au profil de w (recherche par zip_code ou pas)
-List<Job*>* srch_job_profile_wrk(List<Job*>& jobs, Worker& w, bool zip_code)
+List<Job*>* srch_job_profile_wrk(Worker& w, bool zip_code)
 {
 	List<Job*>* l = new List<Job*>();
+	auto jobs = get_jobs();
 	auto it = jobs.first();
 	List<int> li = List<int>();
 	int n;
@@ -84,9 +86,9 @@ List<Worker*>* srch_coll_from_cmp(Worker& w, Company& c)
 
 // retourne les anciens collègues employés aux entreprises 
 // qui recherchent les compétences de w
-List<Worker*>* srch_coll_skills(List<Job*>& jobs, Worker& w)
+List<Worker*>* srch_coll_skills(Worker& w)
 {
-	List<Job*>* lj = srch_job_profile_wrk(jobs, w, false);
+	List<Job*>* lj = srch_job_profile_wrk(w, false);
 	List<Company*> lc = List<Company*>();
 	List<Worker*>* lw = new List<Worker*>();
 	Company *c;

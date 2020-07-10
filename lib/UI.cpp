@@ -8,15 +8,6 @@
 
 using namespace std;
 
-List<Job*>* jobs = NULL;
-List<Worker*>* workers = NULL;
-
-void init_lists(List<Job*>& _jobs, List<Worker*>& _workers)
-{
-	jobs = &_jobs;
-	workers = &_workers;
-}
-
 bool valid_email(string email)
 {
 	string copy(email), it;
@@ -142,7 +133,7 @@ string request_job_title(Company& c)
 	{
 		cout << "-Le titre du poste: ";
 		getline(cin, title);
-		if (job_exist(*jobs, c, title)) cout << "Erreur: l'offre '" << title << "' existe déjà dans votre entreprise." << endl;
+		if (job_exist(c, title)) cout << "Erreur: l'offre '" << title << "' existe déjà dans votre entreprise." << endl;
 		else if (title.empty()) cout << "Erreur: le titre de l'offre est vide." << endl;
 		else if (title == "q") cout << "Erreur: le titre de l'offre ne peut pas etre 'q'." << endl;
 		else loop = false;
@@ -160,7 +151,7 @@ Job* request_job_login(Company& c, string request_phrase)
 		cout << request_phrase;
 		getline(cin, title);
 		if (title == "q") return NULL;
-		j = srch_job_list(*jobs, c, title);
+		j = get_job(c, title);
 		if (j == NULL) cout << "Erreur: l'offre d'emploi '" << title << "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
@@ -188,7 +179,7 @@ void request_wrk_name(string& first_name, string& full_name)
 		cout << "-Votre nom (nom prénom): ";
 		getline(cin, full_name);
 		mygetline(full_name, first_name, ' ');
-		if (wrk_exist(*workers, first_name, full_name)) cout << "Erreur: le Travailleur '" << (first_name + " " + full_name) << "' existe déjà." << endl;
+		if (wrk_exist(first_name, full_name)) cout << "Erreur: le Travailleur '" << (first_name + " " + full_name) << "' existe déjà." << endl;
 		else if (full_name.empty() || first_name.empty()) cout << "Erreur: nom ou prénom vide" << endl;
 		else loop = false;
 	} while (loop);
@@ -206,7 +197,7 @@ void request_wrk_coll(Worker& w)
 		if (!full_name.empty())
 		{
 			mygetline(full_name, first_name, ' ');
-			coll = srch_wrk_list(*workers, first_name, full_name);
+			coll = get_worker(first_name, full_name);
 			if (coll == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
 			else if (*coll == w) cout << "Erreur: vous ne pouvez pas être votre propre collègue." << endl;
 			else if (!coll->employed()) cout << "Erreur: vous ne pouvez pas ajouter un chercheur d'emploi comme collègue." << endl;
@@ -382,7 +373,7 @@ void search_worker(Company& c)
 	zip = request_yn_choice();
 	cout << endl;
 
-	results = srch_wrk_profile_job(*workers, *j, zip);
+	results = srch_wrk_profile_job(*j, zip);
 
 	cout << "Résultats:" << endl;
 	if (results->length > 0) results->print_ptr();
@@ -402,7 +393,6 @@ void create_job(Company& c)
 	title = request_job_title(c);
 
 	j = new Job(title, &c);
-	jobs->addlast(j);
 
 	request_skills(*j, "-Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...): ");
 	cout << "Offre d'emploi créée" << endl;
@@ -417,7 +407,6 @@ void delete_job(Company& c)
 	cout << "~~ Suppression d'offre d'emploi ~~\n\n";
 	j = request_job_login(c, "Entrez le titre de l'offre d'emploi a suprimmer ('q' pour annuler): ");
 	if (j == NULL) return;
-	jobs->remove(j);
 	cout << endl;
 	cout << "Offre d'emploi supprimée" << endl;
 	log_write("Job " + title + " from " + c.name + " deleted");
@@ -437,11 +426,11 @@ void delete_company(Company& c)
 
 	if(choice)
 	{
-		lj = company_jobs(*jobs, c);
-		jobs->remove(*lj);
+		lj = company_jobs(c);
+		get_jobs().remove(*lj);
 		delete lj;
 
-		lw = company_employees(*workers, c);
+		lw = company_employees(c);
 		auto it = lw->first();
 		while (it != lw->end())
 		{
@@ -495,7 +484,6 @@ void create_worker()
 
 	w = new Worker(first_name, full_name, email);
 	w->set_zip_code(zip);
-	workers->addlast(w);
 
 	// Compétences
 	request_skills(*w, "-Indiquez vos compétences (Compétence 1,Compétence 2...): ");
@@ -520,7 +508,7 @@ void login_worker()
 		getline(cin, full_name);
 		if (full_name == "q") return;
 		mygetline(full_name, first_name, ' ');
-		w = srch_wrk_list(*workers, first_name, full_name);
+		w = get_worker(first_name, full_name);
 		if (w == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
@@ -575,7 +563,7 @@ void search_job(Worker& w)
 	zip = request_yn_choice();
 	cout << endl;
 
-	results = srch_job_profile_wrk(*jobs, w, zip);
+	results = srch_job_profile_wrk(w, zip);
 	cout << "Résultats:" << endl;
 	if (results->length > 0) results->print_ptr();
 	else cout << "Aucun trouvé" << endl;
@@ -613,7 +601,7 @@ void search_coll(Worker& w)
 		else cout << "Aucun trouvé" << endl;
 		break;
 	case 2:
-		results = srch_coll_skills(*jobs, w);
+		results = srch_coll_skills(w);
 		cout << "Résultats:" << endl;
 		if (results->length > 0) results->print_ptr();
 		else cout << "Aucun trouvé" << endl;
@@ -677,7 +665,7 @@ void modify_worker(Worker& w)
 	case 4:
 		if (w.employed())
 		{
-			auto co_workers = company_employees(*workers, *w.company);
+			auto co_workers = company_employees(*w.company);
 			co_workers->remove(&w);
 			request_wrk_cmp(w);
 			// Anti-double
@@ -701,7 +689,6 @@ void delete_worker(Worker& w)
 
 	if(choice)
 	{
-		workers->remove(&w);
 		w.remove_from_coll();
 		delete &w;
 		cout << "Travailleur supprimée" << endl;

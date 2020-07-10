@@ -20,10 +20,14 @@ public:
 };
 
 // Search a job in jobs from a title and a company
-Job* srch_job_list(List<Job*>& jobs, Company& c, std::string title);
+Job* get_job(Company& c, std::string title);
+
+Job* get_job(int id);
 
 // Search if a job with the title 'title' and the company 'c' already exist in jobs
-bool job_exist(List<Job*>& jobs, Company& c, std::string title);
+bool job_exist(Company& c, std::string title);
 
 // Returns the jobs of the company c
-List<Job*>* company_jobs(List<Job*>& jobs, Company& c);
+List<Job*>* company_jobs(Company& c);
+
+List<Job*>& get_jobs();
