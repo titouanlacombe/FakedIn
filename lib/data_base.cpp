@@ -327,9 +327,9 @@ void save(std::string folder)
 		id++;
 	}
 	
-	get_companies().empty();
-	get_jobs().empty();
-	get_workers().empty();
+	get_companies().clean();
+	get_jobs().clean();
+	get_workers().clean();
 
 	cmp_file.close();
 	job_file.close();

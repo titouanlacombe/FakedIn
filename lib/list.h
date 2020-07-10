@@ -50,7 +50,8 @@ public:
 
 	List();
 	~List();
-	void empty(); // Empty the list (reset it) (do not delete the data)
+	bool empty(); // Return true if list is empty
+	void clean(); // Empty the list (reset it) (do not delete the data)
 	void addlast(T e); // Add an element at the end of the list
 	void addlast(List<T>& l); // Add an list at the end of the list
 	int get_pos(T e); // Returns the position number of data e in the list
@@ -97,7 +98,10 @@ List<T>::~List()
 }
 
 template <typename T>
-void List<T>::empty()
+bool List<T>::empty() {return length == 0;}
+
+template <typename T>
+void List<T>::clean()
 {
 	auto it = first();
 	while (it != last())

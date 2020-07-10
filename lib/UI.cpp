@@ -498,7 +498,7 @@ void login_worker()
 {
 	bool loop;
 	Worker* w;
-	string full_name, first_name;
+	string full_name;
 
 	cout << "~~ Connexion Travailleur ~~\n\n";
 	loop = true;
@@ -507,9 +507,8 @@ void login_worker()
 		cout << "Entrez votre nom (nom prénom) ('q' pour annuler): ";
 		getline(cin, full_name);
 		if (full_name == "q") return;
-		mygetline(full_name, first_name, ' ');
-		w = get_worker(first_name, full_name);
-		if (w == NULL) cout << "Erreur: le Travailleur '" + first_name + " " + full_name + "' n'existe pas" << endl;
+		w = get_worker(full_name);
+		if (w == NULL) cout << "Erreur: le Travailleur '" + full_name + "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
 	
