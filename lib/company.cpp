@@ -47,8 +47,6 @@ Company* get_company(std::string name)
 	return c;
 }
 
-Company* get_company(int id) {return companies_list[id];}
-
 bool cmp_exist(std::string name) {return get_company(name) != NULL;}
 
 List<Company*>& get_companies() {return companies_list;}

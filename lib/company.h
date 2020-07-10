@@ -20,8 +20,6 @@ public:
 // Search a company by it's name
 Company* get_company(std::string name);
 
-Company* get_company(int id);
-
 // Search if a company with the name 'name' already exist in companies
 bool cmp_exist(std::string name);
 

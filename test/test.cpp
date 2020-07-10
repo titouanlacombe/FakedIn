@@ -8,7 +8,6 @@
 
 #include <signal.h>
 #include <string.h>
-#include <iostream>
 
 using namespace std;
 
@@ -127,24 +126,40 @@ int main()
 	{
 		//----------------------COMPANY---------------------
 		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
+		auto c2 = Company("Boeing", "42069", "spacex@gmail.com");
 		TEST(c.name == "SpaceX");
 		TEST(c.zip_code == "42069");
 		TEST(c.email == "spacex@gmail.com");
+		TEST(get_company("SpaceX") == &c);
+		TEST(get_company("Boeing") == &c2);
+		TEST(get_company("neop,p") == NULL);
+		TEST(get_company("") == NULL);
+		TEST(!cmp_exist("cnpiznp"));
+		TEST(cmp_exist("SpaceX"));
 	}
 
 	{
 		//----------------------JOB---------------------
 		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
-		auto j = Job("SpaceX", &c);
-		TEST(j.title == "SpaceX");
+		auto j = Job("Engineer", &c);
+		auto j2 = Job("CEO", &c);
+		TEST(j.title == "Engineer");
 		TEST(j.skills.length == 0);
 		TEST(j.company == &c);
+		TEST(get_job(c, "Engineer") == &j);
+		TEST(get_job(c, "CEO") == &j2);
+		TEST(get_job(c, "neop,p") == NULL);
+		TEST(!job_exist(c, "cnpiznp"));
+		TEST(job_exist(c, "CEO"));
+		auto l = company_jobs(c);
+		TEST(l->has(&j));
+		TEST(l->has(&j2));
+		delete l;
 	}
 
 	{
 		//----------------------WORKER---------------------
 		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
-		auto l = List<string>();
 		auto w = Worker("Max", "Veran", "max.v@gmail.com");
 		TEST(w.first_name == "Max");
 		TEST(w.last_name == "Veran");
@@ -157,9 +172,20 @@ int main()
 		TEST(w.zip_code == "234567");
 		w.add_skill("C");
 		TEST(w.skills.first_n->data == "C");
-		auto w2 = Worker("T", "L", "T.L@gmail.com");
+		auto w2 = Worker("Tit", "Lacombe", "t.l@gmail.com");
+		w2.set_company(&c);
 		w.add_co_worker(w2);
 		TEST(w.co_workers.first_n->data == &w2);
+		TEST(get_worker("Max", "Veran") == &w);
+		TEST(get_worker("Max Veran") == &w);
+		TEST(get_worker("Tit Lacombe") == &w2);
+		TEST(get_worker("neop,p") == NULL);
+		TEST(!wrk_exist("cnpiznp"));
+		TEST(wrk_exist("Tit Lacombe"));
+		auto l2 = company_employees(c);
+		TEST((*l2)[0] == &w);
+		TEST((*l2)[1] == &w2);
+		delete l2;
 	}
 
 	{
@@ -175,12 +201,21 @@ int main()
 
 	{
 		//----------------------SEARCH---------------------
+		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
+		auto j = Job("Engineer", &c);
+		auto j2 = Job("CEO", &c);
 		auto w = Worker("Max", "Veran", "max.v@gmail.com");
 		auto w2 = Worker("Thomas", "Billet", "t.b@gmail.com");
 		auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
 		w.add_co_worker(w2);
 		w2.add_co_worker(w);
-		// test search
+		
+		// List<Worker*>* srch_wrk_profile_job(Job& j, bool zip_code);
+		auto l1 = srch_wrk_profile_job(j, false);
+		delete l1;
+		// List<Job*>* srch_job_profile_wrk(Worker& w, bool zip_code);
+		// List<Worker*>* srch_coll_from_cmp(Worker& w, Company& c);
+		// List<Worker*>* srch_coll_skills(Worker& w);
 	}
 
 	cout << "[RESULTS] " << nb_tests_passed << "/" << nb_tests << " Tests passed" << endl;

@@ -68,8 +68,6 @@ Job* get_job(Company& c, std::string title)
 	return j;
 }
 
-Job* get_job(int id) {return job_list[id];}
-
 bool job_exist(Company& c, std::string title) {return get_job(c, title) != NULL;}
 
 List<Job*>& get_jobs() {return job_list;}

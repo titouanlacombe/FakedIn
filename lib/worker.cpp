@@ -106,9 +106,8 @@ Worker* get_worker(std::string full_name)
 	return get_worker(first_name, full_name);
 }
 
-Worker* get_worker(int id) {return worker_list[id];}
-
 bool wrk_exist(std::string first_name, std::string last_name) {return get_worker(first_name, last_name) != NULL;}
+
 bool wrk_exist(std::string full_name) {return get_worker(full_name) != NULL;}
 
 List<Worker*>* company_employees(Company& c)
@@ -117,7 +116,7 @@ List<Worker*>* company_employees(Company& c)
 	auto it = worker_list.first();
 	while (it != worker_list.end())
 	{
-		if (*(*it)->company == c) l->addlast(*it);
+		if ((*it)->company != NULL && *(*it)->company == c) l->addlast(*it);
 		it++;
 	}
 	return l;

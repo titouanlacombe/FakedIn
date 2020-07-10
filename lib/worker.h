@@ -33,10 +33,9 @@ Worker* get_worker(std::string first_name, std::string last_name);
 
 Worker* get_worker(std::string full_name);
 
-Worker* get_worker(int id);
-
 // Returns true if a worker already exist with the names 'first_name' and 'last_name'
 bool wrk_exist(std::string first_name, std::string last_name);
+
 bool wrk_exist(std::string full_name);
 
 // Returns the employees of the company c

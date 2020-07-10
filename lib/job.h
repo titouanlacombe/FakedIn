@@ -21,8 +21,6 @@ public:
 // Search a job in jobs from a title and a company
 Job* get_job(Company& c, std::string title);
 
-Job* get_job(int id);
-
 // Search if a job with the title 'title' and the company 'c' already exist in jobs
 bool job_exist(Company& c, std::string title);
 
