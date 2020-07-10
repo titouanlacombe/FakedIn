@@ -1,10 +1,13 @@
 #include "company.h"
 
+List<Company*> companies_list;
+
 Company::Company()
 {
 	email = "";
   zip_code = "";
   name = "";
+	companies_list.addlast(this);
 }
 
 Company::Company(std::string _name, std::string _zip_code, std::string _email)
@@ -12,9 +15,13 @@ Company::Company(std::string _name, std::string _zip_code, std::string _email)
 	email = _email;
   zip_code = _zip_code;
   name = _name;
+	companies_list.addlast(this);
 }
 
-Company::~Company() {}
+Company::~Company()
+{
+	companies_list.remove(this);
+}
 
 bool operator==(Company& l, Company& r) {return l.name == r.name;}
 
@@ -26,11 +33,11 @@ std::ostream& operator<<(std::ostream& os, const Company& c)
 	return os;
 }
 
-Company* srch_cmp_list(List<Company*>& companies, std::string name)
+Company* get_company(std::string name)
 {
 	Company* c = NULL;
-	auto it = companies.first();
-	while (it != companies.end() && c == NULL)
+	auto it = companies_list.first();
+	while (it != companies_list.end() && c == NULL)
 	{
 		if ((*it)->name == name) c = *it;
 		it++;
@@ -38,4 +45,8 @@ Company* srch_cmp_list(List<Company*>& companies, std::string name)
 	return c;
 }
 
-bool cmp_exist(List<Company*>& companies, std::string name) {return srch_cmp_list(companies, name) != NULL;}
+Company* get_company(int id) {return companies_list[id];}
+
+bool cmp_exist(std::string name) {return get_company(name) != NULL;}
+
+List<Company*>& get_companies() {return companies_list;}

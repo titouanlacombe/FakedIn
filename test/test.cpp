@@ -165,14 +165,13 @@ int main()
 	{
 		//----------------------DATA BASE---------------------
 		Worker w;
-		auto lc = List<Company*>();
 		auto lj = List<Job*>();
 		auto lw = List<Worker*>();
-		load(lc, lj, lw, "test/input/data_base");
+		load(lj, lw, "test/input/data_base");
 		w = Worker("first_name", "full_name", "email@e.com");
 		w.set_zip_code("zip");
 		lw.addlast(&w);
-		save(lc, lj, lw, "test/output/data_base");
+		save(lj, lw, "test/output/data_base");
 		TEST_FILE("test/output/data_base/Companies.csv", "test/correction/data_base/Companies.csv");
 		TEST_FILE("test/output/data_base/Jobs.csv", "test/correction/data_base/Jobs.csv");
 		TEST_FILE("test/output/data_base/Employees.csv", "test/correction/data_base/Employees.csv");

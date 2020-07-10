@@ -8,13 +8,11 @@
 
 using namespace std;
 
-List<Company*>* companies = NULL;
 List<Job*>* jobs = NULL;
 List<Worker*>* workers = NULL;
 
-void init_lists(List<Company*>& _companies, List<Job*>& _jobs, List<Worker*>& _workers)
+void init_lists(List<Job*>& _jobs, List<Worker*>& _workers)
 {
-	companies = &_companies;
 	jobs = &_jobs;
 	workers = &_workers;
 }
@@ -82,7 +80,7 @@ string request_cmp_name()
 	{
 		cout << "-Le nom de votre entreprise: ";
 		getline(cin, name);
-		if (cmp_exist(*companies, name)) cout << "Erreur: l'entreprise '" << name << "' existe déjà." << endl;
+		if (cmp_exist(name)) cout << "Erreur: l'entreprise '" << name << "' existe déjà." << endl;
 		else if (name.empty()) cout << "Erreur: le nom est vide." << endl;
 		else if (name == "q") cout << "Erreur: le nom ne peut pas etre 'q'." << endl;
 		else loop = false;
@@ -100,7 +98,7 @@ Company* request_cmp_login(string request_line)
 		cout << request_line;
 		getline(cin, name);
 		if (name == "q") return NULL;
-		c = srch_cmp_list(*companies, name);
+		c = get_company(name);
 		if (c == NULL) cout << "Erreur: l'Entreprise '" << name << "' n'existe pas" << endl;
 		else loop = false;
 	} while (loop);
@@ -234,7 +232,7 @@ void request_wrk_cmp(Worker& w)
 		getline(cin, name);
 		if (!name.empty())
 		{
-			c = srch_cmp_list(*companies, name);
+			c = get_company(name);
 			if (c == NULL) cout << "Erreur: l'Entreprise '" + name + "' n'existe pas" << endl;
 			else
 			{
@@ -315,7 +313,6 @@ void create_company()
 	cout << endl;
 
 	c = new Company(name, zip, email);
-	companies->addlast(c);
 
 	cout << "Compte Entreprise créé\n" << endl;
 	log_write("New Company created: " + name + ", " + zip + ", " + email);
@@ -453,7 +450,6 @@ void delete_company(Company& c)
 		}
 		delete lw;
 
-		companies->remove(&c);
 		delete &c;
 
 		cout << "Entreprise supprimée" << endl;

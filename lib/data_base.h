@@ -6,7 +6,7 @@
 #include "worker.h"
 
 // Reads the data base and creates the 3 lists of objects
-void load(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, std::string folder = "data_base");
+void load(List<Job*>& jobs, List<Worker*>& workers, std::string folder = "data_base");
 
 // Stores the 3 lists of objects in the data base
-void save(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers, std::string folder = "data_base");
+void save(List<Job*>& jobs, List<Worker*>& workers, std::string folder = "data_base");

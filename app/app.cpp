@@ -18,15 +18,14 @@
 
 int main(void)
 {
-	List<Company*> companies;
 	List<Job*> jobs;
 	List<Worker*> workers;
 
 	log_begin("app/logs");
-	log_write("Start");
+	log_write("App start");
 
-	load(companies, jobs, workers, "app/data_base");
-	init_lists(companies, jobs, workers);
+	load(jobs, workers, "app/data_base");
+	init_lists(jobs, workers);
 
 	std::cout << ASCII_ART << std::endl;
 	std::cout << "=== Bienvenu sur FakedIn ! L'application qui réalise vos rêves ===" << std::endl;
@@ -35,9 +34,9 @@ int main(void)
 
 	std::cout << "Merci de votre visite !" << std::endl;
 
-	save(companies, jobs, workers, "app/data_base");
+	save(jobs, workers, "app/data_base");
 	
-	log_write("Quitting...");
+	log_write("App quit");
 	log_end();
 
 	return 0;

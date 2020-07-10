@@ -6,7 +6,7 @@
 #include "worker.h"
 
 // Initialise the 3 lists
-void init_lists(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers);
+void init_lists(List<Job*>& jobs, List<Worker*>& workers);
 
 // Home menu
 void home();
