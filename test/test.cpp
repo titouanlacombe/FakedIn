@@ -170,8 +170,7 @@ int main()
 		save("test/output/data_base");
 		TEST_FILE("test/output/data_base/Companies.csv", "test/correction/data_base/Companies.csv");
 		TEST_FILE("test/output/data_base/Jobs.csv", "test/correction/data_base/Jobs.csv");
-		TEST_FILE("test/output/data_base/Employees.csv", "test/correction/data_base/Employees.csv");
-		TEST_FILE("test/output/data_base/Seekers.csv", "test/correction/data_base/Seekers.csv");
+		TEST_FILE("test/output/data_base/Workers.csv", "test/correction/data_base/Workers.csv");
 	}
 
 	{

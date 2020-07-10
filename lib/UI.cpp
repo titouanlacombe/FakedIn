@@ -1,11 +1,5 @@
 #include "UI.h"
 
-#include "mylog.h"
-#include "data_base.h"
-#include "search.h"
-
-#include <iostream>
-
 using namespace std;
 
 bool valid_email(string email)

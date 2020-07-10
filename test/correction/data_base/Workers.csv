@@ -1,0 +1,8 @@
+First name,Last name,email,Zip code,Skills,Co-workers,Company
+titouan,lacombe,titouan.lacombe99@gmail.com,13010,C;C++;Big Boss,,SpaceX
+max,veran,max.veran@gmail.com,567,boss;cats,titouan lacombe;thomas billets,SpaceX
+thomas,billets,thomas.billets@gmail.com,987,argents;ow,titouan lacombe;max veran,Boeing
+titouan2,lacombe,titouan.lacombe99@gmail.com,23456,Boss;C;C++,,
+max2,veran,max.veran@gmail.com,567,boss;cats,titouan lacombe;thomas billets,
+thomas2,billets,thomas.billets@gmail.com,987,argents;ow,titouan lacombe;max veran,
+first_name,full_name,email@e.com,zip,,,

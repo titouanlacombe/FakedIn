@@ -1,7 +1,11 @@
 #pragma once
 
 #include <string>
+#include <sys/stat.h>
+#include <iostream>
+#include <fstream>
 
+//-----------------Library functions-----------------
 // Open the log file
 void log_begin(std::string folder = "", bool automated_file_name = true);
 
@@ -22,7 +26,8 @@ void dump_str(std::string s);
 int mygetline(std::string& s, std::string& dest, char limit = '\n');
 
 // Return true if path exists
-inline bool path_exist(const std::string& path);
-
-// Create a folder if 'folder' does not exist
-void check_folder(std::string folder);
+inline bool path_exist(const std::string& path)
+{
+  struct stat buffer;
+  return (stat(path.c_str(), &buffer) == 0);
+}

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "list.h"
-#include "company.h"
 #include "job.h"
 #include "worker.h"
 

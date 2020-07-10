@@ -1,3 +1,3 @@
-id,name,zip code,email
-0,SpaceX,23456,spacex@gmail.com
-1,Boeing,456,boeing@gmail.com
+Name,Zip code,email
+SpaceX,23456,spacex@gmail.com
+Boeing,456,boeing@gmail.com

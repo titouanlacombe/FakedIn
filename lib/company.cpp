@@ -35,6 +35,8 @@ std::ostream& operator<<(std::ostream& os, const Company& c)
 
 Company* get_company(std::string name)
 {
+	if (name.empty()) return NULL;
+	
 	Company* c = NULL;
 	auto it = companies_list.first();
 	while (it != companies_list.end() && c == NULL)

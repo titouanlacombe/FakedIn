@@ -1,18 +1,13 @@
 #include "mylog.h"
 
-#include <sys/stat.h>
-#include <fstream>
 #include <ctime>
-#include <cstring>
-#include <string>
-#include <iostream>
 
 std::ofstream log_file; // File containing the logs
 time_t start; // Time of start of loging
 
 void log_begin(std::string folder, bool automated_file_name)
 {
-	check_folder(folder);
+	if (!path_exist(folder)) system(("mkdir -p " + folder).c_str());
 	if (automated_file_name) log_file.open("./" + folder + "/log " + get_time_str() + ".txt");
 	else log_file.open("./" + folder + "/log.txt");
 	time(&start);
@@ -45,7 +40,7 @@ std::string get_time_str(bool longstr, time_t *elapsed)
 	return str;
 }
 
-void dump_str(std::string s)
+void str_debug(std::string s)
 {
   for (unsigned int n = 0; n < s.length(); n++)
   {
@@ -68,15 +63,4 @@ int mygetline(std::string& s, std::string& dest, char limit)
 	}
 	s.erase(0, i+1);
 	return i;
-}
-
-inline bool path_exist(const std::string& path)
-{
-  struct stat buffer;
-  return (stat(path.c_str(), &buffer) == 0);
-}
-
-void check_folder(std::string folder)
-{
-	if (!path_exist(folder)) system(("mkdir -p " + folder).c_str());
 }
