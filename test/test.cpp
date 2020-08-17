@@ -201,21 +201,75 @@ int main()
 
 	{
 		//----------------------SEARCH---------------------
-		auto c = Company("SpaceX", "42069", "spacex@gmail.com");
-		auto j = Job("Engineer", &c);
-		auto j2 = Job("CEO", &c);
-		auto w = Worker("Max", "Veran", "max.v@gmail.com");
-		auto w2 = Worker("Thomas", "Billet", "t.b@gmail.com");
-		auto w3 = Worker("Titouan", "Lacombe", "t.l@gmail.com");
-		w.add_co_worker(w2);
-		w2.add_co_worker(w);
+		auto c1 = Company("SpaceX", "42069", "spacex@gmail.com");
+		auto c2 = Company("Boeing", "12345", "b@gmail.com");
+	
+		auto j1 = Job("Engineer", &c1);
+		j1.add_skill("C");
+		j1.add_skill("C++");
+		auto j2 = Job("CEO", &c1);
+		j2.add_skill("HR");
+		auto j3 = Job("Engineer", &c2);
+		j3.add_skill("C");
+		j3.add_skill("Python");
+		auto j4 = Job("CEO", &c2);
+		j4.add_skill("HR");
+		j4.add_skill("C");
+
+		auto w1 = Worker("1", "X", "x@gmail.com");
+		w1.set_company(&c1);
+		auto w2 = Worker("2", "X", "x@gmail.com");
+		w2.set_company(&c2);
+		auto w3 = Worker("3", "X", "x@gmail.com");
+		w3.set_zip_code("42069");
+		w3.add_skill("C");
+		w3.add_skill("HR");
+		w3.add_co_worker(w1);
+		auto w4 = Worker("4", "X", "x@gmail.com");
+		w4.set_zip_code("23456");
+		w4.add_skill("C");
+		w4.add_skill("C++");
+		w3.add_co_worker(w2);
 		
 		// List<Worker*>* srch_wrk_profile_job(Job& j, bool zip_code);
-		auto l1 = srch_wrk_profile_job(j, false);
+		List<Worker*>* l1 = srch_wrk_profile_job(j1, false);
+		TEST((*l1)[0] == &w4);
+		TEST((*l1)[1] == &w3);
 		delete l1;
+		l1 = srch_wrk_profile_job(j1, true);
+		TEST((*l1)[0] == &w3);
+		delete l1;
+
 		// List<Job*>* srch_job_profile_wrk(Worker& w, bool zip_code);
+		List<Job*>* l2 = srch_job_profile_wrk(w4, false);
+		l2->print_ptr();
+		TEST((*l2)[0] == &j1);
+		TEST((*l2)[1] == &j3);
+		TEST((*l2)[2] == &j4);
+		delete l2;
+		l2 = srch_job_profile_wrk(w3, true);
+		TEST((*l2)[0] == &j1);
+		TEST((*l2)[1] == &j2);
+		delete l2;
+
 		// List<Worker*>* srch_coll_from_cmp(Worker& w, Company& c);
+		l1 = srch_coll_from_cmp(w3, c1);
+		TEST((*l1)[0] == &w1);
+		delete l1;
+		l1 = srch_coll_from_cmp(w3, c2);
+		TEST(l1->length == 0);
+		delete l1;
+		l1 = srch_coll_from_cmp(w4, c1);
+		TEST(l1->length == 0);
+		delete l1;
+
 		// List<Worker*>* srch_coll_skills(Worker& w);
+		l1 = srch_coll_skills(w3);
+		TEST((*l1)[0] == &w1);
+		delete l1;
+		l1 = srch_coll_skills(w4);
+		TEST((*l1)[0] == &w2);
+		delete l1;
 	}
 
 	cout << "[RESULTS] " << nb_tests_passed << "/" << nb_tests << " Tests passed" << endl;

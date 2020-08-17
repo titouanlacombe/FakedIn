@@ -1,5 +1,5 @@
 cc = g++
-cflags = -Wall -pedantic -Werror
+cflags = -Wall -pedantic -Werror --debug
 
 .DEFAULT_GOAL := all
 
@@ -86,11 +86,11 @@ build/test.o: test/test.cpp build/libsearch.a | build
 	$(cc) $(cflags) -c test/test.cpp -I ./lib -o build/test.o
 
 build/test: build/test.o | build
-	$(cc) build/test.o -L ./build -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/test
+	$(cc) build/test.o -L ./build -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/test --debug
 
 #------APPLICATION-------
 build/app.o: app/app.cpp build/libUI.a | build
 	$(cc) $(cflags) -c app/app.cpp -I ./lib -o build/app.o
 
 build/app: build/app.o | build
-	$(cc) build/app.o -L ./build -lUI -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/app
+	$(cc) build/app.o -L ./build -lUI -lsearch -ldata_base -ljob -lworker -lcompany -llist -lmylog -o build/app --debug

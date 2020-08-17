@@ -118,7 +118,9 @@ void List<T>::clean()
 template <typename T>
 void List<T>::addlast(T e)
 {
+	if (first_n) std::cout << "nani: " << first_n->data << std::endl;
 	auto n = new Node<T>(e);
+	if (first_n) std::cout << "nani: " << first_n->data << std::endl;
 	length++;
 	// if list is not empty
 	if (last_n != NULL)
@@ -319,6 +321,7 @@ template <typename T>
 Node<T>* List<T>::min(int start, int end)
 {
 	if (end == -1) end = length;
+	
 	int i;
 	Node<T>* m;
 	auto it = first();
@@ -337,6 +340,7 @@ template <typename T>
 Node<T>* List<T>::max(int start, int end)
 {
 	if (end == -1) end = length;
+	
 	int i;
 	Node<T>* m;
 	auto it = first();
@@ -344,7 +348,7 @@ Node<T>* List<T>::max(int start, int end)
 	m = it.node;
 	while (i < end)
 	{
-		if (*it > m->data) m = it.node; 
+		if (*it > m->data) m = it.node;
 		i++;
 		it++;
 	}

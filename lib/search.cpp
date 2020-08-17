@@ -5,7 +5,7 @@
 List<Worker*>* srch_wrk_profile_job(Job& j, bool zip_code)
 {
 	List<Worker*>* l = new List<Worker*>();
-	List<int> li = List<int>();
+	List<int> li;
 	auto workers = get_workers();
 	auto it = workers.first();
 	int n;
@@ -30,8 +30,9 @@ List<Worker*>* srch_wrk_profile_job(Job& j, bool zip_code)
 					li.addlast(n);
 				}
 			}
-			it++;
 		}
+		it++;
+		// workers.print_ptr();
 	}
 	l->sort(li, false);
 	return l;
@@ -44,7 +45,7 @@ List<Job*>* srch_job_profile_wrk(Worker& w, bool zip_code)
 	List<Job*>* l = new List<Job*>();
 	auto jobs = get_jobs();
 	auto it = jobs.first();
-	List<int> li = List<int>();
+	List<int> li;
 	int n;
 	while (it != jobs.end())
 	{
@@ -61,6 +62,7 @@ List<Job*>* srch_job_profile_wrk(Worker& w, bool zip_code)
 			}
 			else
 			{
+				std::cout << "ha: " << **it << std::endl;
 				l->addlast(*it);
 				li.addlast(n);
 			}
@@ -89,7 +91,7 @@ List<Worker*>* srch_coll_from_cmp(Worker& w, Company& c)
 List<Worker*>* srch_coll_skills(Worker& w)
 {
 	List<Job*>* lj = srch_job_profile_wrk(w, false);
-	List<Company*> lc = List<Company*>();
+	List<Company*> lc;
 	List<Worker*>* lw = new List<Worker*>();
 	Company *c;
 
