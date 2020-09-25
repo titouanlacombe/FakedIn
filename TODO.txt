@@ -1,0 +1,4 @@
+FakedIn:
+fix bug
+titles in list->prints
+ui in english (json option file ? + cvs pour les trads?)
