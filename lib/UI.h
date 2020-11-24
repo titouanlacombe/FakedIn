@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mylog.h"
+#include "language.h"
 #include "search.h"
 
 // Home menu

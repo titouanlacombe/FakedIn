@@ -244,6 +244,22 @@ void request_wrk_cmp(Worker& w)
 	} while (loop);
 }
 
+void change_lang()
+{
+	bool loop;
+	string lang;
+	loop = true;
+	do
+	{
+		cout << "Please enter the language you want \n(you need to have yourlanguage.lang in the language folder) :";
+		getline(cin, lang);
+		if (!path_exist("./languages/" + lang + ".lang")) cout << "Error: the file '" << lang << ".lang" << "' does not exist" << endl;
+		else loop = false;
+	} while (loop);
+	
+	load_language("./languages/" + lang + ".lang");
+}
+
 void home()
 {
 	int choice;
@@ -251,12 +267,12 @@ void home()
 	do
 	{
 		cout << "\n~~ Menu Principal ~~\n\n";
-		cout << "Vous êtes:\n";
-		cout << "\t1. Une Entreprise\n";
-		cout << "\t2. Un Travailleur\n";
+		cout << "\t1. Compte Entreprise\n";
+		cout << "\t2. Compte Travailleur\n";
+		cout << "\t3. Change language\n";
 		cout << endl;
 		
-		choice = request_choice(2);
+		choice = request_choice(3);
 		if (choice == -1) return;
 		cout << endl;
 
@@ -267,6 +283,9 @@ void home()
 			break;
 		case 2:
 			pre_worker();
+			break;
+		case 3:
+			change_lang();
 			break;
 		}
 	} while (true);

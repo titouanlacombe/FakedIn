@@ -1,2 +1,3 @@
 FakedIn:
-ui in english (json option file ? + cvs pour les trads?)
+build french .lang
+trad in english
