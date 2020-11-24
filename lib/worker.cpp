@@ -104,4 +104,4 @@ List<Worker>* company_employees(Company& c)
 	return l;
 }
 
-List<Worker>& get_workers() {return *worker_list;}
+List<Worker>* get_workers() {return worker_list;}

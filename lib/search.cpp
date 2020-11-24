@@ -7,9 +7,9 @@ List<Worker>* srch_wrk_profile_job(Job& j, bool zip_code)
 	List<Worker>* l = new List<Worker>();
 	List<int> li;
 	auto workers = get_workers();
-	auto it = workers.first();
+	auto it = workers->first();
 	int n;
-	while (it != workers.end())
+	while (it != workers->end())
 	{
 		if (!(*it)->employed())
 		{
@@ -34,7 +34,6 @@ List<Worker>* srch_wrk_profile_job(Job& j, bool zip_code)
 		it++;
 	}
 	l->sort(li, false);
-	get_workers().print("Workers 1", false);
 	return l;
 }
 
@@ -44,10 +43,10 @@ List<Job>* srch_job_profile_wrk(Worker& w, bool zip_code)
 {
 	List<Job>* l = new List<Job>();
 	auto jobs = get_jobs();
-	auto it = jobs.first();
+	auto it = jobs->first();
 	List<int> li;
 	int n;
-	while (it != jobs.end())
+	while (it != jobs->end())
 	{
 		n = (*it)->skills.in_common(w.skills);
 		if (n > 0)

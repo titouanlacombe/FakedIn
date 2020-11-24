@@ -41,4 +41,4 @@ bool wrk_exist(std::string full_name);
 // Returns the employees of the company c
 List<Worker>* company_employees(Company& c);
 
-List<Worker>& get_workers();
+List<Worker>* get_workers();

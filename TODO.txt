@@ -1,4 +1,3 @@
 FakedIn:
-fix bug
-titles in list->prints
+UI: message spé si résultat de recherche nuls
 ui in english (json option file ? + cvs pour les trads?)

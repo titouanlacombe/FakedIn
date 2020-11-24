@@ -114,7 +114,7 @@ void load(std::string folder)
 			while (mygetline(it, it2, ';')) w->add_skill(it2);
 
 			mygetline(line, it, ','); // co_workers
-			co_workers_names.addlast(&it);
+			co_workers_names.addlast(new std::string(it));
 			
 			mygetline(line, it); // company
 			w->set_company(get_company(it));
@@ -125,9 +125,9 @@ void load(std::string folder)
 
 	// Linking co_workers
 	std::string tmp_str;
-	auto wrk_it = get_workers().first();
+	auto wrk_it = get_workers()->first();
 	auto id_it = co_workers_names.first();
-	while (wrk_it != get_workers().end())
+	while (wrk_it != get_workers()->end())
 	{
 		if (!(* *id_it).empty())
 		{
@@ -153,9 +153,9 @@ void save(std::string folder)
 	wrk_file.open("./" + folder + WRK_FILE_NAME);
 
 	//------------------------WORKERS--------------------------
-	auto wrk_it = get_workers().first();
+	auto wrk_it = get_workers()->first();
 	wrk_file << WRK_FIRST_LINE << "\n";
-	while (wrk_it != get_workers().end())
+	while (wrk_it != get_workers()->end())
 	{
 		// first name,last name,email,zip code
 		wrk_file << (*wrk_it)->first_name << ","
@@ -167,10 +167,10 @@ void save(std::string folder)
 		auto skl_it2 = (*wrk_it)->skills.first();
 		while (skl_it2 != (*wrk_it)->skills.last())
 		{
-			wrk_file << *skl_it2 << ";";
+			wrk_file << * *skl_it2 << ";";
 			skl_it2++;
 		}
-		if (skl_it2 != (*wrk_it)->skills.end()) wrk_file << *skl_it2;
+		if (skl_it2 != (*wrk_it)->skills.end()) wrk_file << * *skl_it2;
 		
 		wrk_file << ",";
 		
@@ -192,9 +192,9 @@ void save(std::string folder)
 	}
 	
 	//------------------------JOBS--------------------------
-	auto job_it = get_jobs().first();
+	auto job_it = get_jobs()->first();
 	job_file << JOB_FIRST_LINE << "\n";
-	while (job_it != get_jobs().end())
+	while (job_it != get_jobs()->end())
 	{
 		// title
 		job_file << (*job_it)->title << ",";
@@ -203,10 +203,10 @@ void save(std::string folder)
 		auto skl_it = (*job_it)->skills.first();
 		while (skl_it != (*job_it)->skills.last())
 		{
-			job_file << *skl_it << ";";
+			job_file << * *skl_it << ";";
 			skl_it++;
 		}
-		if (skl_it != (*job_it)->skills.end()) job_file << *skl_it;
+		if (skl_it != (*job_it)->skills.end()) job_file << * *skl_it;
 		job_file << ",";
 		
 		// Company
@@ -216,9 +216,9 @@ void save(std::string folder)
 	}
 	
 	//------------------------COMPANIES--------------------------
-	auto cmp_it = get_companies().first();
+	auto cmp_it = get_companies()->first();
 	cmp_file << CMP_FIRST_LINE << "\n";
-	while (cmp_it != get_companies().end())
+	while (cmp_it != get_companies()->end())
 	{
 		Company* c = *cmp_it;
 		// name,zip code,email
@@ -230,9 +230,9 @@ void save(std::string folder)
 		delete c;
 	}
 	
-	get_companies().clean();
-	get_jobs().clean();
-	get_workers().clean();
+	get_companies()->clean();
+	get_jobs()->clean();
+	get_workers()->clean();
 
 	cmp_file.close();
 	job_file.close();
