@@ -114,7 +114,7 @@ void load(std::string folder)
 			while (mygetline(it, it2, ';')) w->add_skill(it2);
 
 			mygetline(line, it, ','); // co_workers
-			co_workers_names.addlast(it);
+			co_workers_names.addlast(&it);
 			
 			mygetline(line, it); // company
 			w->set_company(get_company(it));
@@ -129,9 +129,9 @@ void load(std::string folder)
 	auto id_it = co_workers_names.first();
 	while (wrk_it != get_workers().end())
 	{
-		if (!(*id_it).empty())
+		if (!(* *id_it).empty())
 		{
-			tmp_str = *id_it;
+			tmp_str = * *id_it;
 			while (mygetline(tmp_str, it, ';')) (*wrk_it)->co_workers.addlast(get_worker(it));
 		}
 		wrk_it++;

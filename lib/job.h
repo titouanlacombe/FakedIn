@@ -25,6 +25,6 @@ Job* get_job(Company& c, std::string title);
 bool job_exist(Company& c, std::string title);
 
 // Returns the jobs of the company c
-List<Job*>* company_jobs(Company& c);
+List<Job>* company_jobs(Company& c);
 
-List<Job*>& get_jobs();
+List<Job>& get_jobs();

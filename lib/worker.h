@@ -10,7 +10,7 @@ public:
 	std::string email;
 	std::string zip_code;
 	List<std::string> skills; 
-	List<Worker*> co_workers;
+	List<Worker> co_workers;
 	Company* company;
 
 	Worker();
@@ -39,6 +39,6 @@ bool wrk_exist(std::string first_name, std::string last_name);
 bool wrk_exist(std::string full_name);
 
 // Returns the employees of the company c
-List<Worker*>* company_employees(Company& c);
+List<Worker>* company_employees(Company& c);
 
-List<Worker*>& get_workers();
+List<Worker>& get_workers();

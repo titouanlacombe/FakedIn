@@ -1,4 +1,4 @@
-cc = g++
+cc = clang++
 cflags = -Wall -pedantic -Werror --debug
 
 .DEFAULT_GOAL := all

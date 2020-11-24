@@ -1,6 +1,6 @@
 #include "job.h"
 
-List<Job*> job_list;
+List<Job> job_list;
 
 Job::Job()
 {
@@ -23,7 +23,7 @@ Job::~Job()
 	job_list.remove(this);
 }
 
-void Job::add_skill(std::string skill) {skills.addlast(skill);}
+void Job::add_skill(std::string skill) {skills.addlast(new std::string(skill));}
 
 bool operator==(Job& l, Job& r) {return l.title == r.title && l.company == r.company;}
 
@@ -44,9 +44,9 @@ std::ostream& operator<<(std::ostream& os, const Job& j)
 	return os;
 }
 
-List<Job*>* company_jobs(Company& c)
+List<Job>* company_jobs(Company& c)
 {
-	List<Job*>* l = new List<Job*>();
+	List<Job>* l = new List<Job>();
 	auto it = job_list.first();
 	while (it != job_list.end())
 	{
@@ -70,4 +70,4 @@ Job* get_job(Company& c, std::string title)
 
 bool job_exist(Company& c, std::string title) {return get_job(c, title) != NULL;}
 
-List<Job*>& get_jobs() {return job_list;}
+List<Job>& get_jobs() {return job_list;}

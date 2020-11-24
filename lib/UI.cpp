@@ -152,6 +152,17 @@ Job* request_job_login(Company& c, string request_phrase)
 	return j;
 }
 
+bool has_same_str(List<string> ls, string s)
+{
+	auto it = ls.first();
+	while (it != ls.end())
+	{
+		if ((* *it) == s) return true;
+		it++;
+	}
+	return false;
+}
+
 template <typename T>
 void request_skills(T& w, string request_phrase)
 {
@@ -160,7 +171,7 @@ void request_skills(T& w, string request_phrase)
 	getline(cin, skills_raw);
 	while (mygetline(skills_raw, it, ',')) {
 		if (it.empty()) cout << "Une compétence a un nom vide, elle ne sera pas prise en compte" << endl;
-		else if (w.skills.has(it)) cout << "La compétence '" + it + "' est déjà dans la liste, elle ne sera pas prise en compte" << endl;
+		else if (has_same_str(w.skills, it)) cout << "La compétence '" + it + "' est déjà dans la liste, elle ne sera pas prise en compte" << endl;
 		else w.add_skill(it);
 	}
 }
@@ -354,7 +365,7 @@ void company_menu(Company& c)
 
 void search_worker(Company& c)
 {
-	List<Worker*>* results;
+	List<Worker>* results;
 	string title;
 	bool zip;
 	Job *j;
@@ -369,8 +380,7 @@ void search_worker(Company& c)
 
 	results = srch_wrk_profile_job(*j, zip);
 
-	cout << "Résultats:" << endl;
-	if (results->length > 0) results->print_ptr();
+	if (results->length > 0) results->print("Résultats", false);
 	else cout << "Aucun trouvé" << endl;
 	cout << "\nAppuyer sur entrée pour revenir au menu Entreprise.";
 	getline(cin, title);
@@ -409,8 +419,8 @@ void delete_job(Company& c)
 
 void delete_company(Company& c)
 {
-	List<Job*>* lj;
-	List<Worker*>* lw;
+	List<Job>* lj;
+	List<Worker>* lw;
 	bool choice;
 
 	cout << "~~ Suppression de compte Entreprise ~~\n\n";
@@ -547,7 +557,7 @@ void worker_menu(Worker& w)
 
 void search_job(Worker& w)
 {
-	List<Job*>* results;
+	List<Job>* results;
 	bool zip;
 	string it;
 
@@ -557,8 +567,7 @@ void search_job(Worker& w)
 	cout << endl;
 
 	results = srch_job_profile_wrk(w, zip);
-	cout << "Résultats:" << endl;
-	if (results->length > 0) results->print_ptr();
+	if (results->length > 0) results->print("Résultats", false);
 	else cout << "Aucun trouvé" << endl;
 	cout << "\nAppuyer sur entrée pour revenir au menu Travailleur.";
 	getline(cin, it);
@@ -567,7 +576,7 @@ void search_job(Worker& w)
 
 void search_coll(Worker& w)
 {
-	List<Worker*>* results;
+	List<Worker>* results;
 	Company* c;
 	string name;
 	int choice;
@@ -589,14 +598,12 @@ void search_coll(Worker& w)
 		if (c == NULL) return;
 		cout << endl;
 		results = srch_coll_from_cmp(w, *c);
-		cout << "Résultats:" << endl;
-		if (results->length > 0) results->print_ptr();
+		if (results->length > 0) results->print("Résultats", false);
 		else cout << "Aucun trouvé" << endl;
 		break;
 	case 2:
 		results = srch_coll_skills(w);
-		cout << "Résultats:" << endl;
-		if (results->length > 0) results->print_ptr();
+		if (results->length > 0) results->print("Résultats", false);
 		else cout << "Aucun trouvé" << endl;
 		break;
 	}
@@ -616,8 +623,7 @@ void modify_worker(Worker& w)
 	<< "email: " << w.email << "\nCode postal: " << w.zip_code << endl;
 	if(w.employed()) cout << "Entreprise: " << w.company->name << endl;
 	else cout << "En recherche de travail" << endl;
-	cout << "Compétences: ";
-	w.skills.print(true);
+	w.skills.print("Compétences", true);
 	cout << "Collègues: ";
 	auto it = w.co_workers.first();
 	while (it != w.co_workers.end())

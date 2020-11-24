@@ -1,22 +1,23 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
 template <typename T>
 class Node
 {
 public:
-	Node *prev; // Previous node (NULL if none)
-	Node *next; // Next node (NULL if none)
-	T data; // Data stored
+	Node* prev; // Previous node (NULL if none)
+	Node* next; // Next node (NULL if none)
+	T* data; // Data stored
 
 	Node()
 	{
 		prev = NULL;
 		next = NULL;
-		data = T();
+		data = NULL;
 	}
-	Node(T e)
+	Node(T* e)
 	{
 		prev = NULL;
 		next = NULL;
@@ -28,15 +29,15 @@ public:
 template <typename T>
 class Iterator { 
 public:
-	Node<T> *node; // Current node
+	Node<T>* node; // Current node
 
 	Iterator(Node<T>* n = NULL) {node = n;}
-	Iterator operator++(int) // Iterate over the list
+	Iterator operator++(int)
 	{
 		node = node->next;
 		return *this;
 	}
-	T operator*() {return node->data;} // Return the data stored in the current node
+	T* operator*() {return node->data;} // Return the data stored in the current node
 	bool operator!=(Iterator const &it) const {return node != it.node;} // Return false if two iterator are in the same position
 };
 
@@ -44,28 +45,27 @@ template <typename T>
 class List
 {
 public:
-	Node<T> *first_n; // First node of the list
-	Node<T> *last_n; // Last node of the list
+	Node<T>* first_n; // First node of the list
+	Node<T>* last_n; // Last node of the list
 	int length; // Length of the list
 
 	List();
 	~List();
 	bool empty(); // Return true if list is empty
 	void clean(); // Empty the list (reset it) (do not delete the data)
-	void addlast(T e); // Add an element at the end of the list
+	void addlast(T* e); // Add an element at the end of the list
 	void addlast(List<T>& l); // Add an list at the end of the list
-	int get_pos(T e); // Returns the position number of data e in the list
-	int get_pos(Node<T>& n); // Returns the position number of node n in the list
-	Node<T>* get_node(T e); // Returns the node of data e in the list
-	bool has(T e); // Returns true if the list has the element e in it
+	int get_pos(T* e); // Returns the position number of data e in the list
+	int get_pos(Node<T>* n); // Returns the position number of node n in the list
+	Node<T>* get_node(T* e); // Returns the node of data e in the list
+	bool has(T* e); // Returns true if the list has the element e in it
 	void remove(Node<T>* n); // Removes the node n from the list
-	void remove(T e); // Removes the element e from the list
+	void remove(T* e); // Removes the element e from the list
 	void remove(List<T>& l); // Removes elements in l from the list
-	T& operator[](int n); // Returns the data stored in position n
+	T* operator[](int n); // Returns the data stored in position n
 	int in_common(List<T>& l); // Return the number of similarities between this and l
 	void delete_data(); // Deletes the data stored in the list
-	void print(bool single_line = false); // Print the elements
-	void print_ptr(bool single_line = false); // Print the pointed elements
+	void print(std::string title = "List", bool single_line = true); // Print the elements
 	// Iterators
 	Iterator<T> first() {return Iterator<T>(first_n);}
 	Iterator<T> last() {return Iterator<T>(last_n);}
@@ -86,21 +86,6 @@ List<T>::List()
 }
 
 template <typename T>
-List<T>::~List()
-{
-	auto it = first();
-	while (it != last())
-	{
-		it++;
-		delete it.node->prev;
-	}
-	if (it != end()) delete it.node;
-}
-
-template <typename T>
-bool List<T>::empty() {return length == 0;}
-
-template <typename T>
 void List<T>::clean()
 {
 	auto it = first();
@@ -116,11 +101,15 @@ void List<T>::clean()
 }
 
 template <typename T>
-void List<T>::addlast(T e)
+List<T>::~List() {clean();}
+
+template <typename T>
+bool List<T>::empty() {return length == 0;}
+
+template <typename T>
+void List<T>::addlast(T* e)
 {
-	if (first_n) std::cout << "nani: " << first_n->data << std::endl;
 	auto n = new Node<T>(e);
-	if (first_n) std::cout << "nani: " << first_n->data << std::endl;
 	length++;
 	// if list is not empty
 	if (last_n != NULL)
@@ -148,7 +137,7 @@ void List<T>::addlast(List<T>& l)
 }
 
 template <typename T>
-int List<T>::get_pos(T e)
+int List<T>::get_pos(T* e)
 {
 	auto it = first();
 	int i = 0;
@@ -162,11 +151,11 @@ int List<T>::get_pos(T e)
 }
 
 template <typename T>
-int List<T>::get_pos(Node<T>& n)
+int List<T>::get_pos(Node<T>* n)
 {
 	auto it = first();
 	int i = 0;
-	while (it != end() && it.node != &n)
+	while (it != end() && it.node != n)
 	{
 		it++;
 		i++;
@@ -176,7 +165,7 @@ int List<T>::get_pos(Node<T>& n)
 }
 
 template <typename T>
-Node<T>* List<T>::get_node(T e)
+Node<T>* List<T>::get_node(T* e)
 {
 	auto it = first();
 	while (it != end() && *it != e) it++;
@@ -184,7 +173,7 @@ Node<T>* List<T>::get_node(T e)
 }
 
 template <typename T>
-bool List<T>::has(T e) {return (get_node(e) != NULL);}
+bool List<T>::has(T* e) {return (get_node(e) != NULL);}
 
 template <typename T>
 void List<T>::remove(Node<T>* n)
@@ -214,9 +203,9 @@ void List<T>::remove(Node<T>* n)
 }
 
 template <typename T>
-void List<T>::remove(T e)
+void List<T>::remove(T* e)
 {
-	auto n = get_node(e);
+	Node<T>* n = get_node(e);
 	if (n != NULL) remove(n);
 }
 
@@ -232,7 +221,7 @@ void List<T>::remove(List<T>& l)
 }
 
 template <typename T>
-T& List<T>::operator[](int n)
+T* List<T>::operator[](int n)
 {
 	int i = 0;
 	auto it = first();
@@ -270,43 +259,12 @@ void List<T>::delete_data()
 }
 
 template <typename T>
-void List<T>::print(bool single_line)
+void List<T>::print(std::string title, bool single_line)
 {
 	auto it = first();
-	if (!single_line)
+	if (single_line)
 	{
-		while (it != end())
-		{
-			std::cout << " - " << *it << std::endl;
-			it++;
-		}
-	}
-	else
-	{
-		while (it != last())
-		{
-			std::cout << *it << ", ";
-			it++;
-		}
-		if (it != end()) std::cout << *it;
-		std::cout << std::endl;
-	}
-}
-
-template <typename T>
-void List<T>::print_ptr(bool single_line)
-{
-	auto it = first();
-	if (!single_line)
-	{
-		while (it != end())
-		{
-			std::cout << " - " << *(*it) << std::endl;
-			it++;
-		}
-	}
-	else
-	{
+		std::cout << title << ": ";
 		while (it != last())
 		{
 			std::cout << *(*it) << ", ";
@@ -314,6 +272,15 @@ void List<T>::print_ptr(bool single_line)
 		}
 		if (it != end()) std::cout << *(*it);
 		std::cout << std::endl;
+	}
+	else
+	{
+		std::cout << title << ":" << std::endl;
+		while (it != end())
+		{
+			std::cout << " - " << *(*it) << std::endl;
+			it++;
+		}
 	}
 }
 
@@ -358,7 +325,7 @@ Node<T>* List<T>::max(int start, int end)
 template <typename T>
 void swap_node(Node<T>& a, Node<T>& b)
 {
-	T tmp = a.data;
+	T *tmp = a.data;
 	a.data = b.data;
 	b.data = tmp;
 }
@@ -374,7 +341,7 @@ void List<T>::sort(List<int>& li, bool ascending)
 	{
 		if (ascending) m_i = li.min(start);
 		else m_i = li.max(start);
-		pos = li.get_pos(*m_i);
+		pos = li.get_pos(m_i);
 		auto m_T = first();
 		k = 0;
 		while (m_T != end() && k < pos)

@@ -1,7 +1,7 @@
 #include "worker.h"
 #include "mylog.h"
 
-List<Worker*> worker_list;
+List<Worker> worker_list;
 
 Worker::Worker()
 {
@@ -10,7 +10,7 @@ Worker::Worker()
 	email = "";
 	zip_code = "";
 	skills = List<std::string>();
-	co_workers = List<Worker*>();
+	co_workers = List<Worker>();
 	company = NULL;
 	worker_list.addlast(this);
 }
@@ -25,7 +25,7 @@ Worker::Worker(std::string full_name, std::string _email)
 	email = _email;
 	zip_code = "";
 	skills = List<std::string>();
-	co_workers = List<Worker*>();
+	co_workers = List<Worker>();
 	company = NULL;
 	worker_list.addlast(this);
 }
@@ -37,7 +37,7 @@ Worker::Worker(std::string _first_name, std::string _last_name, std::string _ema
 	email = _email;
 	zip_code = "";
 	skills = List<std::string>();
-	co_workers = List<Worker*>();
+	co_workers = List<Worker>();
 	company = NULL;
 	worker_list.addlast(this);
 }
@@ -47,7 +47,7 @@ Worker::~Worker()
 	worker_list.remove(this);
 }
 
-void Worker::add_skill(std::string skill) {skills.addlast(skill);}
+void Worker::add_skill(std::string skill) {skills.addlast(new std::string(skill));}
 
 void Worker::add_co_worker(Worker& co_worker) {co_workers.addlast(&co_worker);}
 
@@ -110,9 +110,9 @@ bool wrk_exist(std::string first_name, std::string last_name) {return get_worker
 
 bool wrk_exist(std::string full_name) {return get_worker(full_name) != NULL;}
 
-List<Worker*>* company_employees(Company& c)
+List<Worker>* company_employees(Company& c)
 {
-	List<Worker*>* l = new List<Worker*>();
+	List<Worker>* l = new List<Worker>();
 	auto it = worker_list.first();
 	while (it != worker_list.end())
 	{
@@ -122,4 +122,4 @@ List<Worker*>* company_employees(Company& c)
 	return l;
 }
 
-List<Worker*>& get_workers() {return worker_list;}
+List<Worker>& get_workers() {return worker_list;}

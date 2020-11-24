@@ -1,20 +1,20 @@
 #include "company.h"
 
-List<Company*> companies_list;
+List<Company> companies_list;
 
 Company::Company()
 {
 	email = "";
-  zip_code = "";
-  name = "";
+ 	zip_code = "";
+ 	name = "";
 	companies_list.addlast(this);
 }
 
 Company::Company(std::string _name, std::string _zip_code, std::string _email)
 {
 	email = _email;
-  zip_code = _zip_code;
-  name = _name;
+ 	zip_code = _zip_code;
+ 	name = _name;
 	companies_list.addlast(this);
 }
 
@@ -49,4 +49,4 @@ Company* get_company(std::string name)
 
 bool cmp_exist(std::string name) {return get_company(name) != NULL;}
 
-List<Company*>& get_companies() {return companies_list;}
+List<Company>& get_companies() {return companies_list;}

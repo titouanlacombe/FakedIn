@@ -78,49 +78,52 @@ int main()
 
 	{
 		//----------------------LIST---------------------
+		int numbers[11];
+		for (int i = 0; i < 11; i++) {numbers[i] = i;}
+
 		auto l = List<int>();
-		l.addlast(1);
-		l.addlast(2);
-		l.addlast(3);
-		TEST(l.first_n->data == 1);
-		TEST(l.first_n->next->data == 2);
-		TEST(l.first_n->next->next->data == 3);
+		l.addlast(&numbers[1]);
+		l.addlast(&numbers[2]);
+		l.addlast(&numbers[3]);
+		TEST(l.first_n->data == &numbers[1]);
+		TEST(l.first_n->next->data == &numbers[2]);
+		TEST(l.first_n->next->next->data == &numbers[3]);
 		TEST(l.length == 3);
-		TEST(l[0] == 1);
-		TEST(l[1] == 2);
-		TEST(l[2] == 3);
-		l.remove(2);
+		TEST(l[0] == &numbers[1]);
+		TEST(l[1] == &numbers[2]);
+		TEST(l[2] == &numbers[3]);
+		l.remove(&numbers[2]);
 		auto it = l.first();
-		TEST(*it == 1);
+		TEST(*it == &numbers[1]);
 		it++;
-		TEST(*it == 3);
+		TEST(*it == &numbers[3]);
 		TEST(l.length == 2);
-		l.remove(1);
-		TEST(l[0] == 3);
-		l.remove(3);
+		l.remove(&numbers[1]);
+		TEST(l[0] == &numbers[3]);
+		l.remove(&numbers[3]);
 		TEST(l.first_n == NULL);
 		TEST(l.last_n == NULL);
-		l.addlast(1);
-		l.addlast(6);
-		l.addlast(7);
-		l.addlast(2);
-		l.addlast(3);
-		l.addlast(8);
-		l.addlast(9);
-		l.addlast(5);
-		l.addlast(10);
-		l.addlast(4);
+		l.addlast(&numbers[1]);
+		l.addlast(&numbers[6]);
+		l.addlast(&numbers[7]);
+		l.addlast(&numbers[2]);
+		l.addlast(&numbers[3]);
+		l.addlast(&numbers[8]);
+		l.addlast(&numbers[9]);
+		l.addlast(&numbers[5]);
+		l.addlast(&numbers[10]);
+		l.addlast(&numbers[4]);
 		l.sort();
-		TEST(l[0] == 1);
-		TEST(l[1] == 2);
-		TEST(l[2] == 3);
-		TEST(l[3] == 4);
-		TEST(l[4] == 5);
-		TEST(l[5] == 6);
-		TEST(l[6] == 7);
-		TEST(l[7] == 8);
-		TEST(l[8] == 9);
-		TEST(l[9] == 10);
+		TEST(l[0] == &numbers[1]);
+		TEST(l[1] == &numbers[2]);
+		TEST(l[2] == &numbers[3]);
+		TEST(l[3] == &numbers[4]);
+		TEST(l[4] == &numbers[5]);
+		TEST(l[5] == &numbers[6]);
+		TEST(l[6] == &numbers[7]);
+		TEST(l[7] == &numbers[8]);
+		TEST(l[8] == &numbers[9]);
+		TEST(l[9] == &numbers[10]);
 	}
 
 	{
@@ -171,7 +174,7 @@ int main()
 		w.set_zip_code("234567");
 		TEST(w.zip_code == "234567");
 		w.add_skill("C");
-		TEST(w.skills.first_n->data == "C");
+		TEST(*w.skills.first_n->data == "C");
 		auto w2 = Worker("Tit", "Lacombe", "t.l@gmail.com");
 		w2.set_company(&c);
 		w.add_co_worker(w2);
@@ -231,8 +234,8 @@ int main()
 		w4.add_skill("C++");
 		w3.add_co_worker(w2);
 		
-		// List<Worker*>* srch_wrk_profile_job(Job& j, bool zip_code);
-		List<Worker*>* l1 = srch_wrk_profile_job(j1, false);
+		// List<Worker>* srch_wrk_profile_job(Job& j, bool zip_code);
+		List<Worker>* l1 = srch_wrk_profile_job(j1, false);
 		TEST((*l1)[0] == &w4);
 		TEST((*l1)[1] == &w3);
 		delete l1;
@@ -241,8 +244,7 @@ int main()
 		delete l1;
 
 		// List<Job*>* srch_job_profile_wrk(Worker& w, bool zip_code);
-		List<Job*>* l2 = srch_job_profile_wrk(w4, false);
-		l2->print_ptr();
+		List<Job>* l2 = srch_job_profile_wrk(w4, false);
 		TEST((*l2)[0] == &j1);
 		TEST((*l2)[1] == &j3);
 		TEST((*l2)[2] == &j4);
