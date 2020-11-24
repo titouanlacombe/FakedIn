@@ -204,35 +204,35 @@ int main()
 
 	{
 		//----------------------SEARCH---------------------
-		auto c1 = Company("SpaceX", "42069", "spacex@gmail.com");
-		auto c2 = Company("Boeing", "12345", "b@gmail.com");
+		auto c1 = Company("1. SpaceX", "42069", "spacex@gmail.com");
+		auto c2 = Company("2. Boeing", "12345", "b@gmail.com");
 	
-		auto j1 = Job("Engineer", &c1);
+		auto j1 = Job("1. Engineer", &c1);
 		j1.add_skill("C");
 		j1.add_skill("C++");
-		auto j2 = Job("CEO", &c1);
+		auto j2 = Job("2. CEO", &c1);
 		j2.add_skill("HR");
-		auto j3 = Job("Engineer", &c2);
+		auto j3 = Job("3. Engineer", &c2);
 		j3.add_skill("C");
 		j3.add_skill("Python");
-		auto j4 = Job("CEO", &c2);
+		auto j4 = Job("4. CEO", &c2);
 		j4.add_skill("HR");
 		j4.add_skill("C");
 
-		auto w1 = Worker("1", "X", "x@gmail.com");
+		auto w1 = Worker("1.", "X", "x@gmail.com");
 		w1.set_company(&c1);
-		auto w2 = Worker("2", "X", "x@gmail.com");
+		auto w2 = Worker("2.", "X", "x@gmail.com");
 		w2.set_company(&c2);
-		auto w3 = Worker("3", "X", "x@gmail.com");
+		auto w3 = Worker("3.", "X", "x@gmail.com");
 		w3.set_zip_code("42069");
 		w3.add_skill("C");
 		w3.add_skill("HR");
 		w3.add_co_worker(w1);
-		auto w4 = Worker("4", "X", "x@gmail.com");
+		auto w4 = Worker("4.", "X", "x@gmail.com");
 		w4.set_zip_code("23456");
 		w4.add_skill("C");
 		w4.add_skill("C++");
-		w3.add_co_worker(w2);
+		w4.add_co_worker(w2);
 		
 		// List<Worker>* srch_wrk_profile_job(Job& j, bool zip_code);
 		List<Worker>* l1 = srch_wrk_profile_job(j1, false);

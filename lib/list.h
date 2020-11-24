@@ -334,53 +334,89 @@ Node<T>* List<T>::max(int start, int end)
 }
 
 template <typename T>
-void swap_node(Node<T>& a, Node<T>& b)
+void swap_data(Node<T>* a, Node<T>* b)
 {
-	T *tmp = a.data;
-	a.data = b.data;
-	b.data = tmp;
+	T *tmp = a->data;
+	a->data = b->data;
+	b->data = tmp;
 }
 
 template <typename T>
 void List<T>::sort(List<int>& li, bool ascending)
 {
-	int start = 0, pos, k;
-	auto it_T = first();
-	auto it_i = li.first();
-	Node<int> *m_i;
-	while (it_i != li.end())
+	auto curent_pos = first();
+	auto curent_pos_int = li.first();
+	Node<int> *extrema_node;
+	while (curent_pos != end())
 	{
-		if (ascending) m_i = li.min(start);
-		else m_i = li.max(start);
-		pos = li.get_pos(m_i);
-		auto m_T = first();
-		k = 0;
-		while (m_T != end() && k < pos)
+		// Find extrema
+		auto extrema_it = Iterator<int>(curent_pos_int.node);
+		extrema_node = extrema_it.node;
+		if (ascending)
 		{
-			m_T++;
-			k++;
+			while (extrema_it != li.end())
+			{
+				if (* *extrema_it < *extrema_node->data) extrema_node = extrema_it.node;
+				extrema_it++;
+			}
+		}
+		else
+		{
+			while (extrema_it != li.end())
+			{
+				if (* *extrema_it > *extrema_node->data) extrema_node = extrema_it.node;
+				extrema_it++;
+			}
+		}
+
+		// Find extrema on main list
+		int minmax_pos = li.get_pos(extrema_node);
+		int count = 0;
+		auto tmp_it = first();
+		while (tmp_it != end() && count < minmax_pos)
+		{
+			tmp_it++;
+			count++;
 		}
 		
-		swap_node(*(it_T.node), *(m_T.node));
-		swap_node(*(it_i.node), *m_i);
-		it_T++;
-		it_i++;
-		start++;
+		// swap and update
+		swap_data(curent_pos_int.node, extrema_node);
+		swap_data(curent_pos.node, tmp_it.node);
+
+		curent_pos++;
+		curent_pos_int++;
 	}
 }
 
 template <typename T>
 void List<T>::sort(bool ascending)
 {
-	int start = 0;
-	auto it = first();
-	Node<T> *m;
-	while (it != end())
+	auto curent_pos = first();
+	Node<int> *extrema_node;
+	while (curent_pos != end())
 	{
-		if (ascending) m = min(start);
-		else m = max(start);
-		swap_node(*(it.node), *m);
-		it++;
-		start++;
+		// Find extrema
+		auto extrema_it = Iterator<int>(curent_pos.node);
+		extrema_node = extrema_it.node;
+		if (ascending)
+		{
+			while (extrema_it != end())
+			{
+				if (* *extrema_it < *extrema_node->data) extrema_node = extrema_it.node;
+				extrema_it++;
+			}
+		}
+		else
+		{
+			while (extrema_it != end())
+			{
+				if (* *extrema_it > *extrema_node->data) extrema_node = extrema_it.node;
+				extrema_it++;
+			}
+		}
+
+		// swap and update
+		swap_data(curent_pos.node, extrema_node);
+		curent_pos++;
 	}
 }

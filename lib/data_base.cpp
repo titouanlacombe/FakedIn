@@ -138,6 +138,8 @@ void load(std::string folder)
 		id_it++;
 	}
 
+	co_workers_names.delete_data();
+
 	cmp_file.close();
 	job_file.close();
 	wrk_file.close();
