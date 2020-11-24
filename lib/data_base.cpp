@@ -124,18 +124,22 @@ void load(std::string folder)
 	}
 
 	// Linking co_workers
-	std::string tmp_str;
-	auto wrk_it = get_workers()->first();
-	auto id_it = co_workers_names.first();
-	while (wrk_it != get_workers()->end())
+	auto workers = get_workers();
+	if (workers)
 	{
-		if (!(* *id_it).empty())
+		std::string tmp_str;
+		auto wrk_it = workers->first();
+		auto id_it = co_workers_names.first();
+		while (wrk_it != workers->end())
 		{
-			tmp_str = * *id_it;
-			while (mygetline(tmp_str, it, ';')) (*wrk_it)->co_workers.addlast(get_worker(it));
+			if (!(* *id_it).empty())
+			{
+				tmp_str = * *id_it;
+				while (mygetline(tmp_str, it, ';')) (*wrk_it)->co_workers.addlast(get_worker(it));
+			}
+			wrk_it++;
+			id_it++;
 		}
-		wrk_it++;
-		id_it++;
 	}
 
 	co_workers_names.delete_data();

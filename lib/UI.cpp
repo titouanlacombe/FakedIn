@@ -431,7 +431,7 @@ void delete_company(Company& c)
 	if(choice)
 	{
 		lj = company_jobs(c);
-		get_jobs().remove(*lj);
+		get_jobs()->remove(*lj);
 		delete lj;
 
 		lw = company_employees(c);
