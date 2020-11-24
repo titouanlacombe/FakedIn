@@ -381,7 +381,7 @@ void search_worker(Company& c)
 	results = srch_wrk_profile_job(*j, zip);
 
 	if (results->length > 0) results->print("Résultats", false);
-	else cout << "Aucun trouvé" << endl;
+	else cout << "Aucun résultat trouvé" << endl;
 	cout << "\nAppuyer sur entrée pour revenir au menu Entreprise.";
 	getline(cin, title);
 	delete results;
@@ -568,7 +568,7 @@ void search_job(Worker& w)
 
 	results = srch_job_profile_wrk(w, zip);
 	if (results->length > 0) results->print("Résultats", false);
-	else cout << "Aucun trouvé" << endl;
+	else cout << "Aucun résultat trouvé" << endl;
 	cout << "\nAppuyer sur entrée pour revenir au menu Travailleur.";
 	getline(cin, it);
 	delete results;
@@ -599,12 +599,12 @@ void search_coll(Worker& w)
 		cout << endl;
 		results = srch_coll_from_cmp(w, *c);
 		if (results->length > 0) results->print("Résultats", false);
-		else cout << "Aucun trouvé" << endl;
+		else cout << "Aucun résultat trouvé" << endl;
 		break;
 	case 2:
 		results = srch_coll_skills(w);
 		if (results->length > 0) results->print("Résultats", false);
-		else cout << "Aucun trouvé" << endl;
+		else cout << "Aucun résultat trouvé" << endl;
 		break;
 	}
 	cout << "\nAppuyer sur entrée pour revenir au menu Travailleur.";
