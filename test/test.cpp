@@ -236,6 +236,7 @@ int main()
 		
 		// List<Worker>* srch_wrk_profile_job(Job& j, bool zip_code);
 		List<Worker>* l1 = srch_wrk_profile_job(j1, false);
+		get_workers().print("Workers 2", false);
 		TEST((*l1)[0] == &w4);
 		TEST((*l1)[1] == &w3);
 		delete l1;

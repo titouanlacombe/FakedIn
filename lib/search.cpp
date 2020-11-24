@@ -32,9 +32,9 @@ List<Worker>* srch_wrk_profile_job(Job& j, bool zip_code)
 			}
 		}
 		it++;
-		// workers.print();
 	}
 	l->sort(li, false);
+	get_workers().print("Workers 1", false);
 	return l;
 }
 
@@ -62,7 +62,6 @@ List<Job>* srch_job_profile_wrk(Worker& w, bool zip_code)
 			}
 			else
 			{
-				std::cout << "ha: " << **it << std::endl;
 				l->addlast(*it);
 				li.addlast(new int(n));
 			}

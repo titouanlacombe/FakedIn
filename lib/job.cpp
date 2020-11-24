@@ -1,27 +1,20 @@
 #include "job.h"
 
-List<Job> job_list;
-
-Job::Job()
-{
-  title = "";
-  company = NULL;
-  skills = List<std::string>();
-	job_list.addlast(this);
-}
+List<Job>* job_list = NULL;
 
 Job::Job(std::string _title, Company* _company)
 {
-  title = _title;
-  company = _company;
-  skills = List<std::string>();
-	job_list.addlast(this);
+	title = _title;
+	company = _company;
+	skills = List<std::string>();
+	
+	if (!job_list) job_list = new List<Job>();
+	job_list->addlast(this);
 }
 
-Job::~Job()
-{
-	job_list.remove(this);
-}
+Job::Job() {Job("", NULL);}
+
+Job::~Job() {job_list->remove(this);}
 
 void Job::add_skill(std::string skill) {skills.addlast(new std::string(skill));}
 
@@ -47,8 +40,8 @@ std::ostream& operator<<(std::ostream& os, const Job& j)
 List<Job>* company_jobs(Company& c)
 {
 	List<Job>* l = new List<Job>();
-	auto it = job_list.first();
-	while (it != job_list.end())
+	auto it = job_list->first();
+	while (it != job_list->end())
 	{
 		if (*(*it)->company == c) l->addlast(*it);
 		it++;
@@ -59,8 +52,8 @@ List<Job>* company_jobs(Company& c)
 Job* get_job(Company& c, std::string title)
 {
 	Job* j = NULL;
-	auto it = job_list.first();
-	while (it != job_list.end() && j == NULL)
+	auto it = job_list->first();
+	while (it != job_list->end() && j == NULL)
 	{
 		if ((*it)->title == title && *(*it)->company == c) j = *it;
 		it++;
@@ -70,4 +63,4 @@ Job* get_job(Company& c, std::string title)
 
 bool job_exist(Company& c, std::string title) {return get_job(c, title) != NULL;}
 
-List<Job>& get_jobs() {return job_list;}
+List<Job>& get_jobs() {return *job_list;}

@@ -58,7 +58,8 @@ public:
 	int get_pos(T* e); // Returns the position number of data e in the list
 	int get_pos(Node<T>* n); // Returns the position number of node n in the list
 	Node<T>* get_node(T* e); // Returns the node of data e in the list
-	bool has(T* e); // Returns true if the list has the element e in it
+	bool has(T* e); // Returns true if the list has the pointer e in it
+	bool has_same(T* e); // Returns true if the list has the same element (==) pointed by e
 	void remove(Node<T>* n); // Removes the node n from the list
 	void remove(T* e); // Removes the element e from the list
 	void remove(List<T>& l); // Removes elements in l from the list
@@ -173,6 +174,15 @@ Node<T>* List<T>::get_node(T* e)
 }
 
 template <typename T>
+bool List<T>::has_same(T* e)
+{
+	auto it = first();
+	while (it != end() && * *it != *e) it++;
+	if (it != end()) return true;
+	else return false;
+}
+
+template <typename T>
 bool List<T>::has(T* e) {return (get_node(e) != NULL);}
 
 template <typename T>
@@ -230,7 +240,8 @@ T* List<T>::operator[](int n)
 		i++;
 		it++;
 	}
-	return it.node->data;
+	if (it.node) return it.node->data;
+	else return NULL;
 }
 
 template <typename T>
@@ -241,7 +252,7 @@ int List<T>::in_common(List<T>& l)
 
 	while (it != l.end())
 	{
-		if (has(*it)) n++;
+		if (has_same(*it)) n++;
 		it++;
 	}
 	return n;

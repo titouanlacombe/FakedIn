@@ -1,34 +1,7 @@
 #include "worker.h"
 #include "mylog.h"
 
-List<Worker> worker_list;
-
-Worker::Worker()
-{
-	first_name = "";
-	last_name = "";
-	email = "";
-	zip_code = "";
-	skills = List<std::string>();
-	co_workers = List<Worker>();
-	company = NULL;
-	worker_list.addlast(this);
-}
-
-Worker::Worker(std::string full_name, std::string _email)
-{
-	std::string _first_name;
-	mygetline(full_name, _first_name, ' ');
-
-	first_name = _first_name;
-	last_name = full_name;
-	email = _email;
-	zip_code = "";
-	skills = List<std::string>();
-	co_workers = List<Worker>();
-	company = NULL;
-	worker_list.addlast(this);
-}
+List<Worker>* worker_list = NULL;
 
 Worker::Worker(std::string _first_name, std::string _last_name, std::string _email)
 {
@@ -39,13 +12,21 @@ Worker::Worker(std::string _first_name, std::string _last_name, std::string _ema
 	skills = List<std::string>();
 	co_workers = List<Worker>();
 	company = NULL;
-	worker_list.addlast(this);
+
+	if (!worker_list) worker_list = new List<Worker>();
+	worker_list->addlast(this);
 }
 
-Worker::~Worker()
+Worker::Worker(std::string full_name, std::string _email)
 {
-	worker_list.remove(this);
+	std::string _first_name;
+	mygetline(full_name, _first_name, ' ');
+	Worker(_first_name, full_name, _email);
 }
+
+Worker::Worker() {Worker("", "");}
+
+Worker::~Worker() {worker_list->remove(this);}
 
 void Worker::add_skill(std::string skill) {skills.addlast(new std::string(skill));}
 
@@ -75,6 +56,7 @@ std::ostream& operator<<(std::ostream& os, const Worker& w)
 {
 	os << w.first_name << " " << w.last_name << " (email: " << w.email;
 	if (w.employed()) os << ", Travaille chez " << w.company->name;
+	else os << ", Au chomage";
 	os << ")";
 	// os << ", Compétences: ";
 	// auto it = w.skills->first;
@@ -90,8 +72,8 @@ std::ostream& operator<<(std::ostream& os, const Worker& w)
 Worker* get_worker(std::string first_name, std::string last_name)
 {
 	Worker* w = NULL;
-	auto it = worker_list.first();
-	while (it != worker_list.end() && w == NULL)
+	auto it = worker_list->first();
+	while (it != worker_list->end() && w == NULL)
 	{
 		if ((*it)->first_name == first_name && (*it)->last_name == last_name) w = (*it);
 		it++;
@@ -113,8 +95,8 @@ bool wrk_exist(std::string full_name) {return get_worker(full_name) != NULL;}
 List<Worker>* company_employees(Company& c)
 {
 	List<Worker>* l = new List<Worker>();
-	auto it = worker_list.first();
-	while (it != worker_list.end())
+	auto it = worker_list->first();
+	while (it != worker_list->end())
 	{
 		if ((*it)->company != NULL && *(*it)->company == c) l->addlast(*it);
 		it++;
@@ -122,4 +104,4 @@ List<Worker>* company_employees(Company& c)
 	return l;
 }
 
-List<Worker>& get_workers() {return worker_list;}
+List<Worker>& get_workers() {return *worker_list;}
