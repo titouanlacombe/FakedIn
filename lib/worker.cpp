@@ -54,9 +54,9 @@ bool operator!=(Worker& l, Worker& r) {return !(l==r);}
 
 std::ostream& operator<<(std::ostream& os, const Worker& w)
 {
-	os << w.first_name << " " << w.last_name << " (email: " << w.email;
-	if (w.employed()) os << ", Travaille chez " << w.company->name;
-	else os << ", Au chomage";
+	os << w.first_name << " " << w.last_name << " (" + get_phrase(88) + ": " << w.email;
+	if (w.employed()) os << ", " + get_phrase(103) + " " << w.company->name;
+	else os << ", " + get_phrase(91);
 	os << ")";
 	// os << ", Compétences: ";
 	// auto it = w.skills->first;

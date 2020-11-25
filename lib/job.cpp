@@ -24,8 +24,8 @@ bool operator!=(Job& l, Job& r) {return !(l==r);}
 
 std::ostream& operator<<(std::ostream& os, const Job& j)
 {
-	os << j.title << " chez " << j.company->name << " (email: "
-	<< j.company->email << ", Code postal: " << j.company->zip_code << ")";
+	os << j.title << " " + get_phrase(102) + " " << j.company->name << " (" + get_phrase(88) + ": "
+	<< j.company->email << ", " + get_phrase(89) + ": " << j.company->zip_code << ")";
 	// auto it = j.skills->first;
 	// os << " Compétences requises: ";
 	// while (it != j.skills->last)

@@ -22,7 +22,7 @@ bool operator!=(Company& l, Company& r) {return !(l==r);}
 
 std::ostream& operator<<(std::ostream& os, const Company& c)
 {
-	os << "Entreprise: " << c.name << " Code postal: " << c.zip_code << " email: " << c.email;
+	os << get_phrase(90) + ": " << c.name << " " + get_phrase(89) + ": " << c.zip_code << " " + get_phrase(88) + ": " << c.email;
 	return os;
 }
 

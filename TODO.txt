@@ -1,3 +1,8 @@
 FakedIn:
 build french .lang
 trad in english
+
+print_error(str)
+print_error(str, str, str)
+
+print_menu_choices(str[])

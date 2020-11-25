@@ -159,88 +159,109 @@ void save(std::string folder)
 	wrk_file.open("./" + folder + WRK_FILE_NAME);
 
 	//------------------------WORKERS--------------------------
-	auto wrk_it = get_workers()->first();
 	wrk_file << WRK_FIRST_LINE << "\n";
-	while (wrk_it != get_workers()->end())
+	auto workers = get_workers();
+	if (workers)
 	{
-		// first name,last name,email,zip code
-		wrk_file << (*wrk_it)->first_name << ","
-		<< (*wrk_it)->last_name << ","
-		<< (*wrk_it)->email << ","
-		<< (*wrk_it)->zip_code << ",";
-		
-		// Skills
-		auto skl_it2 = (*wrk_it)->skills.first();
-		while (skl_it2 != (*wrk_it)->skills.last())
+		auto wrk_it = workers->first();
+		while (wrk_it != workers->end())
 		{
-			wrk_file << * *skl_it2 << ";";
-			skl_it2++;
+			// first name,last name,email,zip code
+			wrk_file << (*wrk_it)->first_name << ","
+			<< (*wrk_it)->last_name << ","
+			<< (*wrk_it)->email << ","
+			<< (*wrk_it)->zip_code << ",";
+			
+			// Skills
+			auto skl_it2 = (*wrk_it)->skills.first();
+			while (skl_it2 != (*wrk_it)->skills.last())
+			{
+				wrk_file << * *skl_it2 << ";";
+				skl_it2++;
+			}
+			if (skl_it2 != (*wrk_it)->skills.end()) wrk_file << * *skl_it2;
+			
+			wrk_file << ",";
+			
+			// co_workers
+			auto coll_it = (*wrk_it)->co_workers.first();
+			while (coll_it != (*wrk_it)->co_workers.last())
+			{
+				wrk_file << (*coll_it)->first_name << " " << (*coll_it)->last_name << ";";
+				coll_it++;
+			}
+			if (coll_it != (*wrk_it)->co_workers.end()) wrk_file << (*coll_it)->first_name << " " << (*coll_it)->last_name;
+			wrk_file << ",";
+			
+			// company
+			if ((*wrk_it)->employed()) wrk_file << (*wrk_it)->company->name;
+			
+			wrk_file << "\n";
+			wrk_it++;
 		}
-		if (skl_it2 != (*wrk_it)->skills.end()) wrk_file << * *skl_it2;
-		
-		wrk_file << ",";
-		
-		// co_workers
-		auto coll_it = (*wrk_it)->co_workers.first();
-		while (coll_it != (*wrk_it)->co_workers.last())
-		{
-			wrk_file << (*coll_it)->first_name << " " << (*coll_it)->last_name << ";";
-			coll_it++;
-		}
-		if (coll_it != (*wrk_it)->co_workers.end()) wrk_file << (*coll_it)->first_name << " " << (*coll_it)->last_name;
-		wrk_file << ",";
-		
-		// company
-		if ((*wrk_it)->employed()) wrk_file << (*wrk_it)->company->name;
-		
-		wrk_file << "\n";
-		wrk_it++;
 	}
 	
 	//------------------------JOBS--------------------------
-	auto job_it = get_jobs()->first();
 	job_file << JOB_FIRST_LINE << "\n";
-	while (job_it != get_jobs()->end())
+	auto jobs = get_jobs();
+	if (jobs)
 	{
-		// title
-		job_file << (*job_it)->title << ",";
-
-		// Skills
-		auto skl_it = (*job_it)->skills.first();
-		while (skl_it != (*job_it)->skills.last())
+		auto job_it = jobs->first();
+		while (job_it != jobs->end())
 		{
-			job_file << * *skl_it << ";";
-			skl_it++;
-		}
-		if (skl_it != (*job_it)->skills.end()) job_file << * *skl_it;
-		job_file << ",";
-		
-		// Company
-		job_file << (*job_it)->company->name << "\n";
+			// title
+			job_file << (*job_it)->title << ",";
 
-		job_it++;
+			// Skills
+			auto skl_it = (*job_it)->skills.first();
+			while (skl_it != (*job_it)->skills.last())
+			{
+				job_file << * *skl_it << ";";
+				skl_it++;
+			}
+			if (skl_it != (*job_it)->skills.end()) job_file << * *skl_it;
+			job_file << ",";
+			
+			// Company
+			job_file << (*job_it)->company->name << "\n";
+
+			job_it++;
+		}
 	}
 	
 	//------------------------COMPANIES--------------------------
-	auto cmp_it = get_companies()->first();
 	cmp_file << CMP_FIRST_LINE << "\n";
-	while (cmp_it != get_companies()->end())
+	auto companies = get_companies();
+	if (companies)
 	{
-		Company* c = *cmp_it;
-		// name,zip code,email
-		cmp_file << c->name << ","
-		<< c->zip_code << ","
-		<< c->email << "\n";
+		auto cmp_it = companies->first();
+		while (cmp_it != companies->end())
+		{
+			Company* c = *cmp_it;
+			// name,zip code,email
+			cmp_file << c->name << ","
+			<< c->zip_code << ","
+			<< c->email << "\n";
 
-		cmp_it++;
-		delete c;
+			cmp_it++;
+			delete c;
+		}
 	}
-	
-	get_companies()->clean();
-	get_jobs()->clean();
-	get_workers()->clean();
 
-	cmp_file.close();
-	job_file.close();
 	wrk_file.close();
+	job_file.close();
+	cmp_file.close();
+
+	if (workers) {
+		workers->delete_data();
+		delete workers;
+	}
+	if (jobs) {
+		jobs->delete_data();
+		delete jobs;
+	}
+	if (companies) {
+		companies->delete_data();
+		delete companies;
+	}
 }

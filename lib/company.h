@@ -1,6 +1,7 @@
 #pragma once
 
 #include "list.h"
+#include "language.h"
 
 class Company
 {

@@ -12,6 +12,7 @@ void load_language(string path)
 {
 	ifstream lang_file;
 	lang_file.open(path);
+	array_size = 0;
 	
 	string line;
 	List<string> lines;
@@ -27,11 +28,10 @@ void load_language(string path)
 	auto it = lines.first();
 	for (int i = 0; i < array_size; i++)
 	{
-    char *char_array = (char*)malloc(((* *it).length() + 1) * sizeof(char));
-    strcpy(char_array, (* *it).c_str());
+		string tmp = * *it;
+		char *char_array = (char*)malloc((tmp.length() + 1) * sizeof(char));
+		strcpy(char_array, tmp.c_str());
 		lang_array[i] = char_array;
-
-		cout << lang_array[i] << endl;
 		it++;
 	}
 }

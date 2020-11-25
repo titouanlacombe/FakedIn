@@ -22,14 +22,14 @@ int main(void)
 	log_write("App start");
 
 	load("app/data_base");
-	load_language("./languages/english.lang");
+	load_language("./languages/french.lang");
 
 	std::cout << ASCII_ART << std::endl;
-	std::cout << "=== Bienvenu sur FakedIn ! L'application qui réalise vos rêves ===" << std::endl;
+	std::cout << "=== " + get_phrase(104) + " ===" << std::endl;
 
 	home();
 
-	std::cout << "Merci de votre visite !" << std::endl;
+	std::cout << get_phrase(105) << std::endl;
 
 	save("app/data_base");
 	
