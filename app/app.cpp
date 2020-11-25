@@ -22,7 +22,7 @@ int main(void)
 	log_write("App start");
 
 	load("app/data_base");
-	load_language("./languages/french.lang");
+	load_language("./languages/english.lang");
 
 	std::cout << ASCII_ART << std::endl;
 	std::cout << "=== " + get_phrase(104) + " ===" << std::endl;

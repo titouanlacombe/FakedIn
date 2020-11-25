@@ -1,2 +1,3 @@
 FakedIn:
 trad in english
+empty to quit and not 'q' (not forget to delete limitation on name 'q')

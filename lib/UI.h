@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstring>
+
 #include "mylog.h"
 #include "language.h"
 #include "search.h"

@@ -22,87 +22,85 @@ Une des compétences a un nom vide, elle ne sera pas prise en compte
 La compétence
 est déjà dans la liste, elle ne sera pas prise en compte
 Votre nom (nom prénom)
-le Travailleur
+le travailleur
 nom ou prénom vide
 Entrez le nom d'un collègue (nom prénom) (vide pour arreter)
 vous ne pouvez pas être votre propre collègue
 vous ne pouvez pas ajouter un chercheur d'emploi comme collègue
 vous avez déjà
 comme collègue
-Entrez le nom de votre Entreprise (vide pour aucune)
+Entrez le nom de votre entreprise (vide pour aucune)
 Menu Principal
-Compte Entreprise
-Compte Travailleur
+Espace entreprise
+Espace travailleur
 Change language
 Vous souhaitez
-Vous connecter a votre compte Entreprise
-Créér un nouveau compte Entreprise
-Création du compte Entreprise
+Vous connecter a votre compte entreprise
+Créér un nouveau compte entreprise
+Création du compte entreprise
 Merci d'indiquer
-Compte Entreprise créé
-Connexion Entreprise
-Entrez le nom de votre Entreprise ('q' pour annuler)
+Compte entreprise créé
+Connexion entreprise
+Entrez le nom de votre entreprise ('q' pour annuler)
 Menu Entreprise
 ------------------------------------------
 Faire une recherche parmi les chercheurs d'emploi
 Créér une nouvelle offre d'emploi
 Supprimer une offre d'emploi
-Supprimer votre compte Entreprise
+Supprimer votre compte entreprise
 Recherche de travailleur
 Entrez le titre du poste vacant ('q' pour annuler)
-Voulez vous ne voir que les travailleur du même code postal que vous ?
+Voulez vous ne voir que les travailleur du même code postal que votre entreprise ?
 Résultats
 Aucun résultat trouvé
-Appuyer sur entrée pour revenir au menu Entreprise
+Appuyer sur entrée pour revenir au menu entreprise
 Création d'offre d'emploi
-Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...)
+Indiquez les compétences requises pour ce poste (compétence1,compétence2,...)
 Offre d'emploi créée
 Suppression d'offre d'emploi
 Entrez le titre de l'offre d'emploi a suprimmer ('q' pour annuler)
 Offre d'emploi supprimée
-Suppression de compte Entreprise
+Suppression de compte entreprise
 Voulez vous vraiment suprimer votre compte ?
 Entreprise supprimée
 Suppression annulée
-Vous connecter a votre compte Travailleur
-Créér un nouveau compte Travailleur
-Création de profil Travailleur
-Indiquez vos compétences (Compétence 1,Compétence 2...)
-Profil créé
-Connexion Travailleur
+Vous connecter a votre compte travailleur
+Créér un nouveau compte travailleur
+Création de profil travailleur
+Indiquez vos compétences (compétence1,compétence2,...)
+Profil travailleur créé
+Connexion travailleur
 Entrez votre nom (nom prénom) ('q' pour annuler)
-Menu Employé (
+Menu Travailleur (
 Chercher un nouvel emploi
 Rechercher un profil parmis vos anciens collègues
 Modifier votre profil
 Supprimer votre profil
 Recherche d'offre d'emploi
 Voulez vous ne voir que les offres du même code postal que vous ?
-Appuyer sur entrée pour revenir au menu Travailleur
+Appuyer sur entrée pour revenir au menu travailleur
 Recherche parmis vos anciens collègues
 Trouver des anciens collegues travaillant dans une certaine entreprise
 Trouver des anciens collegues travaillant dans une entreprise cherchant votre profil
 Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues ('q' pour annuler)
-Modification du compte Travailleur
+Modification du compte travailleur
 Votre profil actuel
 email
-Code postal
-Entreprise
-En recherche de travail
-Compétences
-Collègues
-Aucun
+code postal
+entreprise
+en recherche de travail
+compétences
+collègues
+aucun
 Ajouter une compétence
 Ajouter un collègue de travail
 Changez votre code postal
 Changez votre entreprise
-Indiquez vos nouvelles compétences (Compétence 1,Compétence 2...)
-Suppression de compte Travailleur
+Indiquez vos nouvelles compétences (compétence1,compétence2,...)
+Suppression de compte travailleur
 Travailleur supprimé
 chez
-Travaille chez
+travaille chez
 Bienvenue sur FakedIn ! L'application qui réalise vos rêves
 Merci de votre visite !
 Erreur
-Espace Travailleur
-Espace Entreprise

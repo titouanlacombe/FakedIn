@@ -57,22 +57,47 @@ void print_title(int title)
 	cout << "~~ " << get_phrase(title) << " ~~\n" << endl;
 }
 
-void print_menu(int nb_choices, string title, string choices_str[])
+void print_menu(int nb_choices, string title, char* choices_str[])
 {
 	print_title(title);
 	cout << get_phrase(37) + ":\n";
 	for (int i = 0; i < nb_choices; i++)
 	{
-		cout << "\t" << to_string(i + 1) << ". " << choices_str[i] << "\n" << endl;
+		cout << "\t" << to_string(i + 1) << ". " << choices_str[i] << endl;
 	}
 	cout << endl;
 }
 
 void print_menu(int nb_choices, int title, int choices_str[])
 {
-	string tab[nb_choices];
-	for (int i = 0; i < nb_choices; i++) tab[i] = get_phrase(choices_str[i]);
+	char** tab = (char**)malloc(nb_choices * sizeof(char*));
+	for (int i = 0; i < nb_choices; i++)
+	{
+		string tmp = get_phrase(choices_str[i]);
+		tab[i] = (char*)malloc((tmp.length() + 1) * sizeof(char));
+		strcpy(tab[i], tmp.c_str());
+	}
+
 	print_menu(nb_choices, get_phrase(title), tab);
+
+	for (int i = 0; i < nb_choices; i++) free(tab[i]);
+	free(tab);
+}
+
+void print_menu(int nb_choices, string title, int choices_str[])
+{
+	char** tab = (char**)malloc(nb_choices * sizeof(char*));
+	for (int i = 0; i < nb_choices; i++)
+	{
+		string tmp = get_phrase(choices_str[i]);
+		tab[i] = (char*)malloc((tmp.length() + 1) * sizeof(char));
+		strcpy(tab[i], tmp.c_str());
+	}
+
+	print_menu(nb_choices, title, tab);
+
+	for (int i = 0; i < nb_choices; i++) free(tab[i]);
+	free(tab);
 }
 
 int request_choice(int nb)
@@ -99,7 +124,7 @@ bool request_yn_choice()
 	{
 		cout << get_phrase(3) + ": ";
 		getline(cin, it);
-		if (it == "o") return true;
+		if (it == "o" || it == "y") return true;
 		else if (it == "n") return false;
 		print_error(2);
 	} while (true);
@@ -339,7 +364,7 @@ void home()
 void pre_company()
 {
 	int choices_str[2] = {38, 39};
-	print_menu(2, 108, choices_str);
+	print_menu(2, 34, choices_str);
 	
 	int choice = request_choice(2);
 	if (choice == -1) return;
@@ -393,9 +418,8 @@ void company_menu(Company& c)
 	
 	do
 	{
-		string title = get_phrase(45) + " (" + c.name + ")";
-		string choices_str[4] = {get_phrase(47), get_phrase(48), get_phrase(49), get_phrase(50)};
-		print_menu(4, title, choices_str);
+		int choices_str[4] = {47, 48, 49, 50};
+		print_menu(4, get_phrase(45) + " (" + c.name + ")", choices_str);
 		
 		choice = request_choice(4);
 		if (choice == -1) return;
@@ -510,7 +534,7 @@ void delete_company(Company& c)
 void pre_worker()
 {
 	int choices_str[2] = {67, 68};
-	print_menu(2, 107, choices_str);
+	print_menu(2, 35, choices_str);
 
 	int choice = request_choice(2);
 	if (choice == -1) return;
@@ -577,9 +601,8 @@ void worker_menu(Worker& w)
 
 	do
 	{
-		string title = get_phrase(74) + w.first_name + " " + w.last_name + ")";
-		string choices_str[4] = {get_phrase(75), get_phrase(76), get_phrase(77), get_phrase(78)};
-		print_menu(4, title, choices_str);
+		int choices_str[4] = {75, 76, 77, 78};
+		print_menu(4, get_phrase(74) + w.first_name + " " + w.last_name + ")", choices_str);
 
 		choice = request_choice(4);
 		if (choice == -1) return;
