@@ -1,11 +1,11 @@
-Enter your choice ('q' to exit)
+Enter your choice (empty to exit)
 invalid choice
 Enter your choice y/n
 The name of your company
 the company
 already exist
 the name is empty
-the name can't be 'q'
+the name can't be empty
 doesn't exist
 Your email address (x@y.z)
 the email
@@ -17,7 +17,7 @@ The title of the job
 the job
 already exist in your company
 the job title is empty
-the job title can't be 'q'
+the job title can't be empty
 One of the skills has an empty name, it will not be acounted
 The skill
 is already in the list, it will not be acounted
@@ -41,7 +41,7 @@ Company account creation
 Please enter
 Company account created
 Company account log in
-Enter the name of your company ('q' to cancel)
+Enter the name of your company (empty to cancel)
 Company Menu
 ------------------------------------------
 Search among the unemployed
@@ -49,7 +49,7 @@ Create a new job
 Delete a job
 Delete your company account
 Search a worker
-Enter the title of the free job ('q' to cancel)
+Enter the title of the free job (empty to cancel)
 Do you want to only see the workers of the same zip code as your company ?
 Results
 No result found
@@ -58,7 +58,7 @@ Job creation
 Enter the required skill(s) for this job (skill1,skill2,...)
 Job created
 Job deletion
-Enter the job to delete ('q' to cancel)
+Enter the job to delete (empty to cancel)
 Job deleted
 Company account deletion
 Do you really want to delete your account ?
@@ -70,7 +70,7 @@ Worker account creation
 Enter your skill(s) (skill1,skill2,...)
 Worker account created
 Worker log in
-Enter your name (first last) ('q' to cancel)
+Enter your name (first last) (empty to cancel)
 Worker Menu (
 Search a new job
 Search a profile from your past colleagues
@@ -82,7 +82,7 @@ Hit enter to come back to your worker menu
 Past colleagues search
 Find past colleagues working in a specified company
 Find past colleagues working in a company searching for someone with your skills
-Enter the company name where you want to search for past colleagues ('q' to cancel)
+Enter the company name where you want to search for past colleagues (empty to cancel)
 Worker Account editing
 Your account
 email

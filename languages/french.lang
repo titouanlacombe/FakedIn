@@ -1,11 +1,11 @@
-Entrez votre choix ('q' pour sortir)
+Entrez votre choix (vide pour sortir)
 choix invalide
 Entrez votre choix o/n
 Le nom de votre entreprise
 l'entreprise
 existe déjà
 le nom est vide
-le nom ne peut pas etre 'q'
+le nom ne peut pas etre vide
 n'existe pas
 Votre adresse email (x@y.z)
 l'email
@@ -17,7 +17,7 @@ Le titre du poste
 l'offre
 existe déjà dans votre entreprise
 le titre de l'offre est vide
-le titre de l'offre ne peut pas etre 'q'
+le titre de l'offre ne peut pas etre vide
 Une des compétences a un nom vide, elle ne sera pas prise en compte
 La compétence
 est déjà dans la liste, elle ne sera pas prise en compte
@@ -41,7 +41,7 @@ Création du compte entreprise
 Merci d'indiquer
 Compte entreprise créé
 Connexion entreprise
-Entrez le nom de votre entreprise ('q' pour annuler)
+Entrez le nom de votre entreprise (vide pour annuler)
 Menu Entreprise
 ------------------------------------------
 Faire une recherche parmi les chercheurs d'emploi
@@ -49,7 +49,7 @@ Créér une nouvelle offre d'emploi
 Supprimer une offre d'emploi
 Supprimer votre compte entreprise
 Recherche de travailleur
-Entrez le titre du poste vacant ('q' pour annuler)
+Entrez le titre du poste vacant (vide pour annuler)
 Voulez vous ne voir que les travailleur du même code postal que votre entreprise ?
 Résultats
 Aucun résultat trouvé
@@ -58,7 +58,7 @@ Création d'offre d'emploi
 Indiquez les compétences requises pour ce poste (compétence1,compétence2,...)
 Offre d'emploi créée
 Suppression d'offre d'emploi
-Entrez le titre de l'offre d'emploi a suprimmer ('q' pour annuler)
+Entrez le titre de l'offre d'emploi a suprimmer (vide pour annuler)
 Offre d'emploi supprimée
 Suppression de compte entreprise
 Voulez vous vraiment suprimer votre compte ?
@@ -70,7 +70,7 @@ Création de profil travailleur
 Indiquez vos compétences (compétence1,compétence2,...)
 Profil travailleur créé
 Connexion travailleur
-Entrez votre nom (nom prénom) ('q' pour annuler)
+Entrez votre nom (nom prénom) (vide pour annuler)
 Menu Travailleur (
 Chercher un nouvel emploi
 Rechercher un profil parmis vos anciens collègues
@@ -82,7 +82,7 @@ Appuyer sur entrée pour revenir au menu travailleur
 Recherche parmis vos anciens collègues
 Trouver des anciens collegues travaillant dans une certaine entreprise
 Trouver des anciens collegues travaillant dans une entreprise cherchant votre profil
-Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues ('q' pour annuler)
+Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues (vide pour annuler)
 Modification du compte travailleur
 Votre profil actuel
 email

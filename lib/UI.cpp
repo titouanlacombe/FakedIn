@@ -108,7 +108,7 @@ int request_choice(int nb)
 	{
 		cout << get_phrase(1) + ": ";
 		getline(cin, it);
-		if (it == "q") return -1;
+		if (it.empty()) return -1;
 		if (is_number(it)) {
 			choice = stoi(it);
 			if (choice > 0 && choice <= nb) return choice;
@@ -140,7 +140,6 @@ string request_cmp_name()
 		getline(cin, name);
 		if (cmp_exist(name)) print_error(5, name, 6);
 		else if (name.empty()) print_error(7);
-		else if (name == "q") print_error(8);
 		else loop = false;
 	} while (loop);
 	return name;
@@ -155,7 +154,7 @@ Company* request_cmp_login(string request_line)
 	{
 		cout << request_line;
 		getline(cin, name);
-		if (name == "q") return NULL;
+		if (name.empty()) return NULL;
 		c = get_company(name);
 		if (c == NULL) print_error(5, name, 9);
 		else loop = false;
@@ -202,7 +201,6 @@ string request_job_title(Company& c)
 		getline(cin, title);
 		if (job_exist(c, title)) print_error(17, title, 18);
 		else if (title.empty()) print_error(19);
-		else if (title == "q") print_error(20);
 		else loop = false;
 	} while (loop);
 	return title;
@@ -217,7 +215,7 @@ Job* request_job_login(Company& c, string request_phrase)
 	{
 		cout << request_phrase;
 		getline(cin, title);
-		if (title == "q") return NULL;
+		if (title.empty()) return NULL;
 		j = get_job(c, title);
 		if (j == NULL) print_error(17, title, 9);
 		else loop = false;
@@ -586,7 +584,7 @@ void login_worker()
 	{
 		cout << get_phrase(73) << ": ";
 		getline(cin, full_name);
-		if (full_name == "q") return;
+		if (full_name.empty()) return;
 		w = get_worker(full_name);
 		if (w == NULL) cout << get_phrase(25) + full_name + get_phrase(9) << endl;
 		else loop = false;
