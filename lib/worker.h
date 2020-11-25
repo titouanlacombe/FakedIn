@@ -10,10 +10,11 @@ public:
 	std::string email;
 	std::string zip_code;
 	List<std::string> skills; 
-	List<Worker*> co_workers;
+	List<Worker> co_workers;
 	Company* company;
 
 	Worker();
+	Worker(std::string full_name, std::string _email);
 	Worker(std::string _first_name, std::string _last_name, std::string _email);
 	~Worker();
 	void add_skill(std::string skill); // Add a skill
@@ -28,10 +29,16 @@ public:
 };
 
 // Search a worker by his first and last name
-Worker* srch_wrk_list(List<Worker*>& workers, std::string first_name, std::string last_name);
+Worker* get_worker(std::string first_name, std::string last_name);
+
+Worker* get_worker(std::string full_name);
 
 // Returns true if a worker already exist with the names 'first_name' and 'last_name'
-bool wrk_exist(List<Worker*>& workers, std::string first_name, std::string last_name);
+bool wrk_exist(std::string first_name, std::string last_name);
+
+bool wrk_exist(std::string full_name);
 
 // Returns the employees of the company c
-List<Worker*>* company_employees(List<Worker*>& workers, Company& c);
+List<Worker>* company_employees(Company& c);
+
+List<Worker>* get_workers();

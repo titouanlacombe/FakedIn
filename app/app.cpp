@@ -1,4 +1,8 @@
+#include "mylog.h"
+#include "data_base.h"
 #include "UI.h"
+
+#include <iostream>
 
 #define ASCII_ART															       \
 "*********************************************   \n" \
@@ -14,26 +18,22 @@
 
 int main(void)
 {
-	List<Company*> companies;
-	List<Job*> jobs;
-	List<Worker*> workers;
-
 	log_begin("app/logs");
-	log_write("Start");
+	log_write("App start");
 
-	load(companies, jobs, workers, "app/data_base");
-	init_lists(companies, jobs, workers);
+	load("app/data_base");
+	load_language("./languages/english.lang");
 
 	std::cout << ASCII_ART << std::endl;
-	std::cout << "=== Bienvenu sur FakedIn ! L'application qui réalise vos rêves ===" << std::endl;
+	std::cout << "=== " + get_phrase(104) + " ===" << std::endl;
 
 	home();
 
-	std::cout << "Merci de votre visite !" << std::endl;
+	std::cout << get_phrase(105) << std::endl;
 
-	save(companies, jobs, workers, "app/data_base");
+	save("app/data_base");
 	
-	log_write("Quitting...");
+	log_write("App quit");
 	log_end();
 
 	return 0;

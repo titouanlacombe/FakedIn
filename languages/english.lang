@@ -1,0 +1,106 @@
+Enter your choice (empty to exit)
+invalid choice
+Enter your choice y/n
+The name of your company
+the company
+already exist
+the name is empty
+the name can't be empty
+doesn't exist
+Your email address (x@y.z)
+the email
+is invalid
+Your zip code
+the zip code
+isn't a number
+The title of the job
+the job
+already exist in your company
+the job title is empty
+the job title can't be empty
+One of the skills has an empty name, it will not be acounted
+The skill
+is already in the list, it will not be acounted
+Your name (first last)
+The worker
+first name or last name empty
+Enter the name of a colleague (first last) (empty to stop)
+you can't be your own colleague
+your can't add an unemployed person as your colleague
+you already have
+as your colleague
+Enter the name of your company (empty for unemployed)
+Main Menu
+Company space
+Worker space
+Change language
+Please select
+Log into your company account
+Create a new company account
+Company account creation
+Please enter
+Company account created
+Company account log in
+Enter the name of your company (empty to cancel)
+Company Menu
+------------------------------------------
+Search among the unemployed
+Create a new job
+Delete a job
+Delete your company account
+Search a worker
+Enter the title of the free job (empty to cancel)
+Do you want to only see the workers of the same zip code as your company ?
+Results
+No result found
+Hit enter to come back to your company menu
+Job creation
+Enter the required skill(s) for this job (skill1,skill2,...)
+Job created
+Job deletion
+Enter the job to delete (empty to cancel)
+Job deleted
+Company account deletion
+Do you really want to delete your account ?
+Company deleted
+Deletion canceled
+Log into your worker account
+Create a new worker account
+Worker account creation
+Enter your skill(s) (skill1,skill2,...)
+Worker account created
+Worker log in
+Enter your name (first last) (empty to cancel)
+Worker Menu (
+Search a new job
+Search a profile from your past colleagues
+Modify your account
+Delete your account
+Job search
+Do you want to only see the jobs of the same zip code as you ?
+Hit enter to come back to your worker menu
+Past colleagues search
+Find past colleagues working in a specified company
+Find past colleagues working in a company searching for someone with your skills
+Enter the company name where you want to search for past colleagues (empty to cancel)
+Worker Account editing
+Your account
+email
+zip code
+company
+unemployed
+skills
+colleagues
+no one
+Add a skill
+Add a colleague
+Modify your zip code
+Modify your company
+Enter your new skill(s) (skill1,skill2,...)
+Worker Account deletion
+Worker deleted
+in
+work for
+Welcome to FakedIn ! The app that makes your dreams come true
+Thank you for your visit !
+Error

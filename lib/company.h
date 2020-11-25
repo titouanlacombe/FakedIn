@@ -1,6 +1,7 @@
 #pragma once
 
 #include "list.h"
+#include "language.h"
 
 class Company
 {
@@ -18,7 +19,9 @@ public:
 };
 
 // Search a company by it's name
-Company* srch_cmp_list(List<Company*>& companies, std::string name);
+Company* get_company(std::string name);
 
 // Search if a company with the name 'name' already exist in companies
-bool cmp_exist(List<Company*>& companies, std::string name);
+bool cmp_exist(std::string name);
+
+List<Company>* get_companies();

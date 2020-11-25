@@ -1,9 +1,10 @@
 #pragma once
 
-#include "search.h"
+#include <cstring>
 
-// Initialise the 3 lists
-void init_lists(List<Company*>& companies, List<Job*>& jobs, List<Worker*>& workers);
+#include "mylog.h"
+#include "language.h"
+#include "search.h"
 
 // Home menu
 void home();
