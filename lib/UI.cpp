@@ -27,20 +27,68 @@ bool valid_zip(string zip)
 	return is_number(zip);
 }
 
+void print_error(string str)
+{
+	cout << get_phrase(106) << ": " << str << endl;
+}
+
+void print_error(string start, string help, string end)
+{
+	print_error(start + " '" + help + "' " + end);
+}
+
+void print_error(int str)
+{
+	print_error(get_phrase(str));
+}
+
+void print_error(int start, string help, int end)
+{
+	print_error(get_phrase(start), help, get_phrase(end));
+}
+
+void print_title(string title)
+{
+	cout << "~~ " << title << " ~~\n" << endl;
+}
+
+void print_title(int title)
+{
+	cout << "~~ " << get_phrase(title) << " ~~\n" << endl;
+}
+
+void print_menu(int nb_choices, string title, string choices_str[])
+{
+	print_title(title);
+	cout << get_phrase(37) + ":\n";
+	for (int i = 0; i < nb_choices; i++)
+	{
+		cout << "\t" << to_string(i + 1) << ". " << choices_str[i] << "\n" << endl;
+	}
+	cout << endl;
+}
+
+void print_menu(int nb_choices, int title, int choices_str[])
+{
+	string tab[nb_choices];
+	for (int i = 0; i < nb_choices; i++) tab[i] = get_phrase(choices_str[i]);
+	print_menu(nb_choices, get_phrase(title), tab);
+}
+
 int request_choice(int nb)
 {
 	int choice;
 	string it;
 	do
 	{
-		cout << get_phrase(1);
+		cout << get_phrase(1) + ": ";
 		getline(cin, it);
 		if (it == "q") return -1;
 		if (is_number(it)) {
 			choice = stoi(it);
 			if (choice > 0 && choice <= nb) return choice;
 		}
-		cout << get_phrase(2) << endl;
+		print_error(2);
 	} while (true);
 }
 
@@ -49,11 +97,11 @@ bool request_yn_choice()
 	string it;
 	do
 	{
-		cout << get_phrase(3);
+		cout << get_phrase(3) + ": ";
 		getline(cin, it);
 		if (it == "o") return true;
 		else if (it == "n") return false;
-		cout << get_phrase(2) << endl;
+		print_error(2);
 	} while (true);
 }
 
@@ -63,11 +111,11 @@ string request_cmp_name()
 	bool loop = true;
 	do
 	{
-		cout << get_phrase(4);
+		cout << "- " << get_phrase(4) << ": ";
 		getline(cin, name);
-		if (cmp_exist(name)) cout << get_phrase(5) << name << get_phrase(6) << endl;
-		else if (name.empty()) cout << get_phrase(7) << endl;
-		else if (name == "q") cout << get_phrase(8) << endl;
+		if (cmp_exist(name)) print_error(5, name, 6);
+		else if (name.empty()) print_error(7);
+		else if (name == "q") print_error(8);
 		else loop = false;
 	} while (loop);
 	return name;
@@ -84,7 +132,7 @@ Company* request_cmp_login(string request_line)
 		getline(cin, name);
 		if (name == "q") return NULL;
 		c = get_company(name);
-		if (c == NULL) cout << get_phrase(5) << name << get_phrase(9) << endl;
+		if (c == NULL) print_error(5, name, 9);
 		else loop = false;
 	} while (loop);
 	return c;
@@ -96,9 +144,9 @@ string request_email()
 	bool loop = true;
 	do
 	{
-		cout << get_phrase(10);
+		cout << "- " << get_phrase(10) << ": ";
 		getline(cin, email);
-		if (!valid_email(email)) cout << get_phrase(11) << email << get_phrase(12) << endl;
+		if (!valid_email(email)) print_error(11, email, 12);
 		else loop = false;
 	} while (loop);
 	return email;
@@ -111,9 +159,9 @@ string request_zip()
 	loop = true;
 	do
 	{
-		cout << get_phrase(13);
+		cout << "- " << get_phrase(13) << ": ";
 		getline(cin, zip);
-		if (!valid_zip(zip)) cout << get_phrase(14) << zip << get_phrase(15) << endl;
+		if (!valid_zip(zip)) print_error(14, zip, 15);
 		else loop = false;
 	} while (loop);
 	return zip;
@@ -125,11 +173,11 @@ string request_job_title(Company& c)
 	bool loop = true;
 	do
 	{
-		cout << get_phrase(16);
+		cout << "- " << get_phrase(16) << ": ";
 		getline(cin, title);
-		if (job_exist(c, title)) cout << get_phrase(17) << title << get_phrase(18) << endl;
-		else if (title.empty()) cout << get_phrase(19) << endl;
-		else if (title == "q") cout << get_phrase(20) << endl;
+		if (job_exist(c, title)) print_error(17, title, 18);
+		else if (title.empty()) print_error(19);
+		else if (title == "q") print_error(20);
 		else loop = false;
 	} while (loop);
 	return title;
@@ -146,7 +194,7 @@ Job* request_job_login(Company& c, string request_phrase)
 		getline(cin, title);
 		if (title == "q") return NULL;
 		j = get_job(c, title);
-		if (j == NULL) cout << get_phrase(17) << title << get_phrase(9) << endl;
+		if (j == NULL) print_error(17, title, 9);
 		else loop = false;
 	} while (loop);
 	return j;
@@ -170,8 +218,8 @@ void request_skills(T& w, string request_phrase)
 	cout << request_phrase;
 	getline(cin, skills_raw);
 	while (mygetline(skills_raw, it, ',')) {
-		if (it.empty()) cout << get_phrase(21) << endl;
-		else if (has_same_str(w.skills, it)) cout << get_phrase(22) + it + get_phrase(23) << endl;
+		if (it.empty()) print_error(21);
+		else if (has_same_str(w.skills, it)) print_error(22, it, 23);
 		else w.add_skill(it);
 	}
 }
@@ -181,11 +229,11 @@ void request_wrk_name(string& first_name, string& full_name)
 	bool loop = true;
 	do
 	{
-		cout << get_phrase(24);
+		cout << "- " << get_phrase(24) << ": ";
 		getline(cin, full_name);
 		mygetline(full_name, first_name, ' ');
-		if (wrk_exist(first_name, full_name)) cout << get_phrase(25) << (first_name + " " + full_name) << get_phrase(6) << endl;
-		else if (full_name.empty() || first_name.empty()) cout << get_phrase(26) << endl;
+		if (wrk_exist(first_name, full_name)) print_error(25, first_name + " " + full_name, 6);
+		else if (full_name.empty() || first_name.empty()) print_error(26);
 		else loop = false;
 	} while (loop);
 }
@@ -197,16 +245,16 @@ void request_wrk_coll(Worker& w)
 	bool loop = true;
 	do
 	{
-		cout << get_phrase(27);
+		cout << "- " << get_phrase(27) << ": ";
 		getline(cin, full_name);
 		if (!full_name.empty())
 		{
 			mygetline(full_name, first_name, ' ');
 			coll = get_worker(first_name, full_name);
-			if (coll == NULL) cout << get_phrase(25) + first_name + " " + full_name + get_phrase(9) << endl;
-			else if (*coll == w) cout << get_phrase(28) << endl;
-			else if (!coll->employed()) cout << get_phrase(29) << endl;
-			else if (w.co_workers.has(coll)) cout << get_phrase(30) + coll->first_name + " " + coll->last_name + get_phrase(31) << endl;
+			if (coll == NULL) print_error(25, first_name + " " + full_name, 9);
+			else if (*coll == w) print_error(28);
+			else if (!coll->employed()) print_error(29);
+			else if (w.co_workers.has(coll)) print_error(30, coll->first_name + " " + coll->last_name, 31);
 			else
 			{
 				w.add_co_worker(*coll);
@@ -224,12 +272,12 @@ void request_wrk_cmp(Worker& w)
 	bool loop = true;
 	do
 	{
-		cout << get_phrase(32);
+		cout << "- " << get_phrase(32) << ": ";
 		getline(cin, name);
 		if (!name.empty())
 		{
 			c = get_company(name);
-			if (c == NULL) cout << get_phrase(5) + name + get_phrase(9) << endl;
+			if (c == NULL) print_error(5, name, 9);
 			else
 			{
 				w.set_company(c);
@@ -262,17 +310,14 @@ void change_lang()
 
 void home()
 {
-	int choice;
-
 	do
 	{
-		cout << "\n" + get_phrase(33) + "\n\n";
-		cout << "\t" + get_phrase(34) + "\n";
-		cout << "\t" + get_phrase(35) + "\n";
-		cout << "\t" + get_phrase(36) + "\n";
 		cout << endl;
+
+		int choices_str[3] = {34, 35, 36};
+		print_menu(3, 33, choices_str);
 		
-		choice = request_choice(3);
+		int choice = request_choice(3);
 		if (choice == -1) return;
 		cout << endl;
 
@@ -293,14 +338,10 @@ void home()
 
 void pre_company()
 {
-	int choice;
-
-	cout << get_phrase(37) + "\n";
-	cout << "\t" + get_phrase(38) + "\n";
-	cout << "\t" + get_phrase(38) + "\n";
-	cout << endl;
+	int choices_str[2] = {38, 39};
+	print_menu(2, 108, choices_str);
 	
-	choice = request_choice(2);
+	int choice = request_choice(2);
 	if (choice == -1) return;
 	cout << endl;
 
@@ -320,8 +361,8 @@ void create_company()
 	string name, zip, email;
 	Company *c;
 
-	cout << get_phrase(40) + "\n\n";
-	cout << get_phrase(41) + "\n";
+	print_title(40);
+	cout << get_phrase(41) + ":\n";
 	name = request_cmp_name();
 	zip = request_zip();
 	email = request_email();
@@ -339,8 +380,8 @@ void login_company()
 	Company* c;
 	string name;
 
-	cout << get_phrase(43) + "\n\n";
-	c = request_cmp_login(get_phrase(44));
+	print_title(43);
+	c = request_cmp_login(get_phrase(44) + ": ");
 	if (c == NULL) return;
 	
 	company_menu(*c);
@@ -352,13 +393,9 @@ void company_menu(Company& c)
 	
 	do
 	{
-		cout << "\n" + get_phrase(45) << c.name << get_phrase(46) + "\n\n";
-		cout << get_phrase(37) + "\n";
-		cout << "\t" + get_phrase(47) + "\n";
-		cout << "\t" + get_phrase(48) + "\n";
-		cout << "\t" + get_phrase(49) + "\n";
-		cout << "\t" + get_phrase(50) + "\n";
-		cout <<	endl;
+		string title = get_phrase(45) + " (" + c.name + ")";
+		string choices_str[4] = {get_phrase(47), get_phrase(48), get_phrase(49), get_phrase(50)};
+		print_menu(4, title, choices_str);
 		
 		choice = request_choice(4);
 		if (choice == -1) return;
@@ -389,8 +426,8 @@ void search_worker(Company& c)
 	bool zip;
 	Job *j;
 
-	cout << get_phrase(51) + "\n\n";
-	j = request_job_login(c, get_phrase(52));
+	print_title(51);
+	j = request_job_login(c, get_phrase(52) + ": ");
 	if (j == NULL) return;
 	cout << endl;
 	cout << get_phrase(53) + "\n";
@@ -411,13 +448,13 @@ void create_job(Company& c)
 	string title;
 	Job *j;
 
-	cout << get_phrase(57) + "\n\n";
-	cout << get_phrase(41) + "\n";
+	print_title(57);
+	cout << get_phrase(41) + ":\n";
 	title = request_job_title(c);
 
 	j = new Job(title, &c);
 
-	request_skills(*j, get_phrase(58));
+	request_skills(*j, "- " + get_phrase(58) + ": ");
 	cout << get_phrase(59) << endl;
 	log_write("New Job created: " + title);
 }
@@ -427,8 +464,8 @@ void delete_job(Company& c)
 	string title;
 	Job* j;
 
-	cout << get_phrase(60) + "\n\n";
-	j = request_job_login(c, get_phrase(61));
+	print_title(60);
+	j = request_job_login(c, get_phrase(61) + ": ");
 	if (j == NULL) return;
 	cout << endl;
 	cout << get_phrase(62) << endl;
@@ -442,7 +479,7 @@ void delete_company(Company& c)
 	List<Worker>* lw;
 	bool choice;
 
-	cout << get_phrase(63) + "\n\n";
+	print_title(63);
 	cout << get_phrase(64) + "\n";
 	choice = request_yn_choice();
 	cout << endl;
@@ -472,14 +509,10 @@ void delete_company(Company& c)
 
 void pre_worker()
 {
-	int choice;
+	int choices_str[2] = {67, 68};
+	print_menu(2, 107, choices_str);
 
-	cout << get_phrase(37) + "\n";
-	cout << "\t" + get_phrase(67) + "\n";
-	cout << "\t" + get_phrase(68) + "\n";
-	cout << endl;
-
-	choice = request_choice(2);
+	int choice = request_choice(2);
 	if (choice == -1) return;
 	cout << endl;
 	
@@ -499,8 +532,8 @@ void create_worker()
 	string first_name, full_name, email, zip;
 	Worker *w;
 
-	cout << get_phrase(69) + "\n\n";
-	cout << get_phrase(41) + "\n";
+	print_title(69);
+	cout << get_phrase(41) + ":\n";
 	request_wrk_name(first_name, full_name);
 	email = request_email();
 	zip = request_zip();
@@ -509,7 +542,7 @@ void create_worker()
 	w->set_zip_code(zip);
 
 	// Compétences
-	request_skills(*w, get_phrase(70));
+	request_skills(*w, "- " + get_phrase(70) + ": ");
 	request_wrk_coll(*w);
 	request_wrk_cmp(*w);
 	cout << "\n" + get_phrase(71) + "\n" << endl;
@@ -523,11 +556,11 @@ void login_worker()
 	Worker* w;
 	string full_name;
 
-	cout << get_phrase(72) + "\n\n";
+	print_title(72);
 	loop = true;
 	do
 	{
-		cout << get_phrase(73);
+		cout << get_phrase(73) << ": ";
 		getline(cin, full_name);
 		if (full_name == "q") return;
 		w = get_worker(full_name);
@@ -544,14 +577,10 @@ void worker_menu(Worker& w)
 
 	do
 	{
-		cout << "\n" + get_phrase(74) << w.first_name << " " << w.last_name << get_phrase(46) + "\n\n";
-		cout << get_phrase(37) + "\n";
-		cout << "\t" + get_phrase(75) + "\n";
-		cout << "\t" + get_phrase(76) + "\n";
-		cout << "\t" + get_phrase(77) + "\n";
-		cout << "\t" + get_phrase(78) + "\n";
-		cout << endl;
-		
+		string title = get_phrase(74) + w.first_name + " " + w.last_name + ")";
+		string choices_str[4] = {get_phrase(75), get_phrase(76), get_phrase(77), get_phrase(78)};
+		print_menu(4, title, choices_str);
+
 		choice = request_choice(4);
 		if (choice == -1) return;
 		cout << endl;
@@ -580,7 +609,7 @@ void search_job(Worker& w)
 	bool zip;
 	string it;
 
-	cout << get_phrase(79) + "\n\n";
+	print_title(79);
 	cout << get_phrase(80) + "\n";
 	zip = request_yn_choice();
 	cout << endl;
@@ -598,22 +627,18 @@ void search_coll(Worker& w)
 	List<Worker>* results;
 	Company* c;
 	string name;
-	int choice;
 
-	cout << get_phrase(82) + "\n\n";
-	cout << get_phrase(37) + "\n";
-	cout << "\t" + get_phrase(83) + "\n";
-	cout << "\t" + get_phrase(84) + "\n";
-	cout << endl;
+	int choices_str[2] = {83, 84};
+	print_menu(2, 82, choices_str);
 	
-	choice = request_choice(2);
+	int choice = request_choice(2);
 	if (choice == -1) return;	
 	cout << endl;
 
 	switch(choice)
 	{
 	case 1:
-		c = request_cmp_login(get_phrase(85));
+		c = request_cmp_login(get_phrase(85) + ": ");
 		if (c == NULL) return;
 		cout << endl;
 		results = srch_coll_from_cmp(w, *c);
@@ -636,7 +661,8 @@ void modify_worker(Worker& w)
 	string zip;
 	int choice;
 
-	cout << get_phrase(86) + "\n\n" + get_phrase(87) + "\n"
+	cout << get_phrase(46) << endl;
+	cout << get_phrase(87) + ":\n"
 	<< w.first_name << " " << w.last_name << "\n"
 	<< get_phrase(88) + ": " << w.email << "\n" + get_phrase(89) + ": " << w.zip_code << endl;
 	if(w.employed()) cout << get_phrase(90) + ": " << w.company->name << endl;
@@ -651,13 +677,10 @@ void modify_worker(Worker& w)
 	}
 	if (it != w.co_workers.end()) cout << (*it)->first_name << " " << (*it)->last_name;
 	else cout << get_phrase(94);
-	cout << "\n\n";
-	cout << get_phrase(37) + "\n";
-	cout << "\t" + get_phrase(95) + "\n";
-	cout << "\t" + get_phrase(96) + "\n";
-	cout << "\t" + get_phrase(97) + "\n";
-	cout << "\t" + get_phrase(98) + "\n";
-	cout << endl;
+	cout << get_phrase(46) << endl;
+
+	int choices_str[4] = {95, 96, 97, 98};
+	print_menu(4, 86, choices_str);
 
 	choice = request_choice(4);
 	if (choice == -1) return;	
@@ -667,7 +690,7 @@ void modify_worker(Worker& w)
 	{
 	case 1:
 		// Compétences
-		request_skills(w, get_phrase(99));
+		request_skills(w, "- " + get_phrase(99) + ": ");
 		log_write("Added skills to " + w.first_name + " " + w.last_name);
 		break;
 	case 2:
@@ -699,7 +722,7 @@ void delete_worker(Worker& w)
 {
 	bool choice;
 
-	cout << get_phrase(100) + "\n\n";
+	print_title(100);
 	cout << get_phrase(64) + "\n";
 	choice = request_yn_choice();
 	cout << endl;

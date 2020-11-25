@@ -1,90 +1,90 @@
-Entrez votre choix ('q' pour sortir): 
-Erreur: choix invalide.
-Entrez votre choix o/n: 
--Le nom de votre entreprise: 
-Erreur: l'entreprise '
-' existe déjà.
-Erreur: le nom est vide.
-Erreur: le nom ne peut pas etre 'q'.
-' n'existe pas
--Votre adresse email (x@y.z): 
-Erreur: l'email '
-' est invalide.
--Votre code postal: 
-Erreur: le code postal '
-' n'est pas un nombre.
--Le titre du poste: 
-Erreur: l'offre '
-' existe déjà dans votre entreprise.
-Erreur: le titre de l'offre est vide.
-Erreur: le titre de l'offre ne peut pas etre 'q'.
-Une des compétences a un nom vide, elle ne sera pas prise en compte.
-La compétence '
-' est déjà dans la liste, elle ne sera pas prise en compte.
--Votre nom (nom prénom): 
-Erreur: le Travailleur '
-Erreur: nom ou prénom vide
--Entrez le nom d'un collègue (nom prénom) (vide pour arreter): 
-Erreur: vous ne pouvez pas être votre propre collègue.
-Erreur: vous ne pouvez pas ajouter un chercheur d'emploi comme collègue.
-Erreur: vous avez déjà '
-' comme collègue.
--Entrez le nom de votre Entreprise (vide pour aucune): 
-~~ Menu Principal ~~
-1. Compte Entreprise
-2. Compte Travailleur
-3. Change language
-Vous souhaitez:
-1. Vous connecter a votre compte Entreprise
-2. Créér un nouveau compte Entreprise
-~~ Création du compte Entreprise ~~
-Merci d'indiquer:
+Entrez votre choix ('q' pour sortir)
+choix invalide
+Entrez votre choix o/n
+Le nom de votre entreprise
+l'entreprise
+existe déjà
+le nom est vide
+le nom ne peut pas etre 'q'
+n'existe pas
+Votre adresse email (x@y.z)
+l'email
+est invalide
+Votre code postal
+le code postal
+n'est pas un nombre
+Le titre du poste
+l'offre
+existe déjà dans votre entreprise
+le titre de l'offre est vide
+le titre de l'offre ne peut pas etre 'q'
+Une des compétences a un nom vide, elle ne sera pas prise en compte
+La compétence
+est déjà dans la liste, elle ne sera pas prise en compte
+Votre nom (nom prénom)
+le Travailleur
+nom ou prénom vide
+Entrez le nom d'un collègue (nom prénom) (vide pour arreter)
+vous ne pouvez pas être votre propre collègue
+vous ne pouvez pas ajouter un chercheur d'emploi comme collègue
+vous avez déjà
+comme collègue
+Entrez le nom de votre Entreprise (vide pour aucune)
+Menu Principal
+Compte Entreprise
+Compte Travailleur
+Change language
+Vous souhaitez
+Vous connecter a votre compte Entreprise
+Créér un nouveau compte Entreprise
+Création du compte Entreprise
+Merci d'indiquer
 Compte Entreprise créé
-~~ Connexion Entreprise ~~
-Entrez le nom de votre Entreprise ('q' pour annuler): 
-~~ Menu Entreprise (
-) ~~
-1. Faire une recherche parmi les chercheurs d'emploi
-2. Créér une nouvelle offre d'emploi
-3. Supprimer une offre d'emploi
-4. Supprimer votre compte Entreprise
-~~ Recherche de travailleur ~~
-Entrez le titre du poste vacant ('q' pour annuler): 
+Connexion Entreprise
+Entrez le nom de votre Entreprise ('q' pour annuler)
+Menu Entreprise
+------------------------------------------
+Faire une recherche parmi les chercheurs d'emploi
+Créér une nouvelle offre d'emploi
+Supprimer une offre d'emploi
+Supprimer votre compte Entreprise
+Recherche de travailleur
+Entrez le titre du poste vacant ('q' pour annuler)
 Voulez vous ne voir que les travailleur du même code postal que vous ?
 Résultats
 Aucun résultat trouvé
-Appuyer sur entrée pour revenir au menu Entreprise.
-~~ Création d'offre d'emploi ~~
--Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...): 
+Appuyer sur entrée pour revenir au menu Entreprise
+Création d'offre d'emploi
+Indiquez les compétences requises pour ce poste (Compétence 1,Compétence 2...)
 Offre d'emploi créée
-~~ Suppression d'offre d'emploi ~~
-Entrez le titre de l'offre d'emploi a suprimmer ('q' pour annuler): 
+Suppression d'offre d'emploi
+Entrez le titre de l'offre d'emploi a suprimmer ('q' pour annuler)
 Offre d'emploi supprimée
-~~ Suppression de compte Entreprise ~~
+Suppression de compte Entreprise
 Voulez vous vraiment suprimer votre compte ?
 Entreprise supprimée
 Suppression annulée
-1. Vous connecter a votre compte Travailleur
-2. Créér un nouveau compte Travailleur
-~~ Création de profil Travailleur ~~
--Indiquez vos compétences (Compétence 1,Compétence 2...): 
+Vous connecter a votre compte Travailleur
+Créér un nouveau compte Travailleur
+Création de profil Travailleur
+Indiquez vos compétences (Compétence 1,Compétence 2...)
 Profil créé
-~~ Connexion Travailleur ~~
-Entrez votre nom (nom prénom) ('q' pour annuler): 
-~~ Menu Employé (
-1. Chercher un nouvel emploi
-2. Rechercher un profil parmis vos anciens collègues
-3. Modifier votre profil
-4. Supprimer votre profil
-~~ Recherche d'offre d'emploi ~~
+Connexion Travailleur
+Entrez votre nom (nom prénom) ('q' pour annuler)
+Menu Employé (
+Chercher un nouvel emploi
+Rechercher un profil parmis vos anciens collègues
+Modifier votre profil
+Supprimer votre profil
+Recherche d'offre d'emploi
 Voulez vous ne voir que les offres du même code postal que vous ?
-Appuyer sur entrée pour revenir au menu Travailleur.
-~~ Recherche parmis vos anciens collègues ~~
-1. Trouver des anciens collegues travaillant dans une certaine entreprise
-2. Trouver des anciens collegues travaillant dans une entreprise cherchant votre profil
-Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues ('q' pour annuler): 
-~~ Modification du compte Travailleur ~~
-Votre profil actuel: 
+Appuyer sur entrée pour revenir au menu Travailleur
+Recherche parmis vos anciens collègues
+Trouver des anciens collegues travaillant dans une certaine entreprise
+Trouver des anciens collegues travaillant dans une entreprise cherchant votre profil
+Indiquez le nom de l'entreprise dans laquelle vous cherchez vos anciens collègues ('q' pour annuler)
+Modification du compte Travailleur
+Votre profil actuel
 email
 Code postal
 Entreprise
@@ -92,14 +92,17 @@ En recherche de travail
 Compétences
 Collègues
 Aucun
-1. Ajouter une compétence
-2. Ajouter un collègue de travail
-3. Changez votre code postal
-4. Changez votre entreprise
--Indiquez vos nouvelles compétences (Compétence 1,Compétence 2...): 
-~~ Suppression de compte Travailleur ~~
+Ajouter une compétence
+Ajouter un collègue de travail
+Changez votre code postal
+Changez votre entreprise
+Indiquez vos nouvelles compétences (Compétence 1,Compétence 2...)
+Suppression de compte Travailleur
 Travailleur supprimé
 chez
 Travaille chez
 Bienvenue sur FakedIn ! L'application qui réalise vos rêves
 Merci de votre visite !
+Erreur
+Espace Travailleur
+Espace Entreprise
